@@ -1,7 +1,25 @@
-@defWidth = 69px;
+@defWidth: 69px;
 
-.gameWindow{
-  width: 621px;
-  height: 276px;
+.gameContainer{
+  width: @defWidth * 9;
+  height: @defWidth * 4;
   border: double;
+  display: grid;
+  grid-template-rows: 40px auto 40px 35px;
+  gap: 15px;
+  padding: 15px 12px;
+
+  .gameWordArea{
+    background-color: red;
+  }
+  .gameStatsArea{
+    background-color: blue;
+  }
+  .gameTypingArea{
+    background-color: green;
+  }
+  .gameResetButton{
+    background-color: orange;
+  }
+
 }
