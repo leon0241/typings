@@ -135,7 +135,7 @@ class UserGame extends GameSettings {
   initialiseArray() {
     // Creates temp variable, could be faster to assign to this.gameWords before
     const tempGameWords = [];
-    for(let i = 0;i < 30; i++){
+    for(let i = 0;i < 50; i++){
       // Random integer from 0 to length of array and assigns
       let randint = Math.floor(Math.random() * (words.length));
       tempGameWords[i] = this._words[randint];
@@ -162,13 +162,10 @@ class DOMManipulation {
       appenderSpan.classList.add("typingWord");
       appenderSpan.textContent = `${gameWords[i]} `;
       area.appendChild(appenderSpan);
-    }
-  }
 
-  highlightFirstWord() {
-    let nodeList = document.querySelectorAll(".typingWord");
-    let nodeItem = nodeList.item(0)
-    console.log(nodeList, nodeItem)
+    }
+
+    let nodeItem = area.querySelector(".typingWord")
     nodeItem.id = "highlightWord"
   }
 
@@ -187,9 +184,9 @@ const words = ["the", "I", "you"];
 let inGame = false;
 let Game = new UserGame(1, 1, words);
 let DOMFunctions = new DOMManipulation();
-Game.initialiseArray()
-DOMFunctions.showArray(Game.gameWords)
-DOMFunctions.highlightFirstWord()
+Game.initialiseArray();
+DOMFunctions.showArray(Game.gameWords);
+//DOMFunctions.highlightFirstWord();
 //startGame()
 
 // TODO: DOM Read buttons to get values
@@ -202,7 +199,9 @@ function editGameData() {
 }
 
 function startGame() {
-  Game.initialiseArray();
+  //Game.initialiseArray();
+  //DOMFunctions.showArray(Game.gameWords)
+  //DOMFunctions.highlightFirstWord()
   type = Game.type;
   inGame = true;
   //TODO: figure out how tf async works
