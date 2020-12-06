@@ -1,35 +1,30 @@
-window.onload = () => {
-  const words = ["the", "I", "you"];//function to take stuff
-  let inGame = true;
-  let Game = new Game(0, 2, words);
-}
-
 class GameSettings{
   constructor(type, difficulty, words) {
-    this.type = type;
-    this.difficulty = difficulty;
-    this.words = words;
+    this._type = type;
+    this._difficulty = difficulty;
+    this._words = words;
   }
 
   get type() { //0 = time, 1 = words
-    return this.type;
+    return this._type;
   }
 
   get difficulty() { //0 = lowest, 1 = standard, 2 = high
-    return this.difficulty;
+    return this._difficulty;
   }
 
   set type(value){
-    this.type = value;
+    this._type = value;
   }
 
   set difficulty(value) {
-    this.difficulty = value;
+    this._difficulty = value;
   }
 
-  getCalculatedDifficulty(type, words){
+  getCalculatedDifficulty(){
     let output = 0;
-    let switcher = str(type).concat(str(words));
+    let switcher = this._type.toString().concat(this._difficulty.toString());
+    console.log(switcher)
     switch (switcher) {
       case "00":
         output = 30;
@@ -54,58 +49,63 @@ class GameSettings{
   }
 }
 
-class Game extends gameSettings {
+class UserGame extends GameSettings {
   constructor(type, difficulty, words) {
-    super(type);
-    super(difficulty);
-    super(words);
-    this.gameWords = [];
-    this.wordErrors = 0;
-    this.accuracy = 0;
-    this.timeTaken = 0;
-    this.characters = 0;
+    super(type, difficulty, words);
+    this._gameWords = [];
+    this._wordErrors = 0;
+    this._accuracy = 0;
+    this._timeTaken = 0;
+    this._characters = 0;
   }
 
   get gameWords(){
-    return this.gameWords;
+    return this._gameWords;
   }
 
   get word(){
-    return this.gameWords[0];
+    return this._gameWords[0];
   }
 
   get timeTaken(){
-    return this.timeTaken;
+    return this._timeTaken;
   }
 
   get characters(){
-    return this.characters;
+    return this._characters;
   }
 
   set timeTaken(value){
-    this.timeTaken = value;
+    this._timeTaken = value;
   }
 
   incrementWordErrors(){
-    this.wordErrors += 1;
+    this._wordErrors += 1;
   }
 
   incrementKeystrokes(){
-    this.characters += 1;
+    this._characters += 1;
   }
 
-  initialiseArray(words){
+  initialiseArray(){
     const tempGameWords = []
     for(let i = 0;i < 30; i++){
-      let randint = Math.floor(Math.random() * (words.length + 1))
-      tempGameWords[i] = words[randint]
+      let randint = Math.floor(Math.random() * (words.length))
+      tempGameWords[i] = this._words[randint]
     }
-    this.gameWords = tempGameWords
+    this._gameWords = tempGameWords
   }
 
   newWord(gameWords, words){
-    gameWords.shift()
+    _gameWords.shift()
     let randint = Math.floor(Math.random() * (words.length + 1))
-    gameWords.push(words[randint])
+    _gameWords.push(words[randint])
   }
 }
+
+const words = ["the", "I", "you"];//function to take stuff
+let inGame = true;
+let Game = new UserGame(0, 1, words);
+
+Game.initialiseArray()
+console.log(Game.gameWords)
