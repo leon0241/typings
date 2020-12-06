@@ -1,4 +1,6 @@
- // Basic game options - type, difficulty, words array
+// DOM Variables
+
+// Basic game options - type, difficulty, words array
 class GameSettings {
   // Constructor function
   constructor(type, difficulty, words) {
@@ -68,8 +70,8 @@ class GameSettings {
 
 // Game variables of the user's results
 class UserGame extends GameSettings {
-  constructor(type, difficulty, words) {
-    super(type, difficulty, words);
+  constructor(...args) {
+    super(...args);
     this._gameWords = []; // Array of words in the game
     this._wordErrors = 0; // Number of errors made
     this._accuracy = 0; //Accuracy of player
@@ -134,5 +136,43 @@ class UserGame extends GameSettings {
 }
 
 const words = ["the", "I", "you"];
-let inGame = true;
-let Game = new UserGame(0, 1, words);
+let inGame = false;
+let Game = new UserGame(1, 1, words);
+startGame()
+
+// TODO: DOM Read buttons to get values
+// Activates on save button press
+function editGameData() {
+  let newType = 0;
+  let newDifficulty = 0;
+  Game.type = newType;
+  Game.difficulty = newDifficulty;
+}
+
+// FIXME: it's literally broken though
+function startGame() {
+  Game.initialiseArray();
+  type = Game.type;
+  inGame = true;
+  //TODO: figure out how tf async works
+  //async function countCharacters()
+  type === 1 ? timedGame() : wordGame();
+}
+
+function timedGame() {
+  console.log("yes")
+}
+
+function wordGame() {
+  console.log("a")
+  let wordCount = Game.getCalculatedDifficulty();
+  let timeTaken = 0;
+  while(wordCount > 0) {
+    // TODO: timer
+    gameTypingField.onkeyup = (e) => {
+      if(e.keyCode == 32) {
+        alert("Space pressed!");
+      }
+    }
+  }
+}
