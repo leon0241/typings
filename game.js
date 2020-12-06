@@ -169,10 +169,11 @@ function wordGame() {
   let timeTaken = 0;
   while(wordCount > 0) {
     // TODO: timer
-    gameTypingField.onkeyup = (e) => {
-      if(e.keyCode == 32) {
-        alert("Space pressed!");
-      }
-    }
+  }
+}
+
+gameTypingField.onkeyup = (e) => {
+  if(e.keyCode == 32) {
+    alert("Space pressed!");
   }
 }
