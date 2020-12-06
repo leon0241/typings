@@ -135,7 +135,7 @@ class UserGame extends GameSettings {
   initialiseArray() {
     // Creates temp variable, could be faster to assign to this.gameWords before
     const tempGameWords = [];
-    for(let i = 0;i < 50; i++){
+    for (let i = 0;i < 50; i++) {
       // Random integer from 0 to length of array and assigns
       let randint = Math.floor(Math.random() * (words.length));
       tempGameWords[i] = this._words[randint];
@@ -152,23 +152,29 @@ class UserGame extends GameSettings {
   }
 }
 
+// Any functions that require DOM manipulation
 class DOMManipulation {
   constructor() {}
 
+  // Shows the words on screen and sets starting word as highlight
   showArray(gameWords) {
     let area = gameWordArea;
-    for(let i = 0;i < 50; i++) {
+
+    // Creates new spans with text from gamewords[]
+    // Repeats 50 times for some overflow
+    for (let i = 0;i < 50; i++) {
       let appenderSpan = document.createElement('span');
       appenderSpan.classList.add("typingWord");
       appenderSpan.textContent = `${gameWords[i]} `;
       area.appendChild(appenderSpan);
-
     }
 
+    // Set first word with .typingword as the highlight word
     let nodeItem = area.querySelector(".typingWord")
     nodeItem.id = "highlightWord"
   }
 
+  // Sets the highlight id to the next word - triggers on spacebar pressed
   highlightNextWord() {
     let wordCount = Game.userWordCount;
     let nodeList = document.querySelectorAll(".typingWord");
@@ -225,7 +231,7 @@ function wordGame() {
 function wordCheck() {
   let inputWord = gameTypingField.value
   let wordComparison = Game.word
-  if(inputWord === wordComparison) {
+  if (inputWord === wordComparison) {
 
   } else {
 
@@ -237,7 +243,7 @@ function textColor() {
 }
 
 gameTypingField.onkeyup = (e) => {
-  if(e.keyCode == 32) {
+  if (e.keyCode == 32) {
     console.log("yo")
     //change wordcount and go to the function that highlights word see if it works or not TODO
     //word check
