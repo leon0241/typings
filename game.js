@@ -42,26 +42,33 @@ class GameSettings {
     // Switch statement to go to each option
     switch (switcher) {
       // Time(30s, 60s, 120s)
-      case "00":
+      case "00": {
         output = 30;
         break;
-      case "01":
+      }
+      case "01": {
         output = 60;
         break;
-      case "02":
+      }
+
+      case "02": {
         output = 120;
         break;
+      }
 
       // Words(25 words, 50 words, 100 words)
-      case "10":
+      case "10": {
         output = 25;
         break;
-      case "11":
+      }
+      case "11": {
         output = 50;
         break;
-      case "12":
+      }
+      case "12": {
         output = 100;
         break;
+      }
     }
 
     return output;
@@ -74,37 +81,48 @@ class UserGame extends GameSettings {
     super(...args);
     this._gameWords = []; // Array of words in the game
     this._wordErrors = 0; // Number of errors made
-    this._accuracy = 0; //Accuracy of player
-    this._timeTaken = 0; //Time taken to complete game
-    this._characters = 0; //Number of characters typed
+    this._accuracy = 0; //   Accuracy of player
+    this._timeTaken = 0; //  Time taken to complete game
+    this._characters = 0; // Number of characters typed
+    this._userWordCount = 0; // Number of times spacebar pressed
   }
 
   // Class Getters
-  get gameWords(){
+
+  get gameWords() {
     return this._gameWords;
   }
 
-  get word(){
+  get word() {
     return this._gameWords[0];
   }
 
-  get timeTaken(){
+  get timeTaken() {
     return this._timeTaken;
   }
 
-  get characters(){
+  get characters() {
     return this._characters;
   }
 
+  get userWordCount() {
+    return this._userWordCount;
+  }
+
   // Class Setters
-  set timeTaken(value){
+
+  set timeTaken(value) {
     this._timeTaken = value;
   }
 
   // Class Functions
   // Adds 1 to the word errors
-  incrementWordErrors(){
+  incrementWordErrors() {
     this._wordErrors += 1;
+  }
+
+  incrementWordCount() {
+    this._userWordCount += 1;
   }
 
   // Adds 1 to the number of characters typed
@@ -114,7 +132,7 @@ class UserGame extends GameSettings {
   }
 
   // Creates an array of 30 with random words
-  initialiseArray(){
+  initialiseArray() {
     // Creates temp variable, could be faster to assign to this.gameWords before
     const tempGameWords = [];
     for(let i = 0;i < 30; i++){
@@ -127,18 +145,52 @@ class UserGame extends GameSettings {
   }
 
   // Drops the first word of the array and appends a new one on the end
-  newWord(){
+  newWord() {
     let gameWords = this._gameWords;
-    gameWords.shift();
     let randint = Math.floor(Math.random() * (words.length));
     gameWords.push(words[randint]);
   }
 }
 
+class DOMManipulation {
+  constructor() {}
+
+  showArray(gameWords) {
+    let area = gameWordArea;
+    for(let i = 0;i < 50; i++) {
+      let appenderSpan = document.createElement('span');
+      appenderSpan.classList.add("typingWord");
+      appenderSpan.textContent = `${gameWords[i]} `;
+      area.appendChild(appenderSpan);
+    }
+  }
+
+  highlightFirstWord() {
+    let nodeList = document.querySelectorAll(".typingWord");
+    let nodeItem = nodeList.item(0)
+    console.log(nodeList, nodeItem)
+    nodeItem.id = "highlightWord"
+  }
+
+  highlightNextWord() {
+    let wordCount = Game.userWordCount;
+    let nodeList = document.querySelectorAll(".typingWord");
+    let nodeItem = nodeList.item(wordCount);
+    let previousItem = nodeList.item(wordCount - 1);
+    nodeItem.id = "highlightWord";
+    previousItem.removeAttribute("id");
+  }
+
+}
+
 const words = ["the", "I", "you"];
 let inGame = false;
 let Game = new UserGame(1, 1, words);
-startGame()
+let DOMFunctions = new DOMManipulation();
+Game.initialiseArray()
+DOMFunctions.showArray(Game.gameWords)
+DOMFunctions.highlightFirstWord()
+//startGame()
 
 // TODO: DOM Read buttons to get values
 // Activates on save button press
@@ -149,13 +201,12 @@ function editGameData() {
   Game.difficulty = newDifficulty;
 }
 
-// FIXME: it's literally broken though
 function startGame() {
   Game.initialiseArray();
   type = Game.type;
   inGame = true;
   //TODO: figure out how tf async works
-  //async function countCharacters()
+  //async function countCharacters()?
   type === 1 ? timedGame() : wordGame();
 }
 
@@ -172,8 +223,26 @@ function wordGame() {
   }
 }
 
+function wordCheck() {
+  let inputWord = gameTypingField.value
+  let wordComparison = Game.word
+  if(inputWord === wordComparison) {
+
+  } else {
+
+  }
+}
+
+function textColor() {
+  //change text color of current word
+}
+
 gameTypingField.onkeyup = (e) => {
   if(e.keyCode == 32) {
-    alert("Space pressed!");
+    console.log("yo")
+    //change wordcount and go to the function that highlights word see if it works or not TODO
+    //word check
+    Game.incrementWordCount()
+    DOMFunctions.highlightNextWord()
   }
 }
