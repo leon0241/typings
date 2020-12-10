@@ -180,8 +180,20 @@ class DOMManipulation {
     let nodeList = document.querySelectorAll(".typingWord");
     let nodeItem = nodeList.item(wordCount);
     let previousItem = nodeList.item(wordCount - 1);
+    let backItem = nodeList.item(wordCount - 2)
     nodeItem.id = "highlightWord";
-    previousItem.removeAttribute("id");
+    previousItem.id = "previousWord";
+    backItem.removeAttribute("id")
+    previousItem.classList.add("completedWord");
+  }
+
+  setAnswer(checkedWord) {
+    let nodeItem = document.getElementById("previousWord")
+    if (checkedWord) {
+      nodeItem.style.color = "yellow";
+    } else {
+      nodeItem.style.color = "blue";
+    }
   }
 
 }
@@ -232,22 +244,18 @@ function wordCheck() {
   let inputWord = gameTypingField.value
   let wordComparison = Game.word
   if (inputWord === wordComparison) {
-
+    DOMFunctions.setAnswer(true)
   } else {
-
+    DOMFunctions.setAnswer(false)
   }
-}
-
-function textColor() {
-  //change text color of current word
 }
 
 gameTypingField.onkeyup = (e) => {
   if (e.keyCode == 32) {
     console.log("yo")
-    //change wordcount and go to the function that highlights word see if it works or not TODO
-    //word check
+    gameTypingField.value = ""
     Game.incrementWordCount()
     DOMFunctions.highlightNextWord()
+    wordCheck()
   }
 }
