@@ -176,7 +176,7 @@ class UserGame extends GameSettings {
 // Any functions that require DOM manipulation
 class DOMManipulation {
   constructor() {
-    this._position = 0
+    this._position = 0;
   }
 
   // ==Getter Methods==
@@ -211,7 +211,7 @@ class DOMManipulation {
   }
 
   // Sets the highlight id to the next word - triggers on spacebar pressed
-  highlightNextWord(wordCount) {
+  highlightNextWord() {
     // Setting local variables for each item needed
     let position = this._position
     // List of words
@@ -221,14 +221,14 @@ class DOMManipulation {
 
     // Add classes and IDs to each of the items
     nodeItem.id = "highlightWord";
-
+    console.log(position)
     // Remove ID from second last typed word - if to stop an error with the first word
-    if (position > 1) {
+    if (position > 0) {
       // Last word typed
       let previousItem = nodeList.item(position - 1);
       previousItem.id = "previousWord";
       previousItem.classList.add("completedWord");
-    } else if (position > 2) {
+    } else if (position > 1) {
       let backItem = nodeList.item(position - 2)
       backItem.removeAttribute("id")
     }
@@ -292,6 +292,7 @@ function wordCheck() {
   // Removes the spacebar from your input word
   let inputWord = gameTypingField.value.trim()
   let wordComparison = Game.word
+  let position = DOMFunctions.position;
 
   let nodeItem = document.getElementById("previousWord")
 
@@ -301,9 +302,6 @@ function wordCheck() {
     DOMFunctions.setAnswer(false, nodeItem)
   }
 
-
-  DOMFunctions.incrementPosition();
-  let position = DOMFunctions.position;
   let nodeList = document.querySelectorAll(".typingWord");
   let futureDomRect = nodeList.item(position).getBoundingClientRect()
   console.log(futureDomRect.top)
@@ -317,6 +315,7 @@ function wordCheck() {
 function goToNextWord() {
   console.log("%cnext word", "color: yellow")
   Game.incrementWordCount()
+  DOMFunctions.incrementPosition();
   DOMFunctions.highlightNextWord()
   wordCheck()
   gameTypingField.value = ""
