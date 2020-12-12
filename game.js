@@ -1,5 +1,10 @@
 // DOM Variables
 
+
+/*================
+ *    CLASSES
+ ================*/
+
 // Basic game options - type, difficulty, words array
 class GameSettings {
   // Constructor function
@@ -94,7 +99,7 @@ class UserGame extends GameSettings {
   }
 
   get word() {
-    return this._gameWords[0];
+    return this._gameWords[this._userWordCount - 1];
   }
 
   get timeTaken() {
@@ -176,36 +181,42 @@ class DOMManipulation {
 
   // Sets the highlight id to the next word - triggers on spacebar pressed
   highlightNextWord() {
+    // Setting local variables for each item needed
+    // Users word count
     let wordCount = Game.userWordCount;
+    // List of words
     let nodeList = document.querySelectorAll(".typingWord");
+    // Word just typed
     let nodeItem = nodeList.item(wordCount);
+    // Last word typed
     let previousItem = nodeList.item(wordCount - 1);
-    let backItem = nodeList.item(wordCount - 2)
+
+    // Add classes and IDs to each of the items
     nodeItem.id = "highlightWord";
     previousItem.id = "previousWord";
-    backItem.removeAttribute("id")
     previousItem.classList.add("completedWord");
+
+    // Remove ID from second last typed word - if to stop an error with the first word
+    if (wordCount > 1) {
+      let backItem = nodeList.item(wordCount - 2)
+      backItem.removeAttribute("id")
+    }
   }
 
+  // Gets bool in from wordCheck() and changes the class if the word was right or wrong
   setAnswer(checkedWord) {
     let nodeItem = document.getElementById("previousWord")
     if (checkedWord) {
-      nodeItem.style.color = "yellow";
+      nodeItem.classList.add("correctWord");
     } else {
-      nodeItem.style.color = "blue";
+      nodeItem.classList.add("wrongWord");
     }
   }
 
 }
-
-const words = ["the", "I", "you"];
-let inGame = false;
-let Game = new UserGame(1, 1, words);
-let DOMFunctions = new DOMManipulation();
-Game.initialiseArray();
-DOMFunctions.showArray(Game.gameWords);
-//DOMFunctions.highlightFirstWord();
-//startGame()
+/*================
+ *   FUNCTIONS
+ ================*/
 
 // TODO: DOM Read buttons to get values
 // Activates on save button press
@@ -241,21 +252,40 @@ function wordGame() {
 }
 
 function wordCheck() {
-  let inputWord = gameTypingField.value
+  // Removes the spacebar from your input word
+  let inputWord = gameTypingField.value.trim()
   let wordComparison = Game.word
+  console.log(`${inputWord} ===  ${wordComparison}`)
+  console.log("inputWord type: ", typeof inputWord)
+  console.log("wordComparison type: ", typeof wordComparison)
   if (inputWord === wordComparison) {
+    console.log("yes")
     DOMFunctions.setAnswer(true)
   } else {
+    console.log("no")
     DOMFunctions.setAnswer(false)
   }
 }
 
 gameTypingField.onkeyup = (e) => {
   if (e.keyCode == 32) {
-    console.log("yo")
-    gameTypingField.value = ""
+    console.log("%cnext word", "color: yellow")
     Game.incrementWordCount()
     DOMFunctions.highlightNextWord()
     wordCheck()
+    gameTypingField.value = ""
   }
 }
+
+/*================
+ *     GAME
+ ================*/
+
+const words = ["the", "I", "you"];
+let inGame = false;
+let Game = new UserGame(1, 1, words);
+let DOMFunctions = new DOMManipulation();
+Game.initialiseArray();
+DOMFunctions.showArray(Game.gameWords);
+//DOMFunctions.highlightFirstWord();
+//startGame()
