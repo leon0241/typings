@@ -7,14 +7,17 @@
 
 // Basic game options - type, difficulty, words array
 class GameSettings {
-  // Constructor function
+  // ==Constructor==
   constructor(type, difficulty, words) {
-    this._type = type; // Type of game(time = 0, words = 1)
-    this._difficulty = difficulty; // Difficulty of game (0,1,2)
-    this._words = words; // Array of top 200 words
+    // Type of game(time = 0, words = 1)
+    this._type = type;
+    // Difficulty of game (0,1,2)
+    this._difficulty = difficulty;
+    // Array of top 200 words
+    this._words = words;
   }
 
-  // Class Getters
+  // ==Class Getters==
   // 0 = time, 1 = words
   get type() {
     return this._type;
@@ -25,7 +28,7 @@ class GameSettings {
     return this._difficulty;
   }
 
-  // Class Setters
+  // ==Class Setters==
   set type(value) {
     this._type = value;
   }
@@ -34,7 +37,7 @@ class GameSettings {
     this._difficulty = value;
   }
 
-  // Class Functions
+  // ==Class Functions==
   // Gets the difficulty in terms of time/number of words
   getCalculatedDifficulty() {
     let output = 0;
@@ -82,18 +85,24 @@ class GameSettings {
 
 // Game variables of the user's results
 class UserGame extends GameSettings {
+  // ==Constructor==
   constructor(...args) {
     super(...args);
-    this._gameWords = []; // Array of words in the game
-    this._wordErrors = 0; // Number of errors made
-    this._accuracy = 0; //   Accuracy of player
-    this._timeTaken = 0; //  Time taken to complete game
-    this._characters = 0; // Number of characters typed
-    this._userWordCount = 0; // Number of times spacebar pressed
+    // Array of words in the game
+    this._gameWords = [];
+    // Number of errors made
+    this._wordErrors = 0;
+    // Accuracy of player
+    this._accuracy = 0;
+    // Time taken to complete game
+    this._timeTaken = 0;
+    // Number of characters typed
+    this._characters = 0;
+    // Number of times spacebar pressed
+    this._userWordCount = 0;
   }
 
-  // Class Getters
-
+  // ==Class Getters==
   get gameWords() {
     return this._gameWords;
   }
@@ -115,14 +124,13 @@ class UserGame extends GameSettings {
     return this._userWordCount;
   }
 
-  // Class Setters
-
+  // ==Class Setters==
   set timeTaken(value) {
     this._timeTaken = value;
   }
 
-  // Class Functions
-  // Adds 1 to the word errors
+  // ==Class Functions==
+
   incrementWordErrors() {
     this._wordErrors += 1;
   }
@@ -132,7 +140,7 @@ class UserGame extends GameSettings {
   }
 
   // Adds 1 to the number of characters typed
-  // char is the keyCode
+  // char is the keyCode of the typed character
   incrementCharacters(char){
     // 8: backspace, 16: shift, 17: ctrl, 20: caps, 46: delete
     var options = [8, 16, 17, 20, 46];
@@ -146,7 +154,7 @@ class UserGame extends GameSettings {
 
   // Creates an array of 30 with random words
   initialiseArray() {
-    // Creates temp variable, could be faster to assign to this.gameWords before
+    // Creates temp variable, maybe faster to assign to this.gameWords before
     const tempGameWords = [];
     for (let i = 0;i < 50; i++) {
       // Random integer from 0 to length of array and assigns
@@ -157,7 +165,7 @@ class UserGame extends GameSettings {
     this._gameWords = tempGameWords;
   }
 
-  // Drops the first word of the array and appends a new one on the end
+  // Appends a new word to the araray
   newWord() {
     let gameWords = this._gameWords;
     let randint = Math.floor(Math.random() * (words.length));
@@ -167,7 +175,22 @@ class UserGame extends GameSettings {
 
 // Any functions that require DOM manipulation
 class DOMManipulation {
-  constructor() {}
+  constructor() {
+    this._position = 0
+  }
+
+  // ==Getter Methods==
+  get position() {
+    return this._position;
+  }
+
+  set position(value) {
+    this._position = value;
+  }
+
+  incrementPosition() {
+    this._position += 1;
+  }
 
   // Shows the words on screen and sets starting word as highlight
   showArray(gameWords) {
@@ -188,32 +211,31 @@ class DOMManipulation {
   }
 
   // Sets the highlight id to the next word - triggers on spacebar pressed
-  highlightNextWord() {
+  highlightNextWord(wordCount) {
     // Setting local variables for each item needed
-    // Users word count
-    let wordCount = Game.userWordCount;
+    let position = this._position
     // List of words
     let nodeList = document.querySelectorAll(".typingWord");
     // Word just typed
-    let nodeItem = nodeList.item(wordCount);
-    // Last word typed
-    let previousItem = nodeList.item(wordCount - 1);
+    let nodeItem = nodeList.item(position);
 
     // Add classes and IDs to each of the items
     nodeItem.id = "highlightWord";
-    previousItem.id = "previousWord";
-    previousItem.classList.add("completedWord");
 
     // Remove ID from second last typed word - if to stop an error with the first word
-    if (wordCount > 1) {
-      let backItem = nodeList.item(wordCount - 2)
+    if (position > 1) {
+      // Last word typed
+      let previousItem = nodeList.item(position - 1);
+      previousItem.id = "previousWord";
+      previousItem.classList.add("completedWord");
+    } else if (position > 2) {
+      let backItem = nodeList.item(position - 2)
       backItem.removeAttribute("id")
     }
   }
 
   // Gets bool in from wordCheck() and changes the class if the word was right or wrong
-  setAnswer(checkedWord) {
-    let nodeItem = document.getElementById("previousWord")
+  setAnswer(checkedWord, nodeItem) {
     if (checkedWord) {
       nodeItem.classList.add("correctWord");
     } else {
@@ -221,6 +243,13 @@ class DOMManipulation {
     }
   }
 
+  deleteRow(position) {
+    let nodeList = document.querySelectorAll(".typingWord");
+    for (let i = 0; i < position; i++) {
+      let selectedSpan = nodeList.item(i)
+      selectedSpan.remove()
+    }
+  }
 }
 /*================
  *   FUNCTIONS
@@ -252,9 +281,9 @@ function timedGame() {
 
 function wordGame() {
   console.log("a")
-  let wordCount = Game.getCalculatedDifficulty();
+  let totalWordCount = Game.getCalculatedDifficulty();
   let timeTaken = 0;
-  while(wordCount > 0) {
+  while(totalWordCount > 0) {
     // TODO: timer
   }
 }
@@ -263,11 +292,34 @@ function wordCheck() {
   // Removes the spacebar from your input word
   let inputWord = gameTypingField.value.trim()
   let wordComparison = Game.word
+
+  let nodeItem = document.getElementById("previousWord")
+
   if (inputWord === wordComparison) {
-    DOMFunctions.setAnswer(true)
+    DOMFunctions.setAnswer(true, nodeItem)
   } else {
-    DOMFunctions.setAnswer(false)
+    DOMFunctions.setAnswer(false, nodeItem)
   }
+
+
+  DOMFunctions.incrementPosition();
+  let position = DOMFunctions.position;
+  let nodeList = document.querySelectorAll(".typingWord");
+  let futureDomRect = nodeList.item(position).getBoundingClientRect()
+  console.log(futureDomRect.top)
+
+  if (futureDomRect.top > 107){
+    DOMFunctions.deleteRow(position);
+    DOMFunctions.position = 0;
+  }
+}
+
+function goToNextWord() {
+  console.log("%cnext word", "color: yellow")
+  Game.incrementWordCount()
+  DOMFunctions.highlightNextWord()
+  wordCheck()
+  gameTypingField.value = ""
 }
 
 /*================
@@ -280,18 +332,16 @@ let Game = new UserGame(1, 1, words);
 let DOMFunctions = new DOMManipulation();
 Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
-//DOMFunctions.highlightFirstWord();
 //startGame()
 
+// On character pressed in the typing field
 gameTypingField.onkeydown = (e) => {
   //console.log(e.keyCode)
+  // Increment the character count with keycode of typed letter
   Game.incrementCharacters(e.keyCode)
-  console.log(Game.characters)
+  //console.log(Game.characters)
+  // If spacebar is pressed => function go to next word
   if (e.keyCode == 32) {
-    console.log("%cnext word", "color: yellow")
-    Game.incrementWordCount()
-    DOMFunctions.highlightNextWord()
-    wordCheck()
-    gameTypingField.value = ""
+    goToNextWord()
   }
 }
