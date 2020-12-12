@@ -98,6 +98,7 @@ class UserGame extends GameSettings {
     return this._gameWords;
   }
 
+  // Returns the current word
   get word() {
     return this._gameWords[this._userWordCount - 1];
   }
@@ -131,9 +132,16 @@ class UserGame extends GameSettings {
   }
 
   // Adds 1 to the number of characters typed
-  // TODO: Filter for backspace/shift/del
-  incrementKeystrokes(typedChar){
-    this._characters += 1;
+  // char is the keyCode
+  incrementCharacters(char){
+    // 8: backspace, 16: shift, 17: ctrl, 20: caps, 46: delete
+    var options = [8, 16, 17, 20, 46];
+
+    // if the index of char is not in the array then go
+    // alternate way of multiple or statements
+    if (options.indexOf(char) === -1) {
+      this._characters += 1;
+    }
   }
 
   // Creates an array of 30 with random words
@@ -255,25 +263,10 @@ function wordCheck() {
   // Removes the spacebar from your input word
   let inputWord = gameTypingField.value.trim()
   let wordComparison = Game.word
-  console.log(`${inputWord} ===  ${wordComparison}`)
-  console.log("inputWord type: ", typeof inputWord)
-  console.log("wordComparison type: ", typeof wordComparison)
   if (inputWord === wordComparison) {
-    console.log("yes")
     DOMFunctions.setAnswer(true)
   } else {
-    console.log("no")
     DOMFunctions.setAnswer(false)
-  }
-}
-
-gameTypingField.onkeyup = (e) => {
-  if (e.keyCode == 32) {
-    console.log("%cnext word", "color: yellow")
-    Game.incrementWordCount()
-    DOMFunctions.highlightNextWord()
-    wordCheck()
-    gameTypingField.value = ""
   }
 }
 
@@ -289,3 +282,16 @@ Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
 //DOMFunctions.highlightFirstWord();
 //startGame()
+
+gameTypingField.onkeydown = (e) => {
+  //console.log(e.keyCode)
+  Game.incrementCharacters(e.keyCode)
+  console.log(Game.characters)
+  if (e.keyCode == 32) {
+    console.log("%cnext word", "color: yellow")
+    Game.incrementWordCount()
+    DOMFunctions.highlightNextWord()
+    wordCheck()
+    gameTypingField.value = ""
+  }
+}
