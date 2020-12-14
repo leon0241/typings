@@ -1,0 +1,161 @@
+==Pseudocode==
+On Page load
+  init <arr> words[] taken from words file
+  init <bool> inGame
+  init <obj> Game = new Game(time, 60, words)
+
+  Event listener for save button - on click - go to function editGameData()
+
+  Event listener for reset button - on click - go to function startGame()
+
+  Event listener for text box - on letter typed - go to function startGame()
+
+  Event listener(?) for inGame = false - go to function gameEnd()
+
+
+  ==Object: GameSettings==
+    constructor(type, difficulty, words)
+      <int> this.type = type (time = 0, word = 1)
+      <int> this.difficulty = difficulty (from 0 to 2)
+      <array> this.words = words
+
+    get type()
+      return this.type
+
+    get difficulty()
+      return this.difficulty
+
+    set type(value)
+      set this.type to value
+
+    set difficulty(value)
+      set this.difficulty to value
+
+    function getCalculatedDifficulty()
+      init <int> output = 0
+      switch (type and difficulty)
+        case type = 0, difficulty = 0
+          output = 20
+          break
+        repeat case for all scenarios
+      return output
+
+  ==Object: Game Extends GameSettings==
+    Constructor(type, difficulty, words)
+      super(type)
+      super(difficulty)
+      super(words)
+      <array> this.gameWords = []
+      <int> this.wordErrors = 0
+      <int> this.accuracy = 0
+      <int> this.timeTaken = 0
+      <int> this.characters = 0
+
+    get gameWords()
+      return this.gameWords
+
+    get word()
+      return this.gameWords[0]
+
+    get timeTaken()
+      return this.timeTaken
+
+    get characters()
+      return this.characters
+
+    set timeTaken(value)
+      set this.timeTaken to value
+
+    function incrementWordErrors()
+      add 1 to this.wordErrors
+
+
+    function incrementKeystrokes()
+      add 1 to this.characters()
+
+    function initialiseArray(words)
+      init <int> gameWords[]
+      for loop 1 to 30 index "loop"
+        init <int> randint random number from 1 to 200
+        store words[randint] into gameWords[loop]
+      this.gameWords = gameWords
+
+    function newWord(gameWords, words)
+      remove gameWords[0] from array and shift down
+      init <int> randint random number from 1 to 200
+      append words[randint] to this.gameWords
+
+==Functions==
+
+function editGameData()
+  read values of buttons
+  Game = new typingGame(newTime, newDiff, words)
+
+function startGame()
+  Game.initialiseArray(words)
+  type = Game.type()
+  inGame = true
+  async run function countCharacters()
+  if type is time then
+    go to function timedGame(Game)
+  else
+    go to function wordGame(Game)
+
+function countCharacters()
+  while inGame = true do
+    event listener for text box - on keypress =>
+      don't count if backspace or shift
+      Game.IncrementKeystrokes()
+
+function timedGame(Game)
+  init <int> timer = Game.getCalculatedDifficulty()
+  start countdown from timer down to 0 seconds
+  every second -
+    {DOM} change value of time remaining
+  when timer reaches 0 => inGame = false
+  while inGame = true then
+    Event listener for text box - on spacebar typed - go to function wordCheck()
+
+function wordGame(gameWords, Game)
+  init <int> words = Game.getCalculatedDifficulty()
+  init <int> timeTaken = 0
+  While words > 0
+    start timer counting up from 0
+    Event listener for text box - on spacebar typed =>
+      go to function wordCheck
+      take 1 from words
+      {DOM} change value of words remaining
+  stop timer and store time in timeTaken
+  Game.timeTaken(timeTaken)
+  inGame = false
+
+function wordCheck()
+  init <str> inputWord = contents of input box
+  init <str> wordComparison = Game.word()
+  if inputWord is equal to wordComparison then
+    {DOM} change the word's text-color property to green
+  else
+    {DOM} change the word's text-color property to red
+    Game.IncrementWordErrors()
+  go to function onNewWord()
+
+function onNewWord()
+  Game.newWord()
+  if it is the last word of the line then
+    {DOM} shift the other lines of words up and append new line of words below
+  {DOM} change css of selected word to next word
+
+function gameEnd()
+  total = Game.getCalculatedDifficulty()
+  mode = Game.type()
+  totalErrors = Game.totalErrors()
+  wordCount = Game.characters() / 5
+  if mode = 0 then
+    init <float> wpmFactor = total/60
+  else
+    timeTaken = Game.timeTaken()
+    init <float> wpmFactor = timeTaken/60
+
+  init <float> netWPM = (wordCount - totalErrors) / wpmFactor -> round to nearest int
+  init <float> accuracy = (wordcount - totalErrors) / wordCount * 100 -> round to nearest int
+  {DOM} Change value of WPM and accuracy

@@ -167,9 +167,12 @@ class UserGame extends GameSettings {
 
   // Appends a new word to the araray
   newWord() {
+    console.log("pass")
     let gameWords = this._gameWords;
     let randint = Math.floor(Math.random() * (words.length));
     gameWords.push(words[randint]);
+    console.log(this._gameWords)
+    DOMFunctions.updateWords(DOMFunctions.area)
   }
 }
 
@@ -177,6 +180,8 @@ class UserGame extends GameSettings {
 class DOMManipulation {
   constructor() {
     this._position = 0;
+    this._nodeList = document.querySelectorAll(".typingWord");
+    this._area = gameWordArea
   }
 
   // ==Getter Methods==
@@ -184,8 +189,27 @@ class DOMManipulation {
     return this._position;
   }
 
+  get nodeList() {
+    return this._nodeList;
+  }
+
+  get area() {
+    return this._area;
+  }
+
   set position(value) {
     this._position = value;
+  }
+
+  updateNodeList() {
+    this._nodeList = gameWordArea.querySelectorAll(".typingWord");
+  }
+
+  updateWords() {
+    let appenderSpan = document.createElement('span');
+    appenderSpan.classList.add("typingWord");
+    appenderSpan.textContent = `${gameWords[i]} `;
+    this._area.appendChild(appenderSpan);
   }
 
   incrementPosition() {
@@ -194,47 +218,52 @@ class DOMManipulation {
 
   // Shows the words on screen and sets starting word as highlight
   showArray(gameWords) {
-    let area = gameWordArea;
-
+    let area = this._area;
+    // TODO: rename area
     // Creates new spans with text from gamewords[]
     // Repeats 50 times for some overflow
     for (let i = 0;i < 50; i++) {
-      let appenderSpan = document.createElement('span');
-      appenderSpan.classList.add("typingWord");
-      appenderSpan.textContent = `${gameWords[i]} `;
-      area.appendChild(appenderSpan);
+      this.updateWords(area)
     }
 
     // Set first word with .typingword as the highlight word
     let nodeItem = area.querySelector(".typingWord")
     nodeItem.id = "highlightWord"
+
+    this.updateNodeList()
   }
 
-  // Sets the highlight id to the next word - triggers on spacebar pressed
-  highlightNextWord() {
+  // Sets the highlight id to the current word - triggers on spacebar pressed
+  highlightCurrentWord() {
     // Setting local variables for each item needed
     let position = this._position
     // List of words
-    let nodeList = document.querySelectorAll(".typingWord");
+    let nodeList = this._nodeList;
     // Word just typed
     let nodeItem = nodeList.item(position);
 
     // Add classes and IDs to each of the items
+    console.log(nodeList)
     nodeItem.id = "highlightWord";
     console.log(position)
-    // Remove ID from second last typed word - if to stop an error with the first word
+
+    // Add id for the previous word, and remove the id from the second last word
+    // If so the first position doesn't return an error
     if (position > 0) {
       // Last word typed
       let previousItem = nodeList.item(position - 1);
       previousItem.id = "previousWord";
       previousItem.classList.add("completedWord");
-    } else if (position > 1) {
-      let backItem = nodeList.item(position - 2)
-      backItem.removeAttribute("id")
+
+      // Second last word typed - If for same reason as above
+      if (position > 1) {
+        let backItem = nodeList.item(position - 2)
+        backItem.removeAttribute("id")
+      }
     }
   }
 
-  // Gets bool in from wordCheck() and changes the class if the word was right or wrong
+  // Bool in from wordCheck() and changes class if the word was right or wrong
   setAnswer(checkedWord, nodeItem) {
     if (checkedWord) {
       nodeItem.classList.add("correctWord");
@@ -243,8 +272,10 @@ class DOMManipulation {
     }
   }
 
+  // Deletes a row - called from wordCheck
   deleteRow(position) {
-    let nodeList = document.querySelectorAll(".typingWord");
+    let nodeList = this._nodeList;
+    // Remove each span less than the position
     for (let i = 0; i < position; i++) {
       let selectedSpan = nodeList.item(i)
       selectedSpan.remove()
@@ -293,31 +324,46 @@ function wordCheck() {
   let inputWord = gameTypingField.value.trim()
   let wordComparison = Game.word
   let position = DOMFunctions.position;
-
+  // Defines the item to change the class of
   let nodeItem = document.getElementById("previousWord")
 
+  // Checks if the input word is the same as the actual word
   if (inputWord === wordComparison) {
     DOMFunctions.setAnswer(true, nodeItem)
   } else {
     DOMFunctions.setAnswer(false, nodeItem)
   }
 
-  let nodeList = document.querySelectorAll(".typingWord");
+  // Sets DOMRect of the next word, will test if it is on the next line or not
+  let nodeList = DOMFunctions.nodeList;
   let futureDomRect = nodeList.item(position).getBoundingClientRect()
-  console.log(futureDomRect.top)
-
-  if (futureDomRect.top > 107){
+  console.log("domrect y: ", futureDomRect.top)
+  /* Checks if the y coordinate of the span relative to the div is more than 107(next row) and deletes the row */
+  if (futureDomRect.top > 107) {
+    Game.newWord(position)
     DOMFunctions.deleteRow(position);
+    //Set the position back to 0
     DOMFunctions.position = 0;
   }
 }
 
+// All the functions that happen when a word is pressed
 function goToNextWord() {
   console.log("%cnext word", "color: yellow")
+  DOMFunctions.updateNodeList()
+  // Increase word count
   Game.incrementWordCount()
+
+  // Increase position (this is used for DOM styling)
   DOMFunctions.incrementPosition();
-  DOMFunctions.highlightNextWord()
+
+  // Highlights the current word
+  DOMFunctions.highlightCurrentWord()
+
+  // Checks - if word is correct, if word is last on its line
   wordCheck()
+
+  //Clears the value of the field
   gameTypingField.value = ""
 }
 

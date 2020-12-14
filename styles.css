@@ -22,6 +22,14 @@
 }
 
 #highlightWord{
+  color: orange;
+}
+
+.correctWord{
+  color: green;
+}
+
+.wrongWord{
   color: red;
 }
 
