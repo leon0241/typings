@@ -55,7 +55,7 @@ class GameSettings {
         break;
       }
       case "01": {
-        output = 60;
+        output = 5; // TODO: change this back to 60s
         break;
       }
 
@@ -303,19 +303,25 @@ class DOMManipulation {
 // Activates on save button press
 
 function startGame() {
-  Game.initialiseArray();
-  DOMFunctions.showArray(Game.gameWords);
   inGame = true;
   //TODO: figure out how tf async works
   //async function countCharacters()?
-  Game.type === 1 ? timedGame() : wordGame();
+  Game.type === 1 ? wordGame() : timedGame();
 }
 
 function timedGame() {
   let duration = Game.getCalculatedDifficulty()
-  // setInterval(() => {
-  //   console.log("timer at ", "a" ," seconds")
-  // }, 1000)
+  let time = 0;
+  console.log(time, duration)
+  let gameTimer = setInterval(() => {
+    if (time >= duration) {
+      clearInterval(gameTimer)
+    }
+
+    console.log("timer at ", time ," seconds")
+    gameProgress.textContent = time;
+    time++
+  }, 1000)
 }
 
 function wordGame() {
@@ -384,9 +390,15 @@ function goToNextWord() {
 
 const words = ["the", "I", "you"];
 let inGame = false;
-let Game = new UserGame(1, 1, words);
+let Game = new UserGame(0, 1, words);
 let DOMFunctions = new DOMManipulation();
-startGame()
+Game.initialiseArray();
+DOMFunctions.showArray(Game.gameWords);
+
+gameTypingField.onclick = () => {
+  startGame()
+}
+
 
 // On character pressed in the typing field
 gameTypingField.onkeydown = (e) => {
