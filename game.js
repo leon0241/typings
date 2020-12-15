@@ -152,6 +152,15 @@ class UserGame extends GameSettings {
     }
   }
 
+  // Changes difficulty and type when settings are edited
+  //TODO: Settings DOM to call this function
+  editGameData(x, y) {
+    let newType = x;
+    let newDifficulty = y;
+    this._type = newType;
+    this._difficulty = newDifficulty;
+  }
+
   // Creates an array of 30 with random words
   initialiseArray() {
     // Creates temp variable, maybe faster to assign to this.gameWords before
@@ -169,10 +178,12 @@ class UserGame extends GameSettings {
   newWord() {
     console.log("pass")
     let gameWords = this._gameWords;
+    // Random number up to the length of total words array
     let randint = Math.floor(Math.random() * (words.length));
     gameWords.push(words[randint]);
-    console.log(this._gameWords)
-    DOMFunctions.updateWords(DOMFunctions.area)
+
+    // Goes to updateWords with array gameWords, position length of gameWords - 1 (for 0 counting array)
+    DOMFunctions.updateWords(this._gameWords, (this._gameWords.length - 1))
   }
 }
 
@@ -181,7 +192,7 @@ class DOMManipulation {
   constructor() {
     this._position = 0;
     this._nodeList = document.querySelectorAll(".typingWord");
-    this._area = gameWordArea
+    this._area = gameWordArea;
   }
 
   // ==Getter Methods==
@@ -205,7 +216,9 @@ class DOMManipulation {
     this._nodeList = gameWordArea.querySelectorAll(".typingWord");
   }
 
-  updateWords() {
+  // Updates the area and puts in the specified word in the array
+  // Array gamewords, position i
+  updateWords(gameWords, i) {
     let appenderSpan = document.createElement('span');
     appenderSpan.classList.add("typingWord");
     appenderSpan.textContent = `${gameWords[i]} `;
@@ -223,7 +236,8 @@ class DOMManipulation {
     // Creates new spans with text from gamewords[]
     // Repeats 50 times for some overflow
     for (let i = 0;i < 50; i++) {
-      this.updateWords(area)
+      // Goes to updateWords with array gameWords, position i
+      this.updateWords(gameWords, i)
     }
 
     // Set first word with .typingword as the highlight word
@@ -243,7 +257,6 @@ class DOMManipulation {
     let nodeItem = nodeList.item(position);
 
     // Add classes and IDs to each of the items
-    console.log(nodeList)
     nodeItem.id = "highlightWord";
     console.log(position)
 
@@ -288,22 +301,14 @@ class DOMManipulation {
 
 // TODO: DOM Read buttons to get values
 // Activates on save button press
-function editGameData() {
-  let newType = 0;
-  let newDifficulty = 0;
-  Game.type = newType;
-  Game.difficulty = newDifficulty;
-}
 
 function startGame() {
-  //Game.initialiseArray();
-  //DOMFunctions.showArray(Game.gameWords)
-  //DOMFunctions.highlightFirstWord()
-  type = Game.type;
+  Game.initialiseArray();
+  DOMFunctions.showArray(Game.gameWords);
   inGame = true;
   //TODO: figure out how tf async works
   //async function countCharacters()?
-  type === 1 ? timedGame() : wordGame();
+  Game.type === 1 ? timedGame() : wordGame();
 }
 
 function timedGame() {
@@ -320,6 +325,7 @@ function wordGame() {
 }
 
 function wordCheck() {
+  // Checking if the word is correct or not
   // Removes the spacebar from your input word
   let inputWord = gameTypingField.value.trim()
   let wordComparison = Game.word
@@ -334,13 +340,13 @@ function wordCheck() {
     DOMFunctions.setAnswer(false, nodeItem)
   }
 
+  // Checking if next word is on next line, and deletes the first line
   // Sets DOMRect of the next word, will test if it is on the next line or not
   let nodeList = DOMFunctions.nodeList;
   let futureDomRect = nodeList.item(position).getBoundingClientRect()
   console.log("domrect y: ", futureDomRect.top)
   /* Checks if the y coordinate of the span relative to the div is more than 107(next row) and deletes the row */
   if (futureDomRect.top > 107) {
-    Game.newWord(position)
     DOMFunctions.deleteRow(position);
     //Set the position back to 0
     DOMFunctions.position = 0;
@@ -363,6 +369,8 @@ function goToNextWord() {
   // Checks - if word is correct, if word is last on its line
   wordCheck()
 
+  Game.newWord()
+
   //Clears the value of the field
   gameTypingField.value = ""
 }
@@ -375,9 +383,7 @@ const words = ["the", "I", "you"];
 let inGame = false;
 let Game = new UserGame(1, 1, words);
 let DOMFunctions = new DOMManipulation();
-Game.initialiseArray();
-DOMFunctions.showArray(Game.gameWords);
-//startGame()
+startGame()
 
 // On character pressed in the typing field
 gameTypingField.onkeydown = (e) => {
