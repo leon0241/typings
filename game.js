@@ -312,7 +312,10 @@ function startGame() {
 }
 
 function timedGame() {
-  console.log("yes")
+  let duration = Game.getCalculatedDifficulty()
+  // setInterval(() => {
+  //   console.log("timer at ", "a" ," seconds")
+  // }, 1000)
 }
 
 function wordGame() {
