@@ -70,7 +70,7 @@ class GameSettings {
         break;
       }
       case "11": {
-        output = 50;
+        output = 5; //TODO: this too
         break;
       }
       case "12": {
@@ -306,22 +306,48 @@ function startGame() {
   inGame = true;
   //TODO: figure out how tf async works
   //async function countCharacters()?
-  Game.type === 1 ? wordGame() : timedGame();
+  Game.type === 0 ? goToTimedGame() : goToWordGame(); // TODO: maybe fix this idk
 }
 
-function timedGame() {
-  let duration = Game.getCalculatedDifficulty()
-  let time = 0;
-  console.log(time, duration)
-  let gameTimer = setInterval(() => {
-    if (time >= duration) {
-      clearInterval(gameTimer)
-    }
+function inGameTimer(callback) {
+  let gameDifficulty = Game.getCalculatedDifficulty()
+  let time = 1;
+  let type = Game.type;
 
-    console.log("timer at ", time ," seconds")
-    gameProgress.textContent = time;
-    time++
-  }, 1000)
+  const testVar = type === 0
+    ? gameProgress.textContent = "0"
+    : gameProgress.textContent = gameDifficulty
+
+  if (type === 0) {
+    let duration = gameDifficulty;
+    let gameTimer = setInterval(() => {
+      if (time >= duration) {
+        clearInterval(gameTimer)
+        Game.timeTaken = time;
+        callback()
+      }
+
+      gameProgress.textContent = time;
+      time++
+    }, 1000)
+  } else {
+    let userWordCount = 0;
+    let totalWordCount = gameDifficulty;
+    let gameTimer = setInterval (() => {
+      if (totalWordCount <= 0) {
+        clearInterval(gameTimer)
+        Game.timeTaken = time;
+        Game.userWordCount = userWordCount;
+        callback()
+      }
+      console.log("time: ", time)
+      time++
+    }, 1000)
+
+    console.log("wc: ", totalWordCount)
+    gameProgress.textContent = totalWordCount
+    totalWordCount--
+  }
 }
 
 function wordGame() {
@@ -331,6 +357,19 @@ function wordGame() {
   while(totalWordCount > 0) {
     // TODO: timer
   }
+}
+
+function goToTimedGame() {
+  inGameTimer(() => {
+    console.log("test");
+    inGame = false;
+  })
+}
+
+function goToWordGame() {
+  inGameTimer(() => {
+    console.log("test2")
+  })
 }
 
 function wordCheck() {
@@ -390,7 +429,7 @@ function goToNextWord() {
 
 const words = ["the", "I", "you"];
 let inGame = false;
-let Game = new UserGame(0, 1, words);
+let Game = new UserGame(1, 1, words);
 let DOMFunctions = new DOMManipulation();
 Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
@@ -402,12 +441,14 @@ gameTypingField.onclick = () => {
 
 // On character pressed in the typing field
 gameTypingField.onkeydown = (e) => {
-  //console.log(e.keyCode)
-  // Increment the character count with keycode of typed letter
-  Game.incrementCharacters(e.keyCode)
-  //console.log(Game.characters)
-  // If spacebar is pressed => function go to next word
-  if (e.keyCode == 32) {
-    goToNextWord()
+  if (inGame === true) {
+    //console.log(e.keyCode)
+    // Increment the character count with keycode of typed letter
+    Game.incrementCharacters(e.keyCode)
+    //console.log(Game.characters)
+    // If spacebar is pressed => function go to next word
+    if (e.keyCode == 32) {
+      goToNextWord()
+    }
   }
 }
