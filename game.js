@@ -92,8 +92,8 @@ class UserGame extends GameSettings {
     this._gameWords = [];
     // Number of errors made
     this._wordErrors = 0;
-    // Accuracy of player
-    this._accuracy = 0;
+    // WPM and Accuracy of player
+    this._calculatedStats = [0, 0];
     // Time taken to complete game
     this._timeTaken = 0;
     // Number of characters typed
@@ -122,6 +122,10 @@ class UserGame extends GameSettings {
 
   get userWordCount() {
     return this._userWordCount;
+  }
+
+  get calculatedStats() {
+    return this._calculatedStats;
   }
 
   // ==Class Setters==
@@ -184,6 +188,15 @@ class UserGame extends GameSettings {
 
     // Goes to updateWords with array gameWords, position length of gameWords - 1 (for 0 counting array)
     DOMFunctions.updateWords(this._gameWords, (this._gameWords.length - 1))
+  }
+
+  calculateStats() { //TODO: this shit and also dom functio nthat does that
+    let chars = this._characters;
+    let time = this._timeTaken;
+    let errors = this._wordErrors;
+    let totalWords = this._userWordCount;
+
+    console.log(chars, time, errors, totalWords)
   }
 }
 
@@ -258,7 +271,6 @@ class DOMManipulation {
 
     // Add classes and IDs to each of the items
     nodeItem.id = "highlightWord";
-    console.log(position)
 
     // Add id for the previous word, and remove the id from the second last word
     // If so the first position doesn't return an error
@@ -294,6 +306,13 @@ class DOMManipulation {
       selectedSpan.remove()
     }
   }
+
+  finishGame() {
+    let x = Game.userWordCount;
+    let y = Game.characters;
+    let z = Game.timeTaken;
+    console.log(x, y, z)
+  }
 }
 /*================
  *   FUNCTIONS
@@ -323,7 +342,7 @@ function inGameTimer(callback) {
     let gameTimer = setInterval(() => {
       if (time >= duration) {
         clearInterval(gameTimer)
-        Game.timeTaken = time;
+        Game.timeTaken = duration
         callback()
       }
 
@@ -363,6 +382,8 @@ function goToTimedGame() {
   inGameTimer(() => {
     console.log("test");
     inGame = false;
+    Game.calculateStats();
+    DOMFunctions.finishGame();
   })
 }
 
@@ -383,9 +404,10 @@ function wordCheck() {
 
   // Checks if the input word is the same as the actual word
   if (inputWord === wordComparison) {
-    DOMFunctions.setAnswer(true, nodeItem)
+    DOMFunctions.setAnswer(true, nodeItem);
   } else {
-    DOMFunctions.setAnswer(false, nodeItem)
+    Game.incrementWordErrors();
+    DOMFunctions.setAnswer(false, nodeItem);
   }
 
   // Checking if next word is on next line, and deletes the first line
@@ -429,7 +451,7 @@ function goToNextWord() {
 
 const words = ["the", "I", "you"];
 let inGame = false;
-let Game = new UserGame(1, 1, words);
+let Game = new UserGame(0, 1, words);
 let DOMFunctions = new DOMManipulation();
 Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
@@ -445,7 +467,7 @@ gameTypingField.onkeydown = (e) => {
     //console.log(e.keyCode)
     // Increment the character count with keycode of typed letter
     Game.incrementCharacters(e.keyCode)
-    //console.log(Game.characters)
+    console.log(Game.characters)
     // If spacebar is pressed => function go to next word
     if (e.keyCode == 32) {
       goToNextWord()
