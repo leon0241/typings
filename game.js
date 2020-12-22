@@ -133,6 +133,10 @@ class UserGame extends GameSettings {
     this._timeTaken = value;
   }
 
+  set calculatedStats(value) {
+    this._calculatedStats = value;
+  }
+
   // ==Class Functions==
 
   incrementWordErrors() {
@@ -196,7 +200,22 @@ class UserGame extends GameSettings {
     let errors = this._wordErrors;
     let totalWords = this._userWordCount;
 
-    console.log(chars, time, errors, totalWords)
+    let netWords = (chars / 5) - errors
+    let netWPM = ( netWords / (time / 60) )
+    let accuracy = (totalWords - errors) / totalWords * 100
+
+    let stats = [netWPM, accuracy]
+    console.log(stats)
+    //stats.forEach((x) => Game.calculatedStats[x] = Math.round(stats[x]))
+    stats.forEach(function(x) {
+      stats[x] = Math.round(stats[x]);
+    })
+    Game.calculatedStats = [stats]
+    console.log(Game.calculatedStats)
+    let display = [["characters", chars], ["time", time], ["errors", errors], ["total words", totalWords], ["net WPM", stats[0]], ["accuracy", stats[1]]]
+
+    console.table(display)
+    console.log(Game)
   }
 }
 
@@ -307,11 +326,11 @@ class DOMManipulation {
     }
   }
 
-  finishGame() {
+  finishGame() { // TODO: this is dom stuff
     let x = Game.userWordCount;
     let y = Game.characters;
     let z = Game.timeTaken;
-    console.log(x, y, z)
+    //console.log(x, y, z)
   }
 }
 /*================
