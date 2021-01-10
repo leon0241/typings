@@ -15,6 +15,13 @@
 
     </div>
       <p class="typingWord">testing</p>
+    <script type="text/javascript">
+      let stats = [3, 5]
+      console.log(stats);
+      stats.forEach(function(x) { //CURRENT: Fix this rounding error idkx
+        stats[x] = Math.round(stats[x]);
+      })
+    </script>
     <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript" src="game.js"></script>
   </body>

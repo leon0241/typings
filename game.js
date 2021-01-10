@@ -201,18 +201,24 @@ class UserGame extends GameSettings {
     let totalWords = this._userWordCount;
 
     let netWords = (chars / 5) - errors
-    let netWPM = ( netWords / (time / 60) )
+    let netWPM = 0
+    if (netWords < 0) {
+      netWPM = 0
+    } else {
+      netWPM = netWords / (time / 60)
+    }
     let accuracy = (totalWords - errors) / totalWords * 100
 
-    let stats = [netWPM, accuracy]
-    console.log(stats)
-    //stats.forEach((x) => Game.calculatedStats[x] = Math.round(stats[x]))
-    stats.forEach(function(x) {
-      stats[x] = Math.round(stats[x]);
-    })
-    Game.calculatedStats = [stats]
+    let display1 = [["characters", chars], ["time", time], ["errors", errors], ["total words", totalWords], ["net words", netWords], ["net wpm", netWPM], ["accuracy", accuracy], ]
+    console.table(display1)
+
+    let tempStats = [netWPM, accuracy]
+    let stats = []
+    console.log(tempStats)
+    tempStats.forEach((element) => stats.push(Math.round(element)))
+    Game.calculatedStats = stats
     console.log(Game.calculatedStats)
-    let display = [["characters", chars], ["time", time], ["errors", errors], ["total words", totalWords], ["net WPM", stats[0]], ["accuracy", stats[1]]]
+    let display = [["net WPM", stats[0]], ["accuracy", stats[1]]]
 
     console.table(display)
     console.log(Game)
