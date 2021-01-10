@@ -44,3 +44,11 @@
 .gameResetButton{
   border: groove;
 }
+
+.gameWPM{
+  padding: 0px 5px;
+}
+
+.gameAccuracy{
+  padding: 0px 5px;
+}

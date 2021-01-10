@@ -194,34 +194,40 @@ class UserGame extends GameSettings {
     DOMFunctions.updateWords(this._gameWords, (this._gameWords.length - 1))
   }
 
-  calculateStats() { //TODO: this shit and also dom functio nthat does that
+  calculateStats() {
+    // Variable initialisation
     let chars = this._characters;
     let time = this._timeTaken;
     let errors = this._wordErrors;
     let totalWords = this._userWordCount;
 
+    // netWords: The number of correct words (assuming a word is 5 letters)
     let netWords = (chars / 5) - errors
-    let netWPM = 0
-    if (netWords < 0) {
-      netWPM = 0
-    } else {
-      netWPM = netWords / (time / 60)
-    }
+    // Value to divide to get words per minute
+    let timeFactor = time / 60
+
+    // Calculate WPM
+    let netWPM = (netWords < 0)
+      //Account for error where most words that appear are less than 5 letters resulting in negative WPM
+      ? ((totalWords - errors) / timeFactor)
+      : (netWords / timeFactor)
+
+    // Calculate accuracy
     let accuracy = (totalWords - errors) / totalWords * 100
 
-    let display1 = [["characters", chars], ["time", time], ["errors", errors], ["total words", totalWords], ["net words", netWords], ["net wpm", netWPM], ["accuracy", accuracy], ]
-    console.table(display1)
+    // Big console table for stats
+    //let display1 = [["characters", chars], ["time", time], ["errors", errors], ["total words", totalWords], ["net words", netWords], ["net wpm", netWPM], ["accuracy", accuracy], ]
+    //console.table(display1)
 
+    // Rounds each result to the nearest integer
     let tempStats = [netWPM, accuracy]
     let stats = []
-    console.log(tempStats)
     tempStats.forEach((element) => stats.push(Math.round(element)))
     Game.calculatedStats = stats
-    console.log(Game.calculatedStats)
-    let display = [["net WPM", stats[0]], ["accuracy", stats[1]]]
 
-    console.table(display)
-    console.log(Game)
+    // console table for rounded stats
+    //let display = [["net WPM", stats[0]], ["accuracy", stats[1]]]
+    //console.table(display)
   }
 }
 
@@ -332,11 +338,17 @@ class DOMManipulation {
     }
   }
 
-  finishGame() { // TODO: this is dom stuff
-    let x = Game.userWordCount;
-    let y = Game.characters;
-    let z = Game.timeTaken;
-    //console.log(x, y, z)
+  displayStats() { // TODO: this is dom stuff
+    let wpm = Game.calculatedStats[0]
+    let time = Game.calculatedStats[1]
+
+    gameWPM.textContent = wpm;
+    gameAccuracy.textContent = time;
+
+  }
+
+  changeGameProgress(value) {
+    gameProgress.textContent = value
   }
 }
 /*================
@@ -358,9 +370,7 @@ function inGameTimer(callback) {
   let time = 1;
   let type = Game.type;
 
-  const testVar = type === 0
-    ? gameProgress.textContent = "0"
-    : gameProgress.textContent = gameDifficulty
+  const testVar = (type === 0) ? DOMFunctions.changeGameProgress("0") : DOMFunctions.changeGameProgress(gameDifficulty)
 
   if (type === 0) {
     let duration = gameDifficulty;
@@ -371,7 +381,7 @@ function inGameTimer(callback) {
         callback()
       }
 
-      gameProgress.textContent = time;
+      DOMFunctions.changeGameProgress(time);
       time++
     }, 1000)
   } else {
@@ -389,7 +399,7 @@ function inGameTimer(callback) {
     }, 1000)
 
     console.log("wc: ", totalWordCount)
-    gameProgress.textContent = totalWordCount
+    DOMFunctions.changeGameProgress(totalWordCount)
     totalWordCount--
   }
 }
@@ -408,7 +418,7 @@ function goToTimedGame() {
     console.log("test");
     inGame = false;
     Game.calculateStats();
-    DOMFunctions.finishGame();
+    DOMFunctions.displayStats();
   })
 }
 
