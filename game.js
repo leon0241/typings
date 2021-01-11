@@ -375,7 +375,7 @@ function inGameTimer(callback) {
   // DOM for timer depending on the type
   const testVar = (type === 0)
     // Count up from 0 if time
-    ? DOMFunctions.changeGameProgress("0");
+    ? DOMFunctions.changeGameProgress("0")
     //Count down from words remaining if words
     : DOMFunctions.changeGameProgress(gameDifficulty);
 
