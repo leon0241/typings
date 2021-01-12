@@ -379,36 +379,51 @@ function inGameTimer(callback) {
     //Count down from words remaining if words
     : DOMFunctions.changeGameProgress(gameDifficulty);
 
-  // If timer
+  // If timer is on type time
   if (type === 0) {
     let duration = gameDifficulty;
+
+    // SetInterval - timer
     let gameTimer = setInterval(() => {
+      // if timer over the max time
       if (time >= duration) {
+        // Stop timer
         clearInterval(gameTimer);
+
+        // Set time taken to the duration
         Game.timeTaken = duration;
+
+        // To callback function
         callback();
       }
 
+      // Change the on screen timer
       DOMFunctions.changeGameProgress(time);
+
+      // Add 1 to time
       time++;
     }, 1000)
   } else {
+    // If timer is on type words
     let userWordCount = 0;
     let totalWordCount = gameDifficulty;
+    // SetInterval - timer
     let gameTimer = setInterval (() => {
-      if (totalWordCount <= 0) {
+      //
+      if (userWordCount >= totalWordCount) {
         clearInterval(gameTimer)
         Game.timeTaken = time;
         Game.userWordCount = userWordCount;
         callback();
       }
       console.log("time: ", time);
+      console.log("userWordCount: ", userWordCount, "totalWordCount: ", totalWordCount)
       time++;
+      userWordCount++;
     }, 1000)
 
-    console.log("wc: ", totalWordCount);
+    console.log("wc: ", userWordCount);
     DOMFunctions.changeGameProgress(totalWordCount);
-    totalWordCount--;
   }
 }
 
@@ -435,6 +450,9 @@ function goToTimedGame() {
 function goToWordGame() {
   inGameTimer(() => {
     console.log("test2");
+    inGame = false;
+    Game.calculateStats();
+    DOMFunctions.displayStats();
   })
 }
 
@@ -459,7 +477,6 @@ function wordCheck() {
   // Sets DOMRect of the next word, will test if it is on the next line or not
   let nodeList = DOMFunctions.nodeList;
   let futureDomRect = nodeList.item(position).getBoundingClientRect();
-  console.log("domrect y: ", futureDomRect.top);
   /* Checks if the y coordinate of the span relative to the div is more than 107(next row) and deletes the row */
   if (futureDomRect.top > 107) {
     DOMFunctions.deleteRow(position);
@@ -496,7 +513,7 @@ function goToNextWord() {
 
 const words = ["the", "I", "you"];
 let inGame = false;
-let Game = new UserGame(0, 1, words);
+let Game = new UserGame(1, 1, words);
 let DOMFunctions = new DOMManipulation();
 Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
@@ -512,7 +529,7 @@ gameTypingField.onkeydown = (e) => {
     //console.log(e.keyCode)
     // Increment the character count with keycode of typed letter
     Game.incrementCharacters(e.keyCode);
-    console.log(Game.characters);
+    //console.log(Game.characters);
     // If spacebar is pressed => function go to next word
     if (e.keyCode == 32) {
       goToNextWord();
