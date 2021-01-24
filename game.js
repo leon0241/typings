@@ -229,6 +229,35 @@ class UserGame extends GameSettings {
     //let display = [["net WPM", stats[0]], ["accuracy", stats[1]]]
     //console.table(display)
   }
+
+  wordCheck() {
+    // Checking if the word is correct or not
+    // Removes the spacebar from your input word
+    let inputWord = gameTypingField.value.trim();
+    let wordComparison = Game.word;
+    let position = DOMFunctions.position;
+    // Defines the item to change the class of
+    let nodeItem = document.getElementById("previousWord");
+
+    // Checks if the input word is the same as the actual word
+    if (inputWord === wordComparison) {
+      DOMFunctions.setAnswer(true, nodeItem);
+    } else {
+      Game.incrementWordErrors();
+      DOMFunctions.setAnswer(false, nodeItem);
+    }
+
+    // Checking if next word is on next line, and deletes the first line
+    // Sets DOMRect of the next word, will test if it is on the next line or not
+    let nodeList = DOMFunctions.nodeList;
+    let futureDomRect = nodeList.item(position).getBoundingClientRect();
+    /* Checks if the y coordinate of the span relative to the div is more than 107(next row) and deletes the row */
+    if (futureDomRect.top > 107) {
+      DOMFunctions.deleteRow(position);
+      //Set the position back to 0
+      DOMFunctions.position = 0;
+    }
+  }
 }
 
 // Any functions that require DOM manipulation
@@ -358,30 +387,37 @@ class DOMManipulation {
 // TODO: DOM Read buttons to get values
 // Activates on save button press
 
-// Starts the game
-function startGame() {
-  inGame = true;
-  //TODO: figure out how tf async works
-  //async function countCharacters()?
-  Game.type === 0 ? goToTimedGame() : goToWordGame(); // TODO: maybe fix this idk
-}
+class GameFunctions extends UserGame {
+  constructor(...args) {
+    super(...args)
+  }
 
-// Code for timer for both modes
-function inGameTimer(callback) {
-  let gameDifficulty = Game.getCalculatedDifficulty();
-  let time = 1;
-  let type = Game.type;
 
-  // DOM for timer depending on the type
-  const testVar = (type === 0)
-    // Count up from 0 if time
-    ? DOMFunctions.changeGameProgress("0")
-    //Count down from words remaining if words
-    : DOMFunctions.changeGameProgress(gameDifficulty);
+  // Starts the game
+  startGame() {
+    inGame = true;
+    let gameType = this._type === 0 ? this.goToTimedGame() : this.goToWordGame(); // TODO: maybe fix this idk
+  }
 
-  // If timer is on type time
-  if (type === 0) {
-    let duration = gameDifficulty;
+  // OLD: Code for timer for both modes
+  //function inGameTimer(callback) {
+  //   let gameDifficulty = Game.getCalculatedDifficulty();
+  //   let time = 1;
+  //   let type = Game.type;
+  //
+  //   // If timer is on type time else
+  //   if (type === 0) {
+  //     DOMFunctions.changeGameProgress("0")
+  //     timeTimer(time, gameDifficulty)
+  //   } else {
+  //     DOMFunctions.changeGameProgress(gameDifficulty);
+  //     wordTimer(time, gameDifficulty)
+  //   }
+  // }
+
+  timeTimer(callback) {
+    let duration = this.getCalculatedDifficulty();
+    let time = 1;
 
     // SetInterval - timer
     let gameTimer = setInterval(() => {
@@ -391,7 +427,7 @@ function inGameTimer(callback) {
         clearInterval(gameTimer);
 
         // Set time taken to the duration
-        Game.timeTaken = duration;
+        this._timeTaken = duration;
 
         // To callback function
         callback();
@@ -402,119 +438,93 @@ function inGameTimer(callback) {
 
       // Add 1 to time
       time++;
-    }, 1000) // Repeat every second
-  } else {
-    // If timer is on type words
-    let userWordCount = 0;
-    let totalWordCount = gameDifficulty;
-
-    // Keep track of timer since
-    let inGameSeconds = 0;
-    let interval = 100; // Interval to loop setInterval (1/10 seconds)
-
-    // SetInterval - timer
-    let gameTimer = setInterval (() => {
-      // Set word count
-      userWordCount = Game.userWordCount
-
-      // If word count is above total words
-      if (userWordCount >= totalWordCount) {
-        // Stop timer
-        clearInterval(gameTimer)
-
-        // Set time taken to the duration
-        Game.timeTaken = time;
-
-        // To callback function
-        callback();
-      }
-
-      // if time is divisible by 1000 then add a second on
-      inGameSeconds += interval
-      if (inGameSeconds % 1000 === 0) {
-        time++;
-        console.log("time: ", time);
-        console.log("userWordCount: ", userWordCount, "totalWordCount: ", totalWordCount)
-      }
-    }, interval) // Repeat every 1/10 seconds so there is no delay when finishing game
-
-    console.log("wc: ", userWordCount);
-  }
-}
-
-// Callback function for timed game
-function goToTimedGame() {
-  inGameTimer(() => {
-    console.log("test");
-    inGame = false;
-    Game.calculateStats();
-    DOMFunctions.displayStats();
-  })
-}
-
-// Callback function for word game
-function goToWordGame() {
-  inGameTimer(() => {
-    console.log("test2");
-    inGame = false;
-    Game.calculateStats();
-    DOMFunctions.displayStats();
-  })
-}
-
-function wordCheck() {
-  // Checking if the word is correct or not
-  // Removes the spacebar from your input word
-  let inputWord = gameTypingField.value.trim();
-  let wordComparison = Game.word;
-  let position = DOMFunctions.position;
-  // Defines the item to change the class of
-  let nodeItem = document.getElementById("previousWord");
-
-  // Checks if the input word is the same as the actual word
-  if (inputWord === wordComparison) {
-    DOMFunctions.setAnswer(true, nodeItem);
-  } else {
-    Game.incrementWordErrors();
-    DOMFunctions.setAnswer(false, nodeItem);
+    }, 1000)
   }
 
-  // Checking if next word is on next line, and deletes the first line
-  // Sets DOMRect of the next word, will test if it is on the next line or not
-  let nodeList = DOMFunctions.nodeList;
-  let futureDomRect = nodeList.item(position).getBoundingClientRect();
-  /* Checks if the y coordinate of the span relative to the div is more than 107(next row) and deletes the row */
-  if (futureDomRect.top > 107) {
-    DOMFunctions.deleteRow(position);
-    //Set the position back to 0
-    DOMFunctions.position = 0;
+  // If timer is on type words
+  wordTimer(callback) {
+      let totalWordCount = this.getCalculatedDifficulty();
+      let time = 1;
+
+      // Keep track of timer since
+      let inGameSeconds = 0;
+      let interval = 100; // Interval to loop setInterval (1/10 seconds)
+
+      // SetInterval - timer
+      let gameTimer = setInterval (() => {
+
+        // If word count is above total words
+        if (this._userWordCount >= totalWordCount) {
+          // Stop timer
+          clearInterval(gameTimer)
+
+          // Set time taken to the duration
+          this._timeTaken = time;
+
+          // To callback function
+          callback();
+        }
+
+        // if time is divisible by 1000 then add a second
+        inGameSeconds += interval
+        if (inGameSeconds % 1000 === 0) {
+          time++;
+          console.log("time: ", time);
+          console.log("userWordCount: ", userWordCount, "totalWordCount: ", totalWordCount)
+        }
+      }, interval) // Repeat every 1/10 seconds so there is no delay when finishing game
+
+      console.log("wc: ", this._userWordCount);
   }
-}
 
-// All the functions that happen when a word is pressed
-function goToNextWord() {
-  console.log("%cnext word", "color: yellow");
-  DOMFunctions.updateNodeList();
-  // Increase word count
-  Game.incrementWordCount();
+  // Callback function for timed game
+  goToTimedGame() {
+    DOMFunctions.changeGameProgress("0")
+    this.timeTimer(() => {
+      console.log("test");
+      inGame = false;
+      this.calculateStats();
+      DOMFunctions.displayStats();
+    })
+  }
 
-  // Increase position (this is used for DOM styling)
-  DOMFunctions.incrementPosition();
+  // Callback function for word game
+  goToWordGame() {
+    let gameDifficulty = this.getCalculatedDifficulty();
+    DOMFunctions.changeGameProgress(gameDifficulty);
+    this.wordTimer(() => {
+      console.log("test2");
+      inGame = false;
+      this.calculateStats();
+      DOMFunctions.displayStats();
+    })
+  }
 
-  // Highlights the current word
-  DOMFunctions.highlightCurrentWord();
+  // All the functions that happen when a word is pressed
+  goToNextWord() {
+    console.log("%cnext word", "color: yellow");
+    DOMFunctions.updateNodeList();
+    // Increase word count
+    this.incrementWordCount();
 
-  // Checks: if word is correct, if word is last on its line
-  wordCheck();
+    // Increase position (this is used for DOM styling)
+    DOMFunctions.incrementPosition();
 
-  Game.newWord();
+    // Highlights the current word
+    DOMFunctions.highlightCurrentWord();
 
-  // Clears the value of the field
-  gameTypingField.value = "";
+    // Checks: if word is correct, if word is last on its line
+    this.wordCheck();
 
-  //
-  if (Game.type === 1) {
-    DOMFunctions.changeGameProgress(Game.getCalculatedDifficulty() - Game.userWordCount);
+    this.newWord();
+
+    // Clears the value of the field
+    gameTypingField.value = "";
+
+    //
+    if (this._type === 1) {
+      DOMFunctions.changeGameProgress(this.getCalculatedDifficulty() - _userWordCount);
+    }
   }
 }
 
@@ -524,13 +534,13 @@ function goToNextWord() {
 
 const words = ["the", "I", "you"];
 let inGame = false;
-let Game = new UserGame(1, 1, words); // Words = 1, time = 0
+let Game = new GameFunctions(0, 1, words); // Words = 1, time = 0
 let DOMFunctions = new DOMManipulation();
 Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
 
 gameTypingField.onclick = () => {
-  startGame();
+  Game.startGame();
 }
 
 
@@ -543,7 +553,7 @@ gameTypingField.onkeydown = (e) => {
     //console.log(Game.characters);
     // If spacebar is pressed => function go to next word
     if (e.keyCode == 32) {
-      goToNextWord();
+      Game.goToNextWord();
     }
   }
 }
