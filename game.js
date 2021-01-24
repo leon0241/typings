@@ -402,37 +402,43 @@ function inGameTimer(callback) {
 
       // Add 1 to time
       time++;
-    }, 1000)
+    }, 1000) // Repeat every second
   } else {
     // If timer is on type words
     let userWordCount = 0;
     let totalWordCount = gameDifficulty;
+
+    // Keep track of timer since
+    let inGameSeconds = 0;
+    let interval = 100; // Interval to loop setInterval (1/10 seconds)
+
     // SetInterval - timer
     let gameTimer = setInterval (() => {
-      //
+      // Set word count
+      userWordCount = Game.userWordCount
+
+      // If word count is above total words
       if (userWordCount >= totalWordCount) {
+        // Stop timer
         clearInterval(gameTimer)
+
+        // Set time taken to the duration
         Game.timeTaken = time;
-        Game.userWordCount = userWordCount;
+
+        // To callback function
         callback();
       }
-      console.log("time: ", time);
-      console.log("userWordCount: ", userWordCount, "totalWordCount: ", totalWordCount)
-      time++;
-      userWordCount++;
-    }, 1000)
+
+      // if time is divisible by 1000 then add a second on
+      inGameSeconds += interval
+      if (inGameSeconds % 1000 === 0) {
+        time++;
+        console.log("time: ", time);
+        console.log("userWordCount: ", userWordCount, "totalWordCount: ", totalWordCount)
+      }
+    }, interval) // Repeat every 1/10 seconds so there is no delay when finishing game
 
     console.log("wc: ", userWordCount);
-    DOMFunctions.changeGameProgress(totalWordCount);
-  }
-}
-
-function wordGame() {
-  console.log("a");
-  let totalWordCount = Game.getCalculatedDifficulty();
-  let timeTaken = 0;
-  while(totalWordCount > 0) {
-    // TODO: timer
   }
 }
 
@@ -498,13 +504,18 @@ function goToNextWord() {
   // Highlights the current word
   DOMFunctions.highlightCurrentWord();
 
-  // Checks - if word is correct, if word is last on its line
+  // Checks: if word is correct, if word is last on its line
   wordCheck();
 
   Game.newWord();
 
-  //Clears the value of the field
+  // Clears the value of the field
   gameTypingField.value = "";
+
+  //
+  if (Game.type === 1) {
+    DOMFunctions.changeGameProgress(Game.getCalculatedDifficulty() - Game.userWordCount);
+  }
 }
 
 /*================
@@ -513,7 +524,7 @@ function goToNextWord() {
 
 const words = ["the", "I", "you"];
 let inGame = false;
-let Game = new UserGame(1, 1, words);
+let Game = new UserGame(1, 1, words); // Words = 1, time = 0
 let DOMFunctions = new DOMManipulation();
 Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
