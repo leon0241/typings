@@ -55,10 +55,9 @@ class GameSettings {
         break;
       }
       case "01": {
-        output = 5; // TODO: change this back to 60s
+        output = 60;
         break;
       }
-
       case "02": {
         output = 120;
         break;
@@ -70,7 +69,7 @@ class GameSettings {
         break;
       }
       case "11": {
-        output = 5; //TODO: this too
+        output = 50;
         break;
       }
       case "12": {
@@ -83,7 +82,7 @@ class GameSettings {
   }
 }
 
-// Game variables of the user's results
+// Methods used to modify values by the player throughout the game
 class UserGame extends GameSettings {
   // ==Constructor==
   constructor(...args) {
@@ -138,11 +137,12 @@ class UserGame extends GameSettings {
   }
 
   // ==Class Functions==
-
+  // Adds 1 to errors
   incrementWordErrors() {
     this._wordErrors += 1;
   }
 
+  // Adds 1 to word count
   incrementWordCount() {
     this._userWordCount += 1;
   }
@@ -194,6 +194,7 @@ class UserGame extends GameSettings {
     DOMFunctions.updateWords(this._gameWords, (this._gameWords.length - 1));
   }
 
+  // Calculates WPM and accuracy of the player
   calculateStats() {
     // Variable initialisation
     let chars = this._characters;
@@ -230,8 +231,8 @@ class UserGame extends GameSettings {
     //console.table(display)
   }
 
+  // Checks if the word is correct or not
   wordCheck() {
-    // Checking if the word is correct or not
     // Removes the spacebar from your input word
     let inputWord = gameTypingField.value.trim();
     let wordComparison = Game.word;
@@ -260,133 +261,7 @@ class UserGame extends GameSettings {
   }
 }
 
-// Any functions that require DOM manipulation
-class DOMManipulation {
-  constructor() {
-    this._position = 0;
-    this._nodeList = document.querySelectorAll(".typingWord");
-    this._area = gameWordArea;
-  }
-
-  // ==Getter Methods==
-  get position() {
-    return this._position;
-  }
-
-  get nodeList() {
-    return this._nodeList;
-  }
-
-  get area() {
-    return this._area;
-  }
-
-  set position(value) {
-    this._position = value;
-  }
-
-  updateNodeList() {
-    this._nodeList = gameWordArea.querySelectorAll(".typingWord");
-  }
-
-  // Updates the area and puts in the specified word in the array
-  // Array gamewords, position i
-  updateWords(gameWords, i) {
-    let appenderSpan = document.createElement('span');
-    appenderSpan.classList.add("typingWord");
-    appenderSpan.textContent = `${gameWords[i]} `;
-    this._area.appendChild(appenderSpan);
-  }
-
-  incrementPosition() {
-    this._position += 1;
-  }
-
-  // Shows the words on screen and sets starting word as highlight
-  showArray(gameWords) {
-    let area = this._area;
-    // TODO: rename area
-    // Creates new spans with text from gamewords[]
-    // Repeats 50 times for some overflow
-    for (let i = 0;i < 50; i++) {
-      // Goes to updateWords with array gameWords, position i
-      this.updateWords(gameWords, i);
-    }
-
-    // Set first word with .typingword as the highlight word
-    let nodeItem = area.querySelector(".typingWord");
-    nodeItem.id = "highlightWord";
-
-    this.updateNodeList();
-  }
-
-  // Sets the highlight id to the current word - triggers on spacebar pressed
-  highlightCurrentWord() {
-    // Setting local variables for each item needed
-    let position = this._position;
-    // List of words
-    let nodeList = this._nodeList;
-    // Word just typed
-    let nodeItem = nodeList.item(position);
-
-    // Add classes and IDs to each of the items
-    nodeItem.id = "highlightWord";
-
-    // Add id for the previous word, and remove the id from the second last word
-    // If so the first position doesn't return an error
-    if (position > 0) {
-      // Last word typed
-      let previousItem = nodeList.item(position - 1);
-      previousItem.id = "previousWord";
-      previousItem.classList.add("completedWord");
-
-      // Second last word typed - If for same reason as above
-      if (position > 1) {
-        let backItem = nodeList.item(position - 2);
-        backItem.removeAttribute("id");
-      }
-    }
-  }
-
-  // Bool in from wordCheck() and changes class if the word was right or wrong
-  setAnswer(checkedWord, nodeItem) {
-    if (checkedWord) {
-      nodeItem.classList.add("correctWord");
-    } else {
-      nodeItem.classList.add("wrongWord");
-    }
-  }
-
-  // Deletes a row - called from wordCheck
-  deleteRow(position) {
-    let nodeList = this._nodeList;
-    // Remove each span less than the position
-    for (let i = 0; i < position; i++) {
-      let selectedSpan = nodeList.item(i);
-      selectedSpan.remove();
-    }
-  }
-
-  displayStats() { // TODO: this is dom stuff
-    let wpm = Game.calculatedStats[0];
-    let time = Game.calculatedStats[1];
-
-    gameWPM.textContent = wpm;
-    gameAccuracy.textContent = time;
-
-  }
-
-  changeGameProgress(value) {
-    gameProgress.textContent = value;
-  }
-}
-/*================
- *   FUNCTIONS
- ================*/
-
-// TODO: DOM Read buttons to get values
-// Activates on save button press
-
+// Methods that are used to control the game
 class GameFunctions extends UserGame {
   constructor(...args) {
     super(...args)
@@ -399,22 +274,7 @@ class GameFunctions extends UserGame {
     let gameType = this._type === 0 ? this.goToTimedGame() : this.goToWordGame(); // TODO: maybe fix this idk
   }
 
-  // OLD: Code for timer for both modes
-  //function inGameTimer(callback) {
-  //   let gameDifficulty = Game.getCalculatedDifficulty();
-  //   let time = 1;
-  //   let type = Game.type;
-  //
-  //   // If timer is on type time else
-  //   if (type === 0) {
-  //     DOMFunctions.changeGameProgress("0")
-  //     timeTimer(time, gameDifficulty)
-  //   } else {
-  //     DOMFunctions.changeGameProgress(gameDifficulty);
-  //     wordTimer(time, gameDifficulty)
-  //   }
-  // }
-
+  // setInterval timer for a timed game
   timeTimer(callback) {
     let duration = this.getCalculatedDifficulty();
     let time = 1;
@@ -441,14 +301,15 @@ class GameFunctions extends UserGame {
     }, 1000)
   }
 
-  // If timer is on type words
+  // setInterval timer for a word game
   wordTimer(callback) {
       let totalWordCount = this.getCalculatedDifficulty();
       let time = 1;
 
-      // Keep track of timer since
+      // Variable to keep track of timer
       let inGameSeconds = 0;
-      let interval = 100; // Interval to loop setInterval (1/10 seconds)
+      // Interval to loop setInterval (1/10 seconds)
+      let interval = 100;
 
       // SetInterval - timer
       let gameTimer = setInterval (() => {
@@ -500,7 +361,7 @@ class GameFunctions extends UserGame {
     })
   }
 
-  // All the functions that happen when a word is pressed
+  // Functions and methods called after a word is typed
   goToNextWord() {
     console.log("%cnext word", "color: yellow");
     DOMFunctions.updateNodeList();
@@ -528,29 +389,172 @@ class GameFunctions extends UserGame {
   }
 }
 
+// Any functions that require DOM manipulation
+class DOMManipulation {
+  constructor() {
+    // How far a word is down a line
+    this._position = 0;
+
+    // List of all words
+    this._nodeList = document.querySelectorAll(".typingWord");
+
+    // Div of words
+    this._area = gameWordArea;
+  }
+
+  // == Class getters==
+  get position() {
+    return this._position;
+  }
+
+  get nodeList() {
+    return this._nodeList;
+  }
+
+  get area() {
+    return this._area;
+  }
+
+  // ==Class Setters==
+
+  set position(value) {
+    this._position = value;
+  }
+
+  // ==Class Functions==
+
+  updateNodeList() {
+    this._nodeList = gameWordArea.querySelectorAll(".typingWord");
+  }
+
+  // Updates the area and puts in the specified word in the array
+  // Array gamewords, position i
+  updateWords(gameWords, i) {
+    let appenderSpan = document.createElement('span');
+    appenderSpan.classList.add("typingWord");
+    appenderSpan.textContent = `${gameWords[i]} `;
+    this._area.appendChild(appenderSpan);
+  }
+
+  // Adds 1 to position
+  incrementPosition() {
+    this._position += 1;
+  }
+
+  // Shows the words on screen and sets starting word as highlight
+  showArray(gameWords) {
+    let area = this._area;
+    // TODO: rename area
+    // Creates new spans with text from gamewords[]
+    // Repeats 50 times for some overflow
+    for (let i = 0;i < 50; i++) {
+      // Goes to updateWords with array gameWords, position i
+      this.updateWords(gameWords, i);
+    }
+
+    // Set first word with .typingword as the highlight word
+    let nodeItem = area.querySelector(".typingWord");
+    nodeItem.id = "highlightWord";
+
+    this.updateNodeList();
+  }
+
+  // Sets the highlight id - triggers on spacebar pressed
+  highlightCurrentWord() {
+    // Setting local variables for each item needed
+    let position = this._position;
+    // List of words
+    let nodeList = this._nodeList;
+    // Word just typed
+    let nodeItem = nodeList.item(position);
+
+    // Add classes and IDs to each of the items
+    nodeItem.id = "highlightWord";
+
+    // Add id for the previous word, and remove the id from the second last word
+    // If statement so the first position doesn't return an error
+    if (position > 0) {
+      // Last word typed
+      let previousItem = nodeList.item(position - 1);
+      previousItem.id = "previousWord";
+      previousItem.classList.add("completedWord");
+
+      // Second last word typed - If for same reason as above
+      if (position > 1) {
+        let backItem = nodeList.item(position - 2);
+        backItem.removeAttribute("id");
+      }
+    }
+  }
+
+  // Bool in from wordCheck() and changes class if the word was right or wrong
+  setAnswer(checkedWord, nodeItem) {
+    if (checkedWord) {
+      nodeItem.classList.add("correctWord");
+    } else {
+      nodeItem.classList.add("wrongWord");
+    }
+  }
+
+  // Deletes a row - called from wordCheck
+  deleteRow(position) {
+    let nodeList = this._nodeList;
+    // Remove each span less than the position
+    for (let i = 0; i < position; i++) {
+      let selectedSpan = nodeList.item(i);
+      selectedSpan.remove();
+    }
+  }
+
+  displayStats() { // TODO: this is dom stuff
+    let wpm = Game.calculatedStats[0];
+    let time = Game.calculatedStats[1];
+
+    gameWPM.textContent = wpm;
+    gameAccuracy.textContent = time;
+
+  }
+
+  // Sets the timer/word countdown to value
+  changeGameProgress(value) {
+    gameProgress.textContent = value;
+  }
+}
+
 /*================
  *     GAME
  ================*/
 
 const words = ["the", "I", "you"];
 let inGame = false;
+let clicked = false;
 let Game = new GameFunctions(0, 1, words); // Words = 1, time = 0
 let DOMFunctions = new DOMManipulation();
 Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
 
+// On mouse click on typing field
 gameTypingField.onclick = () => {
-  Game.startGame();
+  // Sets condition to true so if a key is pressed the game will start
+  clicked = true;
 }
 
 
 // On character pressed in the typing field
 gameTypingField.onkeydown = (e) => {
+  // Check if clicked is true, and start game if met
+  if (clicked === true) {
+    Game.startGame();
+    clicked = false;
+  }
+
+  // Check if inGame is true before doing any calculations
   if (inGame === true) {
     //console.log(e.keyCode)
     // Increment the character count with keycode of typed letter
     Game.incrementCharacters(e.keyCode);
     //console.log(Game.characters);
+
     // If spacebar is pressed => function go to next word
     if (e.keyCode == 32) {
       Game.goToNextWord();
