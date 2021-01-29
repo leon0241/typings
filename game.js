@@ -331,7 +331,7 @@ class GameFunctions extends UserGame {
         if (inGameSeconds % 1000 === 0) {
           time++;
           console.log("time: ", time);
-          console.log("userWordCount: ", userWordCount, "totalWordCount: ", totalWordCount)
+          console.log("userWordCount: ", this._userWordCount, "totalWordCount: ", totalWordCount)
         }
       }, interval) // Repeat every 1/10 seconds so there is no delay when finishing game
 
@@ -384,7 +384,7 @@ class GameFunctions extends UserGame {
 
     //
     if (this._type === 1) {
-      DOMFunctions.changeGameProgress(this.getCalculatedDifficulty() - _userWordCount);
+      DOMFunctions.changeGameProgress(this.getCalculatedDifficulty() - this._userWordCount);
     }
   }
 }
