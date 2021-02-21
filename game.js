@@ -51,7 +51,7 @@ class GameSettings {
     switch (switcher) {
       // Time(30s, 60s, 120s)
       case "00": {
-        output = 5;
+        output = 30;
         break;
       }
       case "01": {
@@ -65,7 +65,7 @@ class GameSettings {
 
       // Words(25 words, 50 words, 100 words)
       case "10": {
-        output = 5;
+        output = 25;
         break;
       }
       case "11": {
@@ -167,7 +167,6 @@ class UserGame extends GameSettings {
     let newDifficulty = y;
     this._type = newType;
     this._difficulty = newDifficulty;
-    console.log(this._type, this._difficulty)
   }
 
   // Creates an array of 30 with random words
@@ -385,6 +384,7 @@ class GameFunctions extends UserGame {
     gameTypingField.value = "";
 
     //
+    console.log(typeof(this._type))
     if (this._type === 1) {
       DOMFunctions.changeGameProgress(this.getCalculatedDifficulty() - this._userWordCount);
     }
@@ -446,6 +446,7 @@ class DOMManipulation {
   // Shows the words on screen and sets starting word as highlight
   showArray(gameWords) {
     let area = this._area;
+    area.innerHTML = "";
     // TODO: rename area
     // Creates new spans with text from gamewords[]
     // Repeats 50 times for some overflow
@@ -537,10 +538,12 @@ DOMFunctions.showArray(Game.gameWords);
 
 function newGame(that) {
   let type = that.test_type.value;
+  type = parseInt(type, 10)
   let length = that.test_length.value;
-  alert(type)
+  length = parseInt(length, 10)
 
   Game.editGameData(type, length);
+  Game.initialiseArray()
   DOMFunctions.showArray(Game.gameWords);
 }
 
@@ -548,7 +551,9 @@ function newGame(that) {
 // On mouse click on typing field
 gameTypingField.onclick = () => {
   // Sets condition to true so if a key is pressed the game will start
-  clicked = true;
+  if (inGame === false) {
+    clicked = true;
+  }
 }
 
 // On character pressed in the typing field

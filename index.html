@@ -3,23 +3,56 @@
   <head>
     <meta charset="utf-8">
     <title>typings</title>
-    <link rel="stylesheet/less" type="text/css" href="styles.less" />
-    <script src="less.js" ></script>
+    <link rel="stylesheet" type="text/css" href="styles.css"/>
   </head>
   <body>
-    <div class="settings">
-      <button id="settingsButton" type="button" name="button"></button>
-    </div>
-    <div class="typeDropdown">
-      <button onclick="dropdownMenu()" type="button" name="button"></button>
-      <div class="dropdownContent">
-        <a href="#">Time</a>
-        <a href="#">Words</a>
-      </div>
-    </div>
-    <div class="gameContainer">
 
-    </div>
+    <button id="settingsButton">Settings</button>
+    <nav>
+      <form name="settingsForm" onsubmit="newGame(this);return false">
+        <header>
+          <h3>Settings</h3>
+        </header>
+
+        <section>
+          <select name="test_type" id="test_type">
+            <option value="0">Time</option>
+            <option value="1">Text</option>
+          </select>
+
+          <select name="test_length" id="test_length">
+            <option value="0">30s/25w</option>
+            <option value="1">1m/50w</option>
+            <option value="2">2m/100w</option>
+          </select>
+
+          <button id="openModal">View words</button>
+
+          <div id="wordModal" class="modal">
+            <div class="modal_content">
+              <p>test</p>
+            </div>
+          </div>
+
+          <button id="submitButton" type="submit">Submit</button>
+        </section>
+      </form>
+    </nav>
+
+    <main>
+      <div class="gameContainer">
+
+      </div>
+    </main>
+
+    <a href="">
+
+    </a>
+
+    <nav>
+
+    </nav>
+
     <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript" src="game.js"></script>
   </body>
