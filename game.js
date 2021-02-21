@@ -51,7 +51,7 @@ class GameSettings {
     switch (switcher) {
       // Time(30s, 60s, 120s)
       case "00": {
-        output = 30;
+        output = 5;
         break;
       }
       case "01": {
@@ -65,7 +65,7 @@ class GameSettings {
 
       // Words(25 words, 50 words, 100 words)
       case "10": {
-        output = 25;
+        output = 5;
         break;
       }
       case "11": {
@@ -167,6 +167,7 @@ class UserGame extends GameSettings {
     let newDifficulty = y;
     this._type = newType;
     this._difficulty = newDifficulty;
+    console.log(this._type, this._difficulty)
   }
 
   // Creates an array of 30 with random words
@@ -251,9 +252,10 @@ class UserGame extends GameSettings {
     // Checking if next word is on next line, and deletes the first line
     // Sets DOMRect of the next word, will test if it is on the next line or not
     let nodeList = DOMFunctions.nodeList;
-    let futureDomRect = nodeList.item(position).getBoundingClientRect();
+    let offset = nodeList.item(position).offsetTop
+    console.log(offset)
     /* Checks if the y coordinate of the span relative to the div is more than 107(next row) and deletes the row */
-    if (futureDomRect.top > 107) {
+    if (offset > 5) {
       DOMFunctions.deleteRow(position);
       //Set the position back to 0
       DOMFunctions.position = 0;
@@ -528,17 +530,26 @@ class DOMManipulation {
 const words = ["the", "I", "you"];
 let inGame = false;
 let clicked = false;
-let Game = new GameFunctions(0, 1, words); // Words = 1, time = 0
+let Game = new GameFunctions(1, 0, words); // Words = 1, time = 0
 let DOMFunctions = new DOMManipulation();
 Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
+
+function newGame(that) {
+  let type = that.test_type.value;
+  let length = that.test_length.value;
+  alert(type)
+
+  Game.editGameData(type, length);
+  DOMFunctions.showArray(Game.gameWords);
+}
+
 
 // On mouse click on typing field
 gameTypingField.onclick = () => {
   // Sets condition to true so if a key is pressed the game will start
   clicked = true;
 }
-
 
 // On character pressed in the typing field
 gameTypingField.onkeydown = (e) => {
