@@ -5,14 +5,14 @@
  *    CLASSES
  ================*/
 
-// Basic game options - type, difficulty, words array
+// Basic game options - type, length, words array
 class GameSettings {
   // ==Constructor==
-  constructor(type, difficulty, words) {
+  constructor(type, length, words) {
     // Type of game(time = 0, words = 1)
     this._type = type;
-    // Difficulty of game (0,1,2)
-    this._difficulty = difficulty;
+    // Length of game (0,1,2)
+    this._length = length;
     // Array of top 200 words
     this._words = words;
   }
@@ -24,8 +24,8 @@ class GameSettings {
   }
 
   // 0 = lowest, 1 = standard, 2 = high
-  get difficulty() {
-    return this._difficulty;
+  get length() {
+    return this._length;
   }
 
   // ==Class Setters==
@@ -33,18 +33,18 @@ class GameSettings {
     this._type = value;
   }
 
-  set difficulty(value) {
-    this._difficulty = value;
+  set length(value) {
+    this._length = value;
   }
 
   // ==Class Functions==
-  // Gets the difficulty in terms of time/number of words
-  getCalculatedDifficulty() {
+  // Gets the Length in terms of time/number of words
+  getCalculatedLength() {
     let output = 0;
 
-    // Concatenates type and difficulty into a string
+    // Concatenates type and length into a string
     let part1 = this._type.toString();
-    let part2 = this._difficulty.toString();
+    let part2 = this._length.toString();
     let switcher = part1.concat(part2);
 
     // Switch statement to go to each option
@@ -160,13 +160,13 @@ class UserGame extends GameSettings {
     }
   }
 
-  // Changes difficulty and type when settings are edited
+  // Changes length and type when settings are edited
   //TODO: Settings DOM to call this function
   editGameData(x, y) {
     let newType = x;
-    let newDifficulty = y;
+    let newLength = y;
     this._type = newType;
-    this._difficulty = newDifficulty;
+    this._length = newLength;
   }
 
   // Creates an array of 30 with random words
@@ -277,7 +277,7 @@ class GameFunctions extends UserGame {
 
   // setInterval timer for a timed game
   timeTimer(callback) {
-    let duration = this.getCalculatedDifficulty();
+    let duration = this.getCalculatedLength();
     let time = 1;
 
     // SetInterval - timer
@@ -304,7 +304,7 @@ class GameFunctions extends UserGame {
 
   // setInterval timer for a word game
   wordTimer(callback) {
-      let totalWordCount = this.getCalculatedDifficulty();
+      let totalWordCount = this.getCalculatedLength();
       let time = 1;
 
       // Variable to keep track of timer
@@ -352,8 +352,8 @@ class GameFunctions extends UserGame {
 
   // Callback function for word game
   goToWordGame() {
-    let gameDifficulty = this.getCalculatedDifficulty();
-    DOMFunctions.changeGameProgress(gameDifficulty);
+    let gameLength = this.getCalculatedLength();
+    DOMFunctions.changeGameProgress(gameLength);
     this.wordTimer(() => {
       console.log("test2");
       inGame = false;
@@ -386,7 +386,7 @@ class GameFunctions extends UserGame {
     //
     console.log(typeof(this._type))
     if (this._type === 1) {
-      DOMFunctions.changeGameProgress(this.getCalculatedDifficulty() - this._userWordCount);
+      DOMFunctions.changeGameProgress(this.getCalculatedLength() - this._userWordCount);
     }
   }
 }
@@ -425,6 +425,7 @@ class DOMManipulation {
 
   // ==Class Functions==
 
+  // updates the node list
   updateNodeList() {
     this._nodeList = gameWordArea.querySelectorAll(".typingWord");
   }
@@ -509,7 +510,7 @@ class DOMManipulation {
     }
   }
 
-  displayStats() { // TODO: this is dom stuff
+  displayStats() {
     let wpm = Game.calculatedStats[0];
     let time = Game.calculatedStats[1];
 
