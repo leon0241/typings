@@ -13,36 +13,36 @@ class GameSettings {
 
   // ==Constructor==
   constructor(type: number, length: number, words: string[]) {
-    // Type of game(time = 0, words = 1)
-    this._type = type;
     // Length of game (0,1,2)
     this._length = length;
+    // Type of game(time = 0, words = 1)
+    this._type = type;
     // Array of top 200 words
     this._words = words;
   }
   // ==Class Getters==
-  // 0 = time, 1 = words
-  get type(): number {
-    return this._type;
-  }
-
   // 0 = lowest, 1 = standard, 2 = high
   get length(): number {
     return this._length;
   }
 
-  // ==Class Setters==
-  set type(value: number) {
-    this._type = value;
+  // 0 = time, 1 = words
+  get type(): number {
+    return this._type;
   }
 
+  // ==Class Setters==
   set length(value: number) {
     this._length = value;
   }
 
+  set type(value: number) {
+    this._type = value;
+  }
+
   // ==Class Functions==
   // Gets the Length in terms of time/number of words
-  getCalculatedLength() {
+  getCalculatedLength(): number {
     let output: number;
 
     // Concatenates type and length into a string
@@ -87,75 +87,70 @@ class GameSettings {
 
 // Methods used to modify values by the player throughout the game
 class UserGame extends GameSettings {
-  _gameWords: string[]
+  _calculatedStats: number[];
+  _characters: number;
+  _gameWords: string[];
+  _timeTaken: number;
+  _userWordCount: number;
+  _wordErrors: number;
+
   // ==Constructor==
-  constructor(...args: any[]) {
+  constructor(...args: [number, number, string[]]) {
     super(...args);
-    // Array of words in the game
-    this._gameWords = [];
-    // Number of errors made
-    this._wordErrors = 0;
     // WPM and Accuracy of player
     this._calculatedStats = [0, 0];
-    // Time taken to complete game
-    this._timeTaken = 0;
     // Number of characters typed
     this._characters = 0;
+    // Array of words in the game
+    this._gameWords = [];
+    // Time taken to complete game
+    this._timeTaken = 0;
     // Number of times spacebar pressed
     this._userWordCount = 0;
+    // Number of errors made
+    this._wordErrors = 0;
   }
 
   // ==Class Getters==
-  get gameWords() {
-    return this._gameWords;
-  }
-
-  // Returns the current word
-  get word() {
-    return this._gameWords[this._userWordCount - 1];
-  }
-
-  get timeTaken() {
-    return this._timeTaken;
-  }
-
-  get characters() {
+  get characters(): number {
     return this._characters;
   }
 
-  get userWordCount() {
-    return this._userWordCount;
-  }
-
-  get calculatedStats() {
+  get calculatedStats(): number[] {
     return this._calculatedStats;
   }
 
-  // ==Class Setters==
-  set timeTaken(value) {
-    this._timeTaken = value;
+  get gameWords(): string[] {
+    return this._gameWords;
   }
 
-  set calculatedStats(value) {
+  get timeTaken(): number {
+    return this._timeTaken;
+  }
+
+  get userWordCount(): number {
+    return this._userWordCount;
+  }
+
+  // Returns the current word
+  get word(): string {
+    return this._gameWords[this._userWordCount - 1];
+  }
+
+  // ==Class Setters==
+  set calculatedStats(value: number[]) {
     this._calculatedStats = value;
   }
-
-  // ==Class Functions==
-  // Adds 1 to errors
-  incrementWordErrors() {
-    this._wordErrors += 1;
-  }
-
-  // Adds 1 to word count
-  incrementWordCount() {
-    this._userWordCount += 1;
+  
+  set timeTaken(value: number) {
+    this._timeTaken = value;
   }
 
   // Adds 1 to the number of characters typed
   // char is the keyCode of the typed character
-  incrementCharacters(char) {
+  incrementCharacters(char: number): void {
     // 8: backspace, 16: shift, 17: ctrl, 20: caps, 46: delete
-    var options = [8, 16, 17, 20, 46];
+    const options = [8, 16, 17, 20, 46];
 
     // if the index of char is not in the array then go
     // alternate way of multiple or statements
@@ -164,42 +159,19 @@ class UserGame extends GameSettings {
     }
   }
 
-  // Changes length and type when settings are edited
-  //TODO: Settings DOM to call this function
-  editGameData(x, y) {
-    let newType = x;
-    let newLength = y;
-    this._type = newType;
-    this._length = newLength;
+  // Adds 1 to word count
+  incrementWordCount(): void {
+    this._userWordCount += 1;
   }
 
-  // Creates an array of 30 with random words
-  initialiseArray() {
-    // Creates temp variable, maybe faster to assign to this.gameWords before
-    const tempGameWords = [];
-    for (let i = 0; i < 50; i++) {
-      // Random integer from 0 to length of array and assigns
-      let randint = Math.floor(Math.random() * (words.length));
-      tempGameWords[i] = this._words[randint];
-    }
-
-    this._gameWords = tempGameWords;
+  // Adds 1 to errors
+  incrementWordErrors(): void {
+    this._wordErrors += 1;
   }
 
-  // Appends a new word to the araray
-  newWord() {
-    console.log("pass")
-    let gameWords = this._gameWords;
-    // Random number up to the length of total words array
-    let randint = Math.floor(Math.random() * (words.length));
-    gameWords.push(words[randint]);
-
-    // Goes to updateWords with array gameWords, position length of gameWords - 1 (for 0 counting array)
-    DOMFunctions.updateWords(this._gameWords, (this._gameWords.length - 1));
-  }
-
+  // ==Class Functions==
   // Calculates WPM and accuracy of the player
-  calculateStats() {
+  calculateStats(): void {
     // Variable initialisation
     let chars = this._characters;
     let time = this._timeTaken;
@@ -228,11 +200,46 @@ class UserGame extends GameSettings {
     let tempStats = [netWPM, accuracy];
     let stats = [];
     tempStats.forEach((element) => stats.push(Math.round(element)));
-    Game.calculatedStats = stats;
+    this._calculatedStats = stats;
 
     // console table for rounded stats
     //let display = [["net WPM", stats[0]], ["accuracy", stats[1]]]
     //console.table(display)
+  }
+
+  // Changes length and type when settings are edited
+  //TODO: Settings DOM to call this function
+  editGameData(x: number, y: number): void {
+    let newType = x;
+    let newLength = y;
+    this._type = newType;
+    this._length = newLength;
+  }
+
+  // Creates an array of 30 with random words
+  initialiseArray(): void {
+    // Creates temp variable, maybe faster to assign to this.gameWords before
+    let tempGameWords = [];
+
+    for (let i = 0; i < 50; i++) {
+      // Random integer from 0 to length of array and assigns
+      let randint = Math.floor(Math.random() * (words.length));
+      tempGameWords[i] = this._words[randint];
+    }
+
+    this._gameWords = tempGameWords;
+  }
+
+  // Appends a new word to the araray
+  newWord(): void {
+    console.log("pass")
+    let gameWords = this._gameWords;
+    // Random number up to the length of total words array
+    let randint = Math.floor(Math.random() * (words.length));
+    gameWords.push(words[randint]);
+
+    // Goes to updateWords with array gameWords, position length of gameWords - 1 (for 0 counting array)
+    DOMFunctions.updateWords(this._gameWords, (this._gameWords.length - 1));
   }
 
   // Checks if the word is correct or not
@@ -268,19 +275,19 @@ class UserGame extends GameSettings {
 
 // Methods that are used to control the game
 class GameFunctions extends UserGame {
-  constructor(...args) {
+  constructor(...args: [number, number, string[]]) {
     super(...args)
   }
 
 
   // Starts the game
-  startGame() {
+  startGame(): void {
     inGame = true;
     let gameType = this._type === 0 ? this.goToTimedGame() : this.goToWordGame(); // TODO: maybe fix this idk
   }
 
   // setInterval timer for a timed game
-  timeTimer(callback) {
+  timeTimer(callback: any): void {
     let duration = this.getCalculatedLength();
     let time = 1;
 
@@ -307,7 +314,7 @@ class GameFunctions extends UserGame {
   }
 
   // setInterval timer for a word game
-  wordTimer(callback) {
+  wordTimer(callback: any): void {
     let totalWordCount = this.getCalculatedLength();
     let time = 1;
 
@@ -344,8 +351,8 @@ class GameFunctions extends UserGame {
   }
 
   // Callback function for timed game
-  goToTimedGame() {
-    DOMFunctions.changeGameProgress("0")
+  goToTimedGame(): void {
+    DOMFunctions.changeGameProgress(0)
     this.timeTimer(() => {
       console.log("test");
       inGame = false;
@@ -355,7 +362,7 @@ class GameFunctions extends UserGame {
   }
 
   // Callback function for word game
-  goToWordGame() {
+  goToWordGame(): void {
     let gameLength = this.getCalculatedLength();
     DOMFunctions.changeGameProgress(gameLength);
     this.wordTimer(() => {
@@ -367,7 +374,7 @@ class GameFunctions extends UserGame {
   }
 
   // Functions and methods called after a word is typed
-  goToNextWord() {
+  goToNextWord(): void {
     console.log("%cnext word", "color: yellow");
     DOMFunctions.updateNodeList();
     // Increase word count
@@ -397,6 +404,10 @@ class GameFunctions extends UserGame {
 
 // Any functions that require DOM manipulation
 class DOMManipulation {
+  _position: number
+  _nodeList: NodeListOf<HTMLElement>
+  _area: HTMLElement
+
   constructor() {
     // How far a word is down a line
     this._position = 0;
@@ -409,7 +420,7 @@ class DOMManipulation {
   }
 
   // == Class getters==
-  get position() {
+  get position(): number {
     return this._position;
   }
 
@@ -423,20 +434,20 @@ class DOMManipulation {
 
   // ==Class Setters==
 
-  set position(value) {
+  set position(value: number) {
     this._position = value;
   }
 
   // ==Class Functions==
 
   // updates the node list
-  updateNodeList() {
+  updateNodeList(): void {
     this._nodeList = gameWordArea.querySelectorAll(".typingWord");
   }
 
   // Updates the area and puts in the specified word in the array
   // Array gamewords, position i
-  updateWords(gameWords, i) {
+  updateWords(gameWords: string[], i: number): void {
     let appenderSpan = document.createElement('span');
     appenderSpan.classList.add("typingWord");
     appenderSpan.textContent = `${gameWords[i]} `;
@@ -444,12 +455,12 @@ class DOMManipulation {
   }
 
   // Adds 1 to position
-  incrementPosition() {
+  incrementPosition(): void {
     this._position += 1;
   }
 
   // Shows the words on screen and sets starting word as highlight
-  showArray(gameWords) {
+  showArray(gameWords: string[]): void {
     let area = this._area;
     area.innerHTML = "";
     // TODO: rename area
@@ -468,7 +479,7 @@ class DOMManipulation {
   }
 
   // Sets the highlight id - triggers on spacebar pressed
-  highlightCurrentWord() {
+  highlightCurrentWord(): void {
     // Setting local variables for each item needed
     let position = this._position;
     // List of words
@@ -496,7 +507,7 @@ class DOMManipulation {
   }
 
   // Bool in from wordCheck() and changes class if the word was right or wrong
-  setAnswer(checkedWord, nodeItem) {
+  setAnswer(checkedWord: boolean, nodeItem: HTMLElement): void {
     if (checkedWord) {
       nodeItem.classList.add("correctWord");
     } else {
@@ -505,7 +516,7 @@ class DOMManipulation {
   }
 
   // Deletes a row - called from wordCheck
-  deleteRow(position) {
+  deleteRow(position: number): void {
     let nodeList = this._nodeList;
     // Remove each span less than the position
     for (let i = 0; i < position; i++) {
@@ -514,18 +525,19 @@ class DOMManipulation {
     }
   }
 
-  displayStats() {
+  displayStats(): void {
     let wpm = Game.calculatedStats[0];
     let time = Game.calculatedStats[1];
 
-    gameWPM.textContent = wpm;
-    gameAccuracy.textContent = time;
+    gameWPM.textContent = wpm.toString();
+    gameAccuracy.textContent = time.toString();
 
   }
 
   // Sets the timer/word countdown to value
-  changeGameProgress(value) {
-    gameProgress.textContent = value;
+  changeGameProgress(value: number) {
+    let content = value.toString()
+    gameProgress.textContent = content;
   }
 }
 
@@ -541,13 +553,13 @@ let DOMFunctions = new DOMManipulation();
 Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
 
-function newGame(that) {
-  let type = that.test_type.value;
-  type = parseInt(type, 10)
-  let length = that.test_length.value;
-  length = parseInt(length, 10)
+function newGame(that: any) {
+  let type: string = that.test_type.value;
+  let length: string = that.test_length.value;
+  let newType: number = parseInt(type, 10)
+  let newLength: number = parseInt(length, 10)
 
-  Game.editGameData(type, length);
+  Game.editGameData(newType, newLength);
   Game.initialiseArray()
   DOMFunctions.showArray(Game.gameWords);
 }
