@@ -221,6 +221,15 @@ class UserGame extends GameSettings {
             DOMFunctions.position = 0;
         }
     }
+    resetStats() {
+        this._calculatedStats = [0, 0];
+        this._characters = 0;
+        this._gameWords = [""];
+        this._timeTaken = 0;
+        this._userWordCount = 0;
+        this._wordErrors = 0;
+        DOMFunctions.position = 0;
+    }
 }
 // Methods that are used to control the game
 class GameFunctions extends UserGame {
@@ -232,14 +241,28 @@ class GameFunctions extends UserGame {
         inGame = true;
         let gameType = this._type === 0 ? this.goToTimedGame() : this.goToWordGame(); // TODO: maybe fix this idk
     }
+    // Callback function for timed game
+    goToTimedGame() {
+        DOMFunctions.changeGameProgress(0);
+        this.timeTimer(() => {
+            console.log("test");
+            inGame = false;
+            this.calculateStats();
+            DOMFunctions.displayStats();
+        });
+    }
     // setInterval timer for a timed game
     timeTimer(callback) {
         let duration = this.getCalculatedLength();
         let time = 1;
         // SetInterval - timer
         let gameTimer = setInterval(() => {
+            if (inGame === false) {
+                clearInterval(gameTimer);
+                return;
+            }
             // if timer over the max time
-            if (time >= duration) {
+            else if (time >= duration) {
                 // Stop timer
                 clearInterval(gameTimer);
                 // Set time taken to the duration
@@ -253,6 +276,17 @@ class GameFunctions extends UserGame {
             time++;
         }, 1000);
     }
+    // Callback function for word game
+    goToWordGame() {
+        let gameLength = this.getCalculatedLength();
+        DOMFunctions.changeGameProgress(gameLength);
+        this.wordTimer(() => {
+            console.log("test2");
+            inGame = false;
+            this.calculateStats();
+            DOMFunctions.displayStats();
+        });
+    }
     // setInterval timer for a word game
     wordTimer(callback) {
         let totalWordCount = this.getCalculatedLength();
@@ -263,8 +297,12 @@ class GameFunctions extends UserGame {
         let interval = 100;
         // SetInterval - timer
         let gameTimer = setInterval(() => {
+            if (inGame === false) {
+                clearInterval(gameTimer);
+                return;
+            }
             // If word count is above total words
-            if (this._userWordCount >= totalWordCount) {
+            else if (this._userWordCount >= totalWordCount) {
                 // Stop timer
                 clearInterval(gameTimer);
                 // Set time taken to the duration
@@ -281,27 +319,6 @@ class GameFunctions extends UserGame {
             }
         }, interval); // Repeat every 1/10 seconds so there is no delay when finishing game
         console.log("wc: ", this._userWordCount);
-    }
-    // Callback function for timed game
-    goToTimedGame() {
-        DOMFunctions.changeGameProgress(0);
-        this.timeTimer(() => {
-            console.log("test");
-            inGame = false;
-            this.calculateStats();
-            DOMFunctions.displayStats();
-        });
-    }
-    // Callback function for word game
-    goToWordGame() {
-        let gameLength = this.getCalculatedLength();
-        DOMFunctions.changeGameProgress(gameLength);
-        this.wordTimer(() => {
-            console.log("test2");
-            inGame = false;
-            this.calculateStats();
-            DOMFunctions.displayStats();
-        });
     }
     // Functions and methods called after a word is typed
     goToNextWord() {
@@ -432,8 +449,10 @@ class DOMManipulation {
     }
     // Sets the timer/word countdown to value
     changeGameProgress(value) {
-        let content = value.toString();
-        gameProgress.textContent = content;
+        if (typeof value === "number") {
+            value = value.toString();
+        }
+        gameProgress.textContent = value;
     }
 }
 /*================
@@ -451,7 +470,15 @@ function newGame(that) {
     let length = that.test_length.value;
     let newType = parseInt(type, 10);
     let newLength = parseInt(length, 10);
+    Game.resetStats;
     Game.editGameData(newType, newLength);
+    Game.initialiseArray();
+    DOMFunctions.showArray(Game.gameWords);
+}
+function resetGame() {
+    inGame = false;
+    clicked = false;
+    Game.resetStats();
     Game.initialiseArray();
     DOMFunctions.showArray(Game.gameWords);
 }
