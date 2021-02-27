@@ -1,60 +1,12 @@
 const gameContainer = document.querySelector(".gameContainer");
 const game = document.querySelector(".game");
-// const gameStatsArea = document.createElement("div")
-// gameStatsArea.classList.add("gameStatsArea")
-// gameStatsArea.id = "gameStatsArea"
-// const gameWordArea = document.createElement("div")
-// gameWordArea.classList.add("gameWordArea")
-// const gameTypingArea = document.createElement("div")
-// gameTypingArea.classList.add("gameTypingArea")
-// const gameResetArea = document.createElement("div")
-// gameResetArea.classList.add("gameResetButton")
-function createElemClassID(topic, element, className) {
-    let elem = document.createElement(element);
-    elem.classList.add(className);
-    elem.id = topic;
-    return elem;
-}
-function createElemClass(element, className) {
-    let elem = document.createElement(element);
-    elem.classList.add(className);
-    return elem;
-}
-const gameStatsArea = createElemClassID("gameStatsArea", "section", "gameArea");
-const gameWordArea = createElemClassID("gameWordArea", "section", "gameArea");
-const gameTypingArea = createElemClassID("gameTypingArea", "section", "gameArea");
-const gameResetArea = createElemClassID("gameResetArea", "section", "gameArea");
-const gameProgress = createElemClassID("gameProgress", "span", "gameStat");
-const gameWPM = createElemClassID("gameWPM", "span", "gameStat");
-const gameAccuracy = createElemClassID("gameAccuracy", "span", "gameStat");
-const gameTypingField = createElemClass("input", "gameTypingField");
-gameTypingField.setAttribute("type", "text");
-const gameResetButton = createElemClass("button", "gameResetButton");
-gameResetButton.type = "button";
-gameResetButton.textContent = "Reset";
-gameResetButton.onclick = () => resetGame();
-const startOverlay = document.createElement("div");
-startOverlay.id = "startOverlay";
-const startButton = document.createElement("button");
-startButton.classList.add("gameStartButton");
-startButton.type = "button";
-startButton.textContent = "Start";
-startButton.onclick = () => initGame();
-const finishOverlay = document.createElement("div");
-finishOverlay.id = "finishOverlay";
-window.onload = () => {
-    gameContainer.appendChild(gameStatsArea);
-    gameContainer.appendChild(gameWordArea);
-    gameContainer.appendChild(gameTypingArea);
-    gameContainer.appendChild(gameResetArea);
-    gameTypingArea.appendChild(gameTypingField);
-    gameStatsArea.appendChild(gameProgress);
-    gameStatsArea.appendChild(gameWPM);
-    gameStatsArea.appendChild(gameAccuracy);
-    gameResetArea.appendChild(gameResetButton);
-    game.appendChild(startOverlay);
-    startOverlay.appendChild(startButton);
-};
+const gameTypingField = document.querySelector(".gameTypingField");
+const gameWordArea = document.querySelector("#gameWordArea");
+const gameWPM = document.querySelector("#gameWPM");
+const gameAccuracy = document.querySelector("#gameAccuracy");
+const gameProgress = document.querySelector("#gameProgress");
+const startOverlay = document.querySelector("#startOverlay");
+const finishOverlay = document.querySelector("#finishOverlay");
 // Any functions that require DOM manipulation
 class DOMManipulation {
     constructor() {
@@ -165,9 +117,16 @@ class DOMManipulation {
         }
         gameProgress.textContent = value;
     }
+    showStart() {
+        startOverlay.style.display = "inline";
+    }
     showBackdrop() {
         startOverlay.style.display = "none";
     }
     showFinish() {
+        finishOverlay.style.display = "inline";
+    }
+    hideFinish() {
+        finishOverlay.style.display = "none";
     }
 }

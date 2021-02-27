@@ -51,6 +51,16 @@
   z-index: 1;
 }
 .game #finishOverlay {
+  border: groove;
+  background-color: white;
   z-index: 2;
-  display: none;
+  display: flex;
+  flex-direction: column;
+}
+.game #finishOverlay .finishArea {
+  flex: 0 1 auto;
+  border: groove;
+}
+.game #finishOverlay #finishStatArea {
+  flex: 1 1 auto;
 }

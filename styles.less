@@ -64,7 +64,18 @@
   }
 
   #finishOverlay{
+    border: groove;
+    background-color: white;
     z-index: 2;
-    display: none;
+    display: flex;
+    flex-direction: column;
+    .finishArea{
+      flex: 0 1 auto;
+      border: groove;
+    }
+
+    #finishStatArea{
+      flex: 1 1 auto;
+    }
   }
 }

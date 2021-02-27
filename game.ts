@@ -300,10 +300,7 @@ class GameFunctions extends UserGame {
   goToTimedGame(): void {
     DOMFunctions.changeGameProgress(0)
     this.timeTimer(() => {
-      console.log("test");
-      inGame = false;
-      this.calculateStats();
-      DOMFunctions.displayStats();
+      this.finishGame()
     })
   }
 
@@ -343,10 +340,7 @@ class GameFunctions extends UserGame {
     let gameLength = this.getCalculatedLength();
     DOMFunctions.changeGameProgress(gameLength);
     this.wordTimer(() => {
-      console.log("test2");
-      inGame = false;
-      this.calculateStats();
-      DOMFunctions.displayStats();
+      this.finishGame()
     })
   }
   // setInterval timer for a word game
@@ -388,6 +382,12 @@ class GameFunctions extends UserGame {
     }, interval) // Repeat every 1/10 seconds so there is no delay when finishing game
 
     console.log("wc: ", this._userWordCount);
+  }
+
+  finishGame(): void {
+    inGame = false;
+    this.calculateStats();
+    DOMFunctions.showFinish();
   }
 
   // Functions and methods called after a word is typed
@@ -439,8 +439,9 @@ function newGame(that: any) {
 
   Game.resetStats;
   Game.editGameData(newType, newLength);
-  Game.initialiseArray()
+  Game.initialiseArray();
   DOMFunctions.showArray(Game.gameWords);
+  DOMFunctions.changeGameProgress("");
 }
 
 function resetGame() {
@@ -449,10 +450,22 @@ function resetGame() {
   Game.resetStats();
   Game.initialiseArray()
   DOMFunctions.showArray(Game.gameWords)
+  DOMFunctions.changeGameProgress("");
 }
 
 function initGame() {
   DOMFunctions.showBackdrop()
+}
+
+function finishedReset() {
+  DOMFunctions.hideFinish()
+  resetGame()
+}
+
+function finishedExit() {
+  DOMFunctions.hideFinish()
+  resetGame()
+  DOMFunctions.showStart()
 }
 
 // On mouse click on typing field

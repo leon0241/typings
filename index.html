@@ -41,6 +41,53 @@
     <main>
       <div class="game">
         <div class="gameContainer">
+          <section class="gameArea" id="gameStatsArea">
+            <span class="gameStat" id="gameProgress"></span>
+            <span class="gameStat" id="gameWPM"></span>
+            <span class="gameStat" id="gameAccuracy"></span>
+          </section>
+
+          <section class="gameArea" id="gameWordArea">
+
+          </section>
+
+          <section class="gameArea" id="gameTypingArea">
+            <input type="text" class="gameTypingField">
+          </section>
+
+          <section class="gameArea" id="gameResetArea">
+            <button type="button" onclick="resetGame()">Reset</button>
+          </section>
+        </div>
+
+        <div id="startOverlay">
+          <button type="button" onclick="initGame()">Start</button>
+        </div>
+
+        <div id="finishOverlay">
+          <section class="finishArea" id="finishTitleArea">
+            <h1>Test Finished!</h1>
+          </section>
+
+          <section class="finishArea" id="finishNameArea">
+            <input type="text" class="finishTypingField">
+          </section>
+
+          <section class="finishArea" id="finishStatArea">
+            <span class="finishStat StatText" id="finishWPM">WPM</span>
+            <span class="finishStat StatNum" id="finishWPMVal"></span>
+            <span class="finishStat StatText" id="finishAcc">Accuracy</span>
+            <span class="finishStat StatNumber" id="finishAccVal"></span>
+          </section>
+
+          <section class="finishArea" id="finishRetryArea">
+            <button type="button" class="finishButton" onclick="finishedReset()">
+              Retry
+            </button>
+            <button type="button" class="finishButton" onclick="finishedExit()">
+              Exit
+            </button>
+          </section>
         </div>
       </div>
     </main>
