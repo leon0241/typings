@@ -155,7 +155,7 @@ class DOMManipulation {
   }
 
   showFinish(): void {
-    finishOverlay.style.display = "inline"
+    finishOverlay.style.display = "grid"
   }
 
   hideFinish(): void {

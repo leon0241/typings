@@ -124,7 +124,7 @@ class DOMManipulation {
         startOverlay.style.display = "none";
     }
     showFinish() {
-        finishOverlay.style.display = "inline";
+        finishOverlay.style.display = "grid";
     }
     hideFinish() {
         finishOverlay.style.display = "none";

@@ -7,8 +7,8 @@
   height: 276px;
   border: double;
   display: grid;
-  grid-template-rows: 40px auto 40px 35px;
-  gap: 15px;
+  grid-template-rows: 15% auto 15% 12.5%;
+  gap: 5%;
   padding: 15px 12px;
 }
 .game .gameContainer .gameArea {
@@ -49,18 +49,40 @@
 .game #startOverlay {
   backdrop-filter: blur(3px);
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .game #finishOverlay {
   border: groove;
   background-color: white;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
+  display: none;
+  grid-template-rows: 20% 15% auto 20%;
 }
 .game #finishOverlay .finishArea {
-  flex: 0 1 auto;
+  display: flex;
   border: groove;
 }
+.game #finishOverlay #finishTitleArea {
+  justify-content: center;
+  align-items: center;
+}
+.game #finishOverlay #finishNameArea {
+  justify-content: center;
+  align-items: center;
+}
 .game #finishOverlay #finishStatArea {
-  flex: 1 1 auto;
+  display: grid;
+  padding: 0 10%;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 30% 70%;
+}
+.game #finishOverlay #finishStatArea .finishStat {
+  justify-self: center;
+  align-self: center;
+}
+.game #finishOverlay #finishRetryArea {
+  justify-content: space-evenly;
+  align-items: center;
 }
