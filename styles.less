@@ -1,52 +1,62 @@
 @defWidth: 69px;
 @borderStyle: groove;
 
-.gameContainer{
-  width: @defWidth * 9;
-  height: @defWidth * 4;
-  border: double;
-  display: grid;
-  grid-template-rows: 40px auto 40px 35px;
-  gap: 15px;
-  padding: 15px 12px;
+.game{
+  position: relative;
+  display: inline-block;
+  .gameContainer{
+    width: @defWidth * 9;
+    height: @defWidth * 4;
+    border: double;
+    display: grid;
+    grid-template-rows: 40px auto 40px 35px;
+    gap: 15px;
+    padding: 15px 12px;
 
-  .gameStatsArea{
-    border: @borderStyle;
-    .gameWPM, .gameAccuracy{
-      padding: 0px 5px;
+    .gameArea{
+      border: @borderStyle;
     }
 
+    #gameStatsArea{
+      #gameWPM, #gameAccuracy{
+        padding: 0px 5px;
+      }
+    }
+
+    #gameWordArea{
+      position: relative;
+      overflow: hidden;
+      padding: 5px;
+      .typingWord{
+        font-size: 30px;
+      }
+
+      #highlightWord{
+        color: orange;
+      }
+
+      .correctWord{
+        color: green;
+      }
+
+      .wrongWord{
+        color: red;
+      }
+
+    }
+
+    #gameTypingArea{
+      display: block;
+    }
   }
 
-  .gameWordArea{
-    position: relative;
-    border: @borderStyle;
-    overflow: hidden;
-    padding: 5px;
-    .typingWord{
-      font-size: 30px;
-    }
-
-    #highlightWord{
-      color: orange;
-    }
-
-    .correctWord{
-      color: green;
-    }
-
-    .wrongWord{
-      color: red;
-    }
-
+  #startOverlay{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    backdrop-filter: blur(3px);
   }
-
-  .gameTypingArea{
-    border: @borderStyle;
-    display: block;
-  }
-  .gameResetButton{
-    border: @borderStyle;
-  }
-
 }

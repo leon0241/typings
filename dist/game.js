@@ -454,6 +454,9 @@ class DOMManipulation {
         }
         gameProgress.textContent = value;
     }
+    showBackdrop() {
+        startOverlay.style.display = "none";
+    }
 }
 /*================
  *     GAME
@@ -481,6 +484,9 @@ function resetGame() {
     Game.resetStats();
     Game.initialiseArray();
     DOMFunctions.showArray(Game.gameWords);
+}
+function initGame() {
+    DOMFunctions.showBackdrop();
 }
 // On mouse click on typing field
 gameTypingField.onclick = () => {

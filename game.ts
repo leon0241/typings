@@ -552,11 +552,15 @@ class DOMManipulation {
   }
 
   // Sets the timer/word countdown to value
-  changeGameProgress(value: any) {
+  changeGameProgress(value: any): void {
     if (typeof value === "number") {
       value = value.toString()
     }
     gameProgress.textContent = value;
+  }
+
+  showBackdrop(): void {
+    startOverlay.style.display = "none";
   }
 }
 
@@ -590,6 +594,10 @@ function resetGame() {
   Game.resetStats();
   Game.initialiseArray()
   DOMFunctions.showArray(Game.gameWords)
+}
+
+function initGame() {
+  DOMFunctions.showBackdrop()
 }
 
 // On mouse click on typing field

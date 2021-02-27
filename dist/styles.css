@@ -1,4 +1,8 @@
-.gameContainer {
+.game {
+  position: relative;
+  display: inline-block;
+}
+.game .gameContainer {
   width: 621px;
   height: 276px;
   border: double;
@@ -7,35 +11,39 @@
   gap: 15px;
   padding: 15px 12px;
 }
-.gameContainer .gameStatsArea {
+.game .gameContainer .gameArea {
   border: groove;
 }
-.gameContainer .gameStatsArea .gameWPM,
-.gameContainer .gameStatsArea .gameAccuracy {
+.game .gameContainer #gameStatsArea #gameWPM,
+.game .gameContainer #gameStatsArea #gameAccuracy {
   padding: 0px 5px;
 }
-.gameContainer .gameWordArea {
+.game .gameContainer #gameWordArea {
   position: relative;
-  border: groove;
   overflow: hidden;
   padding: 5px;
 }
-.gameContainer .gameWordArea .typingWord {
+.game .gameContainer #gameWordArea .typingWord {
   font-size: 30px;
 }
-.gameContainer .gameWordArea #highlightWord {
+.game .gameContainer #gameWordArea #highlightWord {
   color: orange;
 }
-.gameContainer .gameWordArea .correctWord {
+.game .gameContainer #gameWordArea .correctWord {
   color: green;
 }
-.gameContainer .gameWordArea .wrongWord {
+.game .gameContainer #gameWordArea .wrongWord {
   color: red;
 }
-.gameContainer .gameTypingArea {
-  border: groove;
+.game .gameContainer #gameTypingArea {
   display: block;
 }
-.gameContainer .gameResetButton {
-  border: groove;
+.game #startOverlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  backdrop-filter: blur(3px);
 }
