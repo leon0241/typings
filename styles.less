@@ -50,13 +50,21 @@
     }
   }
 
-  #startOverlay{
+  #startOverlay, #finishOverlay{
     height: 100%;
     width: 100%;
     position: absolute;
-    z-index: 1;
     top: 0;
     right: 0;
+  }
+
+  #startOverlay{
     backdrop-filter: blur(3px);
+    z-index: 1;
+  }
+
+  #finishOverlay{
+    z-index: 2;
+    display: none;
   }
 }

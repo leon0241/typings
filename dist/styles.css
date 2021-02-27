@@ -38,12 +38,19 @@
 .game .gameContainer #gameTypingArea {
   display: block;
 }
-.game #startOverlay {
+.game #startOverlay,
+.game #finishOverlay {
   height: 100%;
   width: 100%;
   position: absolute;
-  z-index: 1;
   top: 0;
   right: 0;
+}
+.game #startOverlay {
   backdrop-filter: blur(3px);
+  z-index: 1;
+}
+.game #finishOverlay {
+  z-index: 2;
+  display: none;
 }

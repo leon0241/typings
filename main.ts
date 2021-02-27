@@ -10,36 +10,32 @@ const game = document.querySelector(".game")
 // const gameResetArea = document.createElement("div")
 // gameResetArea.classList.add("gameResetButton")
 
-const gameStatsArea = createGameSection("gameStatsArea")
-const gameWordArea = createGameSection("gameWordArea")
-const gameTypingArea = createGameSection("gameTypingArea")
-const gameResetArea = createGameSection("gameResetArea")
-
-function createGameSection(topic: string): HTMLElement {
-  let elem: HTMLElement = document.createElement("section")
-  elem.classList.add("gameArea")
+function createElemClassID(topic: string, element: string, className: string) {
+  let elem = document.createElement(element)
+  elem.classList.add(className)
   elem.id = topic
   return elem
 }
 
-const gameProgress = createGameStats("gameProgress")
-const gameWPM = createGameStats("gameWPM")
-const gameAccuracy = createGameStats("gameAccuracy")
-
-
-function createGameStats(topic: string): HTMLElement {
-  let elem: HTMLElement = document.createElement("span")
-  elem.classList.add("gameStat")
-  elem.id = topic
+function createElemClass(element: string, className: string) {
+  let elem = document.createElement(element)
+  elem.classList.add(className)
   return elem
 }
 
-const gameTypingField = document.createElement("input")
-gameTypingField.classList.add("gameTypingField")
+const gameStatsArea = createElemClassID("gameStatsArea", "section", "gameArea")
+const gameWordArea = createElemClassID("gameWordArea", "section", "gameArea")
+const gameTypingArea = createElemClassID("gameTypingArea", "section", "gameArea")
+const gameResetArea = createElemClassID("gameResetArea", "section", "gameArea")
+
+const gameProgress = createElemClassID("gameProgress", "span", "gameStat")
+const gameWPM = createElemClassID("gameWPM", "span", "gameStat")
+const gameAccuracy = createElemClassID("gameAccuracy", "span", "gameStat")
+
+const gameTypingField = createElemClass("input", "gameTypingField")
 gameTypingField.setAttribute("type", "text")
 
-const gameResetButton = document.createElement("button")
-gameResetButton.classList.add("gameResetButton")
+const gameResetButton = createElemClass("button", "gameResetButton")
 gameResetButton.type = "button"
 gameResetButton.textContent = "Reset"
 gameResetButton.onclick = () => resetGame()
