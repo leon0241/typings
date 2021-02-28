@@ -10,6 +10,7 @@ const startOverlay: HTMLElement = document.querySelector("#startOverlay")
 const finishOverlay: HTMLElement = document.querySelector("#finishOverlay")
 
 
+
 // Any functions that require DOM manipulation
 class DOMManipulation {
   _position: number

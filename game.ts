@@ -1,6 +1,3 @@
-// DOM Variables
-
-
 /*================
  *    CLASSES
  ================*/
@@ -419,6 +416,7 @@ class GameFunctions extends UserGame {
   }
 }
 
+
 /*================
  *     GAME
  ================*/
@@ -426,7 +424,7 @@ class GameFunctions extends UserGame {
 const words = ["the", "I", "you"];
 let inGame = false;
 let clicked = false;
-let Game = new GameFunctions(1, 0, words); // Words = 1, time = 0
+let Game = new GameFunctions(0, 1, words); // Words = 1, time = 0
 let DOMFunctions = new DOMManipulation();
 Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
