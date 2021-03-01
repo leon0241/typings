@@ -157,6 +157,7 @@ class DOMManipulation {
 
   showFinish(): void {
     finishOverlay.style.display = "grid"
+    this.displayStats();
   }
 
   hideFinish(): void {

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>typings</title>
-    <link rel="stylesheet" type="text/css" href="dist/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/styles.css"/>
   </head>
   <body>
 
@@ -43,8 +43,6 @@
         <div class="gameContainer">
           <section class="gameArea" id="gameStatsArea">
             <span class="gameStat" id="gameProgress"></span>
-            <span class="gameStat" id="gameWPM"></span>
-            <span class="gameStat" id="gameAccuracy"></span>
           </section>
 
           <section class="gameArea" id="gameWordArea">
@@ -76,8 +74,8 @@
           <section class="finishArea" id="finishStatArea">
             <span class="finishStat StatText" id="finishWPM">WPM</span>
             <span class="finishStat StatText" id="finishAcc">Accuracy</span>
-            <span class="finishStat StatNum" id="finishWPMVal">100</span>
-            <span class="finishStat StatNumber" id="finishAccVal">100</span>
+            <span class="finishStat StatNum" id="gameWPM"></span>
+            <span class="finishStat StatNumber" id="gameAccuracy">100</span>
           </section>
 
           <section class="finishArea" id="finishRetryArea">
@@ -100,7 +98,8 @@
 
     </nav>
 
-    <script type="text/javascript" src="dist/main.js"></script>
-    <script type="text/javascript" src="dist/game.js"></script>
+    <script type="text/javascript" src="scripts/main.js"></script>
+    <script type="text/javascript" src="scripts/words.js"></script>
+    <script type="text/javascript" src="scripts/game.js"></script>
   </body>
 </html>

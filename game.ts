@@ -295,7 +295,7 @@ class GameFunctions extends UserGame {
 
   // Callback function for timed game
   goToTimedGame(): void {
-    DOMFunctions.changeGameProgress(0)
+    DOMFunctions.changeGameProgress(this.getCalculatedLength())
     this.timeTimer(() => {
       this.finishGame()
     })
@@ -325,7 +325,7 @@ class GameFunctions extends UserGame {
       }
 
       // Change the on screen timer
-      DOMFunctions.changeGameProgress(time);
+      DOMFunctions.changeGameProgress(duration - time);
 
       // Add 1 to time
       time++;
@@ -416,18 +416,9 @@ class GameFunctions extends UserGame {
   }
 }
 
-
 /*================
- *     GAME
+ *   Functions
  ================*/
-
-const words = ["the", "I", "you"];
-let inGame = false;
-let clicked = false;
-let Game = new GameFunctions(0, 1, words); // Words = 1, time = 0
-let DOMFunctions = new DOMManipulation();
-Game.initialiseArray();
-DOMFunctions.showArray(Game.gameWords);
 
 function newGame(that: any) {
   let type: string = that.test_type.value;
@@ -466,6 +457,10 @@ function finishedExit() {
   DOMFunctions.showStart()
 }
 
+function getWordList() {
+
+}
+
 // On mouse click on typing field
 gameTypingField.onclick = () => {
   // Sets condition to true so if a key is pressed the game will start
@@ -495,3 +490,15 @@ gameTypingField.onkeydown = (e) => {
     }
   }
 }
+
+
+/*================
+ *     GAME
+ ================*/
+
+let inGame = false;
+let clicked = false;
+let Game = new GameFunctions(0, 1, words); // Words = 1, time = 0
+let DOMFunctions = new DOMManipulation();
+Game.initialiseArray();
+DOMFunctions.showArray(Game.gameWords);
