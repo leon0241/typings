@@ -3,7 +3,7 @@ const app = express()
 const port = 3000
 const mongoose = require('mongoose')
 
-const mongo = "mongodb+srv://leon024:9zRcm0xw5wOcipba@leaderboard.eejxy.mongodb.net/Leaderboard?retryWrites=true&w=majority"
+const mongo = "mongodb+srv://leon024:pas@leaderboard.eejxy.mongodb.net/Leaderboard?retryWrites=true&w=majority"
 
 // let Schema = mongoose.Schema;
 
