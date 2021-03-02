@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>typings</title>
+    <link rel="stylesheet" type="text/css" href="styles/styles.css"/>
+  </head>
+  <body>
+
+    <button id="settingsButton">Settings</button>
+    <nav>
+      <form name="settingsForm" onsubmit="newGame(this);return false">
+        <header>
+          <h3>Settings</h3>
+        </header>
+
+        <section>
+          <select name="test_type" id="test_type">
+            <option value="0">Time</option>
+            <option value="1">Text</option>
+          </select>
+          <select name="test_length" id="test_length">
+            <option value="0">30s/25w</option>
+            <option value="1">1m/50w</option>
+            <option value="2">2m/100w</option>
+          </select>
+
+          <button id="openModal">View words</button>
+
+          <div id="wordModal" class="modal">
+            <div class="modal_content">
+              <p>test</p>
+            </div>
+          </div>
+
+          <button id="submitButton" type="submit">Submit</button>
+        </section>
+      </form>
+    </nav>
+
+    <main>
+      <div class="game">
+        <div class="gameContainer">
+          <section class="gameArea" id="gameStatsArea">
+            <span class="gameStat" id="gameProgress"></span>
+          </section>
+
+          <section class="gameArea" id="gameWordArea">
+
+          </section>
+
+          <section class="gameArea" id="gameTypingArea">
+            <input type="text" class="gameTypingField">
+          </section>
+
+          <section class="gameArea" id="gameResetArea">
+            <button type="button" onclick="resetGame()">Reset</button>
+          </section>
+        </div>
+
+        <div id="startOverlay">
+          <button type="button" onclick="initGame()">Start</button>
+        </div>
+
+        <div id="finishOverlay">
+          <section class="finishArea" id="finishTitleArea">
+            <h1>Test Finished!</h1>
+          </section>
+
+          <section class="finishArea" id="finishNameArea">
+            <input type="text" class="finishTypingField">
+          </section>
+
+          <section class="finishArea" id="finishStatArea">
+            <span class="finishStat StatText" id="finishWPM">WPM</span>
+            <span class="finishStat StatText" id="finishAcc">Accuracy</span>
+            <span class="finishStat StatNum" id="gameWPM"></span>
+            <span class="finishStat StatNumber" id="gameAccuracy">100</span>
+          </section>
+
+          <section class="finishArea" id="finishRetryArea">
+            <button type="button" class="finishButton" onclick="finishedReset()">
+              Retry
+            </button>
+            <button type="button" class="finishButton" onclick="finishedExit()">
+              Exit
+            </button>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <a href="">
+
+    </a>
+
+    <nav>
+
+    </nav>
+
+    <script type="text/javascript" src="scripts/main.js"></script>
+    <script type="text/javascript" src="scripts/words.js"></script>
+    <script type="text/javascript" src="scripts/game.js"></script>
+  </body>
+</html>
