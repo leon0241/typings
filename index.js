@@ -13,7 +13,7 @@ const mongo = "mongodb+srv://leon024:9zRcm0xw5wOcipba@leaderboard.eejxy.mongodb.
 //   acc: Number
 // });
 
-mongoose.connect(mongo)
+mongoose.connect(mongo, {useNewUrlParser: true})
 
 app.use(express.static(__dirname + '/public'));
 
