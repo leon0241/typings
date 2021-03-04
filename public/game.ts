@@ -65,7 +65,7 @@ class GameSettings {
 
       // Words(25 words, 50 words, 100 words)
       case "10": {
-        output = 25;
+        output = 5; //TODO: yo fix this shit
         break;
       }
       case "11": {
@@ -385,6 +385,7 @@ class GameFunctions extends UserGame {
     inGame = false;
     this.calculateStats();
     DOMFunctions.showFinish();
+    DOMFunctions.appendFormData();
   }
 
   // Functions and methods called after a word is typed
@@ -498,7 +499,7 @@ gameTypingField.onkeydown = (e) => {
 
 let inGame = false;
 let clicked = false;
-let Game = new GameFunctions(1, 1, words); // Words = 1, time = 0
+let Game = new GameFunctions(1, 0, words); // Words = 1, time = 0
 let DOMFunctions = new DOMManipulation();
 Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);

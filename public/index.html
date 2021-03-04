@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="styles/styles.css"/>
   </head>
   <body>
-
     <button id="settingsButton">Settings</button>
     <nav>
       <form name="settingsForm" onsubmit="newGame(this);return false">
@@ -67,25 +66,32 @@
             <h1>Test Finished!</h1>
           </section>
 
-          <section class="finishArea" id="finishNameArea">
-            <input type="text" class="finishTypingField">
-          </section>
+          <form action="/finish" method="post">
+            <section class="finishArea" id="finishNameArea">
+              <input type="text" class="finishTypingField" name="Name">
+            </section>
+  
+            <section class="finishArea" id="finishStatArea">
+              <span class="finishStat StatText" id="finishWPM">WPM</span>
+              <span class="finishStat StatText" id="finishAcc">Accuracy</span>
+              <span class="finishStat StatNum" id="gameWPM" name="WPM"></span>
+              <span class="finishStat StatNumber" id="gameAccuracy" name="Acc"></span>
+            </section>
+            
+            <section class="finishArea" id="finishHiddenForms">
+              <input type="text" name="wpm" id="hiddenWpm" class="hiddenField">
+              <input type="text" name="acc" id="hiddenAcc" class="hiddenField">
+            </section>
 
-          <section class="finishArea" id="finishStatArea">
-            <span class="finishStat StatText" id="finishWPM">WPM</span>
-            <span class="finishStat StatText" id="finishAcc">Accuracy</span>
-            <span class="finishStat StatNum" id="gameWPM"></span>
-            <span class="finishStat StatNumber" id="gameAccuracy">100</span>
-          </section>
-
-          <section class="finishArea" id="finishRetryArea">
-            <button type="button" class="finishButton" onclick="finishedReset()">
-              Retry
-            </button>
-            <button type="button" class="finishButton" onclick="finishedExit()">
-              Exit
-            </button>
-          </section>
+            <section class="finishArea" id="finishRetryArea">
+              <button type="submit" class="finishButton" onclick="finishedReset()">
+                Retry
+              </button>
+              <button type="submit" class="finishButton" onclick="finishedExit()">
+                Exit
+              </button>
+            </section>
+          </form>
         </div>
       </div>
     </main>

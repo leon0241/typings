@@ -78,6 +78,9 @@
   justify-self: center;
   align-self: center;
 }
+.game #finishOverlay .hiddenField {
+  display: none;
+}
 .game #finishOverlay #finishRetryArea {
   justify-content: space-evenly;
   align-items: center;

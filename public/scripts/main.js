@@ -7,6 +7,8 @@ const gameAccuracy = document.querySelector("#gameAccuracy");
 const gameProgress = document.querySelector("#gameProgress");
 const startOverlay = document.querySelector("#startOverlay");
 const finishOverlay = document.querySelector("#finishOverlay");
+const hiddenWPMInput = document.querySelector("#hiddenWpm");
+const hiddenAccInput = document.querySelector("#hiddenAcc");
 // Any functions that require DOM manipulation
 class DOMManipulation {
     constructor() {
@@ -129,5 +131,10 @@ class DOMManipulation {
     }
     hideFinish() {
         finishOverlay.style.display = "none";
+    }
+    appendFormData() {
+        hiddenWPMInput.value = Game._calculatedStats[0].toString();
+        hiddenAccInput.value = Game._calculatedStats[1].toString();
+        console.log("passed");
     }
 }
