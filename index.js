@@ -1,12 +1,13 @@
 require("dotenv").config()
 
 const express = require('express')
+// const bodyParser = require('body-parser')
 const formidable = require('formidable')
 const app = express()
 const port = 3000
 const mongoose = require('mongoose')
 
-//const mongo = "mongodb+srv://leon024:9zRcm0xw5wOcipba@leaderboard.eejxy.mongodb.net/Leaderboard?retryWrites=true&w=majority"
+//const mongo = "mongodb+srv://leon024:pass@leaderboard.eejxy.mongodb.net/Leaderboard?retryWrites=true&w=majority"
 
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useUnifiedTopology: true})
 const db = mongoose.connection;
@@ -33,26 +34,27 @@ db.once('open', function() {
 // let ScoresModel = mongoose.model('ScoresModel', ScoresSchema);
 
 app.use(express.static(__dirname + '/public'));
-// // parse application/x-www-form-urlencoded
-// app.use(bodyParser.urlencoded({ extended: false }))
 
-// // parse application/json
-// app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.get('/', (req, res) => {
    res.sendFile('index.html');
 });
 
 app.post("/finish", (req, res) => {
-  const form = formidable({multiples: true})
+  console.log("Name: " + req.body.name)
+  console.log("WPM: " + req.body.wpm)
+  console.log("Acc: " + req.body.acc)
 
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      next(err);
-      return;
-    }
-  });
-  console.log(fields)
+  // const form = formidable({multiples: true})
+  // form.parse(req, (err, fields, files) => {
+  //   if (err) {
+  //     next(err);
+  //     return;
+  //   }
+  //   parsedFields = fields
+  // });
 })
  
  app.listen(port, () => {
