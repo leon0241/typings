@@ -8,8 +8,10 @@ const gameAccuracy: HTMLElement = document.querySelector("#gameAccuracy")
 const gameProgress: HTMLElement = document.querySelector("#gameProgress")
 const startOverlay: HTMLElement = document.querySelector("#startOverlay")
 const finishOverlay: HTMLElement = document.querySelector("#finishOverlay")
+const nameInput: HTMLInputElement = document.querySelector("#finishTypingField")
 const hiddenWPMInput: HTMLInputElement = document.querySelector("#hiddenWpm")
 const hiddenAccInput: HTMLInputElement = document.querySelector("#hiddenAcc")
+const finishForm: HTMLFormElement = document.querySelector("#finishForm")
 
 
 // Any functions that require DOM manipulation
@@ -170,4 +172,13 @@ class DOMManipulation {
     hiddenAccInput.value = Game._calculatedStats[1].toString()
     console.log("passed")
   }
+}
+
+function submitFinishForm(): void {
+  let newFinishForm: HTMLFormElement = document.querySelector("#finishForm")
+  let http = new XMLHttpRequest();
+  const formData = new FormData(newFinishForm);
+  console.log(formData)
+  http.open("POST", "/finish", true);
+  http.send(formData);
 }

@@ -1,7 +1,7 @@
 require("dotenv").config()
 
 const express = require('express')
-const bodyParser = require("body-parser")
+const formidable = require('formidable')
 const app = express()
 const port = 3000
 const mongoose = require('mongoose')
@@ -33,22 +33,26 @@ db.once('open', function() {
 // let ScoresModel = mongoose.model('ScoresModel', ScoresSchema);
 
 app.use(express.static(__dirname + '/public'));
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+// // parse application/x-www-form-urlencoded
+// app.use(bodyParser.urlencoded({ extended: false }))
 
-// parse application/json
-app.use(bodyParser.json())
+// // parse application/json
+// app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
    res.sendFile('index.html');
 });
 
 app.post("/finish", (req, res) => {
-  console.log(req.body)
-  console.log("Name: " + req.body.name)
-  console.log("WPM: " + req.body.wpm)
-  console.log("Acc: " + req.body.acc)
-  res.redirect("/")
+  const form = formidable({multiples: true})
+
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      next(err);
+      return;
+    }
+  });
+  console.log(fields)
 })
  
  app.listen(port, () => {

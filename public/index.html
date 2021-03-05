@@ -24,7 +24,7 @@
             <option value="2">2m/100w</option>
           </select>
 
-          <button id="openModal">View words</button>
+          <button type="button" id="openModal">View words</button>
 
           <div id="wordModal" class="modal">
             <div class="modal_content">
@@ -66,9 +66,10 @@
             <h1>Test Finished!</h1>
           </section>
 
-          <form action="/finish" method="post">
+          <!--  action="/finish" method="post"  -->
+          <form id="finishForm" onsubmit="submitFinishForm();return false">
             <section class="finishArea" id="finishNameArea">
-              <input type="text" class="finishTypingField" name="Name">
+              <input type="text" class="finishTypingField" name="Name" id="finishTypingField">
             </section>
   
             <section class="finishArea" id="finishStatArea">
