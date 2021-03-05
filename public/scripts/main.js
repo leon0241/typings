@@ -146,5 +146,7 @@ function submitFinishForm() {
     const formData = new FormData(newFinishForm);
     console.log(formData);
     http.open("POST", "/finish", true);
+    const newLocal = "application/x-www-form-urlencoded";
+    http.setRequestHeader("Content-type", newLocal);
     http.send(formData);
 }
