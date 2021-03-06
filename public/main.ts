@@ -133,6 +133,7 @@ class DOMManipulation {
     }
   }
 
+  // Display stats to finish screen spans
   displayStats(): void {
     let wpm = Game.calculatedStats[0];
     let time = Game.calculatedStats[1];
@@ -150,27 +151,31 @@ class DOMManipulation {
     gameProgress.textContent = value;
   }
 
+  // Show starting display
   showStart(): void {
-    startOverlay.style.display = "inline"
+    startOverlay.style.display = "flex"
   }
 
+  // Show main display
   showBackdrop(): void {
     startOverlay.style.display = "none";
   }
 
+  // Show finish screen
   showFinish(): void {
     finishOverlay.style.display = "inline"
     this.displayStats();
   }
 
+  // Hide finish screen
   hideFinish(): void {
     finishOverlay.style.display = "none"
   }
 
+  // Set hidden field values to WPM and Accuracy
   appendFormData(): void {
     hiddenWPMInput.value = Game._calculatedStats[0].toString()
     hiddenAccInput.value = Game._calculatedStats[1].toString()
-    console.log("passed")
   }
 }
 

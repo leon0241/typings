@@ -7,7 +7,7 @@
   </head>
   <body>
     <button id="settingsButton">Settings</button>
-    <nav>
+    <nav id="settingsSidebar">
       <form name="settingsForm" onsubmit="newGame(this);return false">
         <header>
           <h3>Settings</h3>
@@ -43,24 +43,24 @@
           <section class="gameArea" id="gameStatsArea">
             <span class="gameStat" id="gameProgress"></span>
           </section>
-
+  
           <section class="gameArea" id="gameWordArea">
-
+  
           </section>
-
+  
           <section class="gameArea" id="gameTypingArea">
             <input type="text" class="gameTypingField">
           </section>
-
+  
           <section class="gameArea" id="gameResetArea">
             <button type="button" onclick="resetGame()">Reset</button>
           </section>
         </div>
-
+  
         <div id="startOverlay">
           <button type="button" onclick="initGame()">Start</button>
         </div>
-
+  
         <div id="finishOverlay">
           <form id="finishForm" onsubmit="submitFinishForm();return false">
               <section class="finishArea" id="finishTitleArea">
