@@ -11,6 +11,7 @@ const nameInput = document.querySelector("#finishTypingField");
 const hiddenWPMInput = document.querySelector("#hiddenWpm");
 const hiddenAccInput = document.querySelector("#hiddenAcc");
 const finishForm = document.querySelector("#finishForm");
+const navbar = document.querySelector("#settingsSidebar");
 // Any functions that require DOM manipulation
 class DOMManipulation {
     constructor() {
@@ -157,4 +158,8 @@ function submitFinishForm() {
     http.open("POST", "/finish", true);
     // Send form data
     http.send(formData);
+}
+function openSettings() {
+    alert("pass");
+    navbar.classList.add("openMenu");
 }

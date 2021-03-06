@@ -12,6 +12,7 @@ const nameInput: HTMLInputElement = document.querySelector("#finishTypingField")
 const hiddenWPMInput: HTMLInputElement = document.querySelector("#hiddenWpm")
 const hiddenAccInput: HTMLInputElement = document.querySelector("#hiddenAcc")
 const finishForm: HTMLFormElement = document.querySelector("#finishForm")
+const navbar: HTMLElement = document.querySelector("#settingsSidebar")
 
 
 // Any functions that require DOM manipulation
@@ -195,4 +196,9 @@ function submitFinishForm(): void {
 
   // Send form data
   http.send(formData);
+}
+
+function openSettings(): void {
+  alert("pass")
+  navbar.classList.add("openMenu")
 }
