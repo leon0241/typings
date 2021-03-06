@@ -46,42 +46,46 @@
   backdrop-filter: blur(3px);
   z-index: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 .game #finishOverlay {
   border: groove;
   background-color: white;
   z-index: 2;
   display: none;
-  grid-template-rows: 20% 15% auto 20%;
 }
-.game #finishOverlay .finishArea {
+.game #finishOverlay form {
+  display: grid;
+  grid-template-rows: 20% 15% auto 20%;
+  height: 100%;
+}
+.game #finishOverlay form .finishArea {
   display: flex;
   border: groove;
 }
-.game #finishOverlay #finishTitleArea {
+.game #finishOverlay form #finishTitleArea {
   justify-content: center;
   align-items: center;
 }
-.game #finishOverlay #finishNameArea {
+.game #finishOverlay form #finishNameArea {
   justify-content: center;
   align-items: center;
 }
-.game #finishOverlay #finishStatArea {
+.game #finishOverlay form #finishStatArea {
   display: grid;
   padding: 0 10%;
   grid-template-columns: 50% 50%;
   grid-template-rows: 30% 70%;
 }
-.game #finishOverlay #finishStatArea .finishStat {
+.game #finishOverlay form #finishStatArea .finishStat {
   justify-self: center;
   align-self: center;
 }
-.game #finishOverlay .hiddenField {
+.game #finishOverlay form #finishHiddenForms {
   display: none;
 }
-.game #finishOverlay #finishRetryArea {
+.game #finishOverlay form #finishRetryArea {
   justify-content: space-evenly;
   align-items: center;
 }

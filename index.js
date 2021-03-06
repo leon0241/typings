@@ -1,61 +1,83 @@
+// dotenv - Returning values from a .env file
 require("dotenv").config()
-
+// ExpressJS - website stuff
 const express = require('express')
-// const bodyParser = require('body-parser')
+// Formidable middleware - parsing multipart form data
 const formidableMiddleware = require('express-formidable');
+
+// Initialise express and packages
 const app = express()
-const port = 3000
 const mongoose = require('mongoose')
+
+// Temporary port to open
+const port = 3000
 
 //const mongo = "mongodb+srv://leon024:pass@leaderboard.eejxy.mongodb.net/Leaderboard?retryWrites=true&w=majority"
 
+// Setup mongoose connection thing with value from .env
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useUnifiedTopology: true})
-const db = mongoose.connection;
 
-//const db = mongoose.connection;
+// Actually connect to mongoose
+const db = mongoose.connection;
+// If error then log connection error message
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  // we're connected!
-  console.log("Connected")
+// If no error then log connected message
+db.once('open', () => console.log("Connected"));
+
+// Define mongoose schema creator
+const Schema = mongoose.Schema;
+ 
+// Define new schema for player
+let ScoresSchema = new Schema({
+  name: String,
+  wpm: Number,
+  acc: Number
 });
 
-//Bind connection to error event (to get notification of connection errors)
-// db.on('error', (error) => console.error(error));
-// db.once("open", () => console.log("connected"))
+// Define model with ScoresSchema
+let Scores = mongoose.model("Scores", ScoresSchema);
 
-// let Schema = mongoose.Schema;
 
-// let ScoresSchema = new Schema({
-//   name: String,
-//   wpm: Number,
-//   acc: Number
-// });
-
-// let ScoresModel = mongoose.model('ScoresModel', ScoresSchema);
-
+// Get file directory from express
 app.use(express.static(__dirname + '/public'));
+// Use express-formidable
 app.use(formidableMiddleware());
 
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
-
+// On page load:
 app.get('/', (req, res) => {
-   req.sendFile('index.html');
+  //send file index.html to user
+  req.sendFile('index.html');
 });
 
+// On finish post request: 
 app.post("/finish", (req, res) => {
-  console.log(req.fields)
+  // Define dictionary with parsed field data
+  let fieldDict = req.fields
 
-  // const form = formidable({multiples: true})
-  // form.parse(req, (err, fields, files) => {
-  //   if (err) {
-  //     next(err);
-  //     return;
-  //   }
-  //   parsedFields = fields
-  // });
+  // If name is blank, set name to "Anon"
+  if (fieldDict.name === "") {
+    fieldDict.name = "Anon"
+  }
+
+  // Create new document with schema and dict values
+  let userScore = new Scores({
+    name: fieldDict.name,
+    wpm: fieldDict.wpm,
+    acc: fieldDict.acc
+  })
+
+  // Save document to collection
+  userScore.save(function (err) {
+    if (err) {
+      console.log(handleError(err));
+    }
+    console.log("saved?")
+    // saved!
+  });
+
 })
- 
- app.listen(port, () => {
-   console.log(`Example app listening at http://localhost:${port}`)
- })
+
+// Listen for port and log the port it is listening to
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})

@@ -128,7 +128,7 @@ class DOMManipulation {
         startOverlay.style.display = "none";
     }
     showFinish() {
-        finishOverlay.style.display = "grid";
+        finishOverlay.style.display = "inline";
         this.displayStats();
     }
     hideFinish() {
@@ -140,13 +140,16 @@ class DOMManipulation {
         console.log("passed");
     }
 }
+// Creates a http request to submit form
 function submitFinishForm() {
+    // Gets form with the new data
     let newFinishForm = document.querySelector("#finishForm");
+    // Sets up new http request
     let http = new XMLHttpRequest();
+    // Setup variable with form data object
     const formData = new FormData(newFinishForm);
-    console.log(formData);
+    // Open request method: post, route: finish, true idk
     http.open("POST", "/finish", true);
-    // const newLocal = "application/x-www-form-urlencoded"
-    // http.setRequestHeader("Content-type",newLocal);
+    // Send form data
     http.send(formData);
 }

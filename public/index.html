@@ -28,7 +28,7 @@
 
           <div id="wordModal" class="modal">
             <div class="modal_content">
-              <p>test</p>
+              
             </div>
           </div>
 
@@ -62,36 +62,35 @@
         </div>
 
         <div id="finishOverlay">
-          <section class="finishArea" id="finishTitleArea">
-            <h1>Test Finished!</h1>
-          </section>
-
-          <!--  action="/finish" method="post"  -->
           <form id="finishForm" onsubmit="submitFinishForm();return false">
-            <section class="finishArea" id="finishNameArea">
-              <input type="text" class="finishTypingField" name="Name" id="finishTypingField">
-            </section>
+              <section class="finishArea" id="finishTitleArea">
+                <h1>Test Finished!</h1>
+              </section>
   
-            <section class="finishArea" id="finishStatArea">
-              <span class="finishStat StatText" id="finishWPM">WPM</span>
-              <span class="finishStat StatText" id="finishAcc">Accuracy</span>
-              <span class="finishStat StatNum" id="gameWPM" name="WPM"></span>
-              <span class="finishStat StatNumber" id="gameAccuracy" name="Acc"></span>
-            </section>
+              <section class="finishArea" id="finishNameArea">
+                <input type="text" class="finishTypingField" name="name" id="finishTypingField">
+              </section>
+    
+              <section class="finishArea" id="finishStatArea">
+                <span class="finishStat StatText" id="finishWPM">WPM</span>
+                <span class="finishStat StatText" id="finishAcc">Accuracy</span>
+                <span class="finishStat StatNum" id="gameWPM" name="WPM"></span>
+                <span class="finishStat StatNumber" id="gameAccuracy" name="Acc"></span>
+              </section>
             
-            <section class="finishArea" id="finishHiddenForms">
-              <input type="text" name="wpm" id="hiddenWpm" class="hiddenField">
-              <input type="text" name="acc" id="hiddenAcc" class="hiddenField">
-            </section>
-
-            <section class="finishArea" id="finishRetryArea">
-              <button type="submit" class="finishButton" onclick="finishedReset()">
-                Retry
-              </button>
-              <button type="submit" class="finishButton" onclick="finishedExit()">
-                Exit
-              </button>
-            </section>
+              <section class="finishArea" id="finishHiddenForms">
+                <input type="text" name="wpm" id="hiddenWpm" class="hiddenField">
+                <input type="text" name="acc" id="hiddenAcc" class="hiddenField">
+              </section>
+  
+              <section class="finishArea" id="finishRetryArea">
+                <button type="submit" class="finishButton" onclick="finishedReset()">
+                  Retry
+                </button>
+                <button type="submit" class="finishButton" onclick="finishedExit()">
+                  Exit
+                </button>
+              </section>
           </form>
         </div>
       </div>

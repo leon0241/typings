@@ -159,7 +159,7 @@ class DOMManipulation {
   }
 
   showFinish(): void {
-    finishOverlay.style.display = "grid"
+    finishOverlay.style.display = "inline"
     this.displayStats();
   }
 
@@ -174,13 +174,20 @@ class DOMManipulation {
   }
 }
 
+// Creates a http request to submit form
 function submitFinishForm(): void {
+  // Gets form with the new data
   let newFinishForm: HTMLFormElement = document.querySelector("#finishForm")
+  
+  // Sets up new http request
   let http = new XMLHttpRequest();
+
+  // Setup variable with form data object
   const formData = new FormData(newFinishForm);
-  console.log(formData)
+
+  // Open request method: post, route: finish, true idk
   http.open("POST", "/finish", true);
-  // const newLocal = "application/x-www-form-urlencoded"
-  // http.setRequestHeader("Content-type",newLocal);
+
+  // Send form data
   http.send(formData);
 }

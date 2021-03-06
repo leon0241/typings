@@ -2,6 +2,11 @@
 @borderStyle: groove;
 @defHeight: 69px;
 
+.center_object() {
+  justify-content: center;
+  align-items: center;
+}
+
 .game{
   position: relative;
   display: inline-block;
@@ -57,8 +62,7 @@
     backdrop-filter: blur(3px);
     z-index: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    .center_object()
   }
 
   #finishOverlay{
@@ -66,40 +70,46 @@
     background-color: white;
     z-index: 2;
     display: none;
-    grid-template-rows: 20% 15% auto 20%;
-    .finishArea{
-      display: flex;
-      border: groove;
-    }
 
-    #finishTitleArea{
-      justify-content: center;
-      align-items: center;
-    }
-
-    #finishNameArea{
-      justify-content: center;
-      align-items: center;
-    }
-
-    #finishStatArea{
+    form{
       display: grid;
-      padding: 0 10%;
-      grid-template-columns: 50% 50%;
-      grid-template-rows: 30% 70%;
-      .finishStat{
-        justify-self: center;
-        align-self: center;
+      grid-template-rows: 20% 15% auto 20%;
+      height: 100%;
+
+      .finishArea{
+        display: flex;
+        border: groove;
       }
-    }
+      
+      
 
-    .hiddenField{
-      display: none;
-    }
+      #finishTitleArea{
+        .center_object();
+      }
 
-    #finishRetryArea{
-      justify-content: space-evenly;
-      align-items: center;
+      #finishNameArea{
+        .center_object();
+      }
+  
+      #finishStatArea{
+        display: grid;
+        padding: 0 10%;
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 30% 70%;
+        .finishStat{
+          justify-self: center;
+          align-self: center;
+        }
+      }
+  
+      #finishHiddenForms{
+        display: none;
+      }
+
+      #finishRetryArea{
+        justify-content: space-evenly;
+        align-items: center;
+      }
     }
   }
 }
