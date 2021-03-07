@@ -51,18 +51,25 @@ main{
 }
 
 #gameContainer{
-  width: @defWidth * 9;
+  width: 39rem;
+  height: 16rem;
   position: absolute;
 }
 
 #game{
+
+  @lh: 7 / 6;
+  @bl: 1/6;
+  @text: 4.5rem * @lh + @lh;
+  @grids: 1.5rem * @lh + 1rem;
+
+  border: double;
   height: 100%;
   width: 100%;
-  border: double;
   display: grid;
-  grid-template-rows: 2rem 6rem 2rem 2rem;
+  grid-template-rows: @grids @text @grids @grids;
   gap: 5%;
-  padding: 15px 12px;
+  padding: 12px;
   box-sizing: border-box; 
 }
 
@@ -145,14 +152,24 @@ main{
   .gameArea {
     border: @borderStyle;
   }
+  //TODO: YO U NEED TO FIX THE BOUNDING RECT SHIT
+
+  #gameStatsArea {
+    padding: 0.5rem;
+    #gameProgress{
+      font-size: 1.5rem;
+    }
+  }
 
   #gameWordArea {
     position: relative;
     overflow: hidden;
-    padding: 5px;
+    padding: 0.5rem;
+    padding-bottom: 0.5rem + 1rem * 1/6;
 
     .typingWord {
       font-size: 1.5rem;
+      text-overflow: clip;
     }
 
     #highlightWord {
@@ -176,6 +193,7 @@ main{
       width: 100%;
       border: 0;
       margin: 0;
+      padding: 0;
     }
   }
 }

@@ -32,17 +32,18 @@ main {
   position: fixed;
 }
 #gameContainer {
-  width: 621px;
+  width: 39rem;
+  height: 16rem;
   position: absolute;
 }
 #game {
+  border: double;
   height: 100%;
   width: 100%;
-  border: double;
   display: grid;
-  grid-template-rows: 2rem 6rem 2rem 2rem;
+  grid-template-rows: 2.75rem 6.41666667rem 2.75rem 2.75rem;
   gap: 5%;
-  padding: 15px 12px;
+  padding: 12px;
   box-sizing: border-box;
 }
 #settingsButton {
@@ -103,13 +104,21 @@ main {
 #game .gameArea {
   border: groove;
 }
+#game #gameStatsArea {
+  padding: 0.5rem;
+}
+#game #gameStatsArea #gameProgress {
+  font-size: 1.5rem;
+}
 #game #gameWordArea {
   position: relative;
   overflow: hidden;
-  padding: 5px;
+  padding: 0.5rem;
+  padding-bottom: 0.66666667rem;
 }
 #game #gameWordArea .typingWord {
   font-size: 1.5rem;
+  text-overflow: clip;
 }
 #game #gameWordArea #highlightWord {
   color: orange;
@@ -128,6 +137,7 @@ main {
   width: 100%;
   border: 0;
   margin: 0;
+  padding: 0;
 }
 #gameContainer #startOverlay,
 #gameContainer #finishOverlay {
