@@ -15,17 +15,34 @@
 
     <nav id="settingsNav">
       <h3>Settings</h3>
-      <form name="settingsForm" onsubmit="newGame(this);return false">
-        <select name="test_type" id="test_type">
-          <option value="0">Time</option>
-          <option value="1">Text</option>
-        </select>
-        
-        <select name="test_length" id="test_length">
-          <option value="0">30s/25w</option>
-          <option value="1">1m/50w</option>
-          <option value="2">2m/100w</option>
-        </select>
+      <form name="settingsForm" id="settingsForm" onsubmit="newGame(this);return false">
+        <label for="test_type">Test type</label>
+        <section class="settingsRadio" id="typeSelector">
+          <input type="radio" name="test_type" id="radiotime" value="0">
+          <label for="radiotime">Time</label>
+          <input type="radio" name="test_type" id="radiowords" value="1">
+          <label for="radiowords">Words</label>
+        </section>
+
+        <label for="time_length">Test length</label>
+        <section class="settingsRadio" id="timeSelector">
+          <input type="radio" name="time_length" id="radio30s" value="0">
+          <label for="radio30s">30 secs</label>
+          <input type="radio" name="time_length" id="radio1m" value="1">
+          <label for="radio1m">1 min</label>
+          <input type="radio" name="time_length" id="radio2m" value="2">
+          <label for="radio2m">2 min</label>
+        </section>
+
+        <label for="word_length">Test length</label>
+        <section class="settingsRadio" id="wordSelector">
+          <input type="radio" name="word_length" id="radio25w" value="0">
+          <label for="radio25w">25 words</label>
+          <input type="radio" name="word_length" id="radio50w" value="1">
+          <label for="radio50w">50 words</label>
+          <input type="radio" name="word_length" id="radio100w" value="2">
+          <label for="radio100w">100 words</label>
+        </section>
 
         <button type="button" id="openModal">View words</button>
 
@@ -52,7 +69,7 @@
             <section class="gameArea" id="gameWordArea"></section>
     
             <section class="gameArea" id="gameTypingArea">
-              <input type="text" class="gameTypingField">
+              <input type="text" id="gameTypingField">
             </section>
     
             <section class="gameArea" id="gameResetArea">

@@ -1,7 +1,7 @@
 const gameContainer: HTMLElement = document.querySelector(".gameContainer")
 const game: HTMLElement = document.querySelector(".game")
 
-const gameTypingField: HTMLInputElement = document.querySelector(".gameTypingField")
+const gameTypingField: HTMLInputElement = document.querySelector("#gameTypingField")
 const gameWordArea: HTMLElement = document.querySelector("#gameWordArea")
 const gameWPM: HTMLElement = document.querySelector("#gameWPM")
 const gameAccuracy: HTMLElement = document.querySelector("#gameAccuracy")

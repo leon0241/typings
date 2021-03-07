@@ -9,6 +9,10 @@
   align-items: center;
 }
 
+* {
+  font-family: Consolas;
+  font-size: 16px;
+}
 
 // General body styling
 
@@ -48,7 +52,6 @@ main{
 
 #gameContainer{
   width: @defWidth * 9;
-  height: 19rem;
   position: absolute;
 }
 
@@ -57,7 +60,7 @@ main{
   width: 100%;
   border: double;
   display: grid;
-  grid-template-rows: 15% auto 15% 12.5%;
+  grid-template-rows: 2rem 6rem 2rem 2rem;
   gap: 5%;
   padding: 15px 12px;
   box-sizing: border-box; 
@@ -80,15 +83,34 @@ main{
 
 .open{
   &#settingsButton{
-     margin-left: 10rem;
+     margin-left: 20%;
   }
 
   &#settingsNav{
-     width: 10rem;
+     width: 20%;
   }
 
   &#overlay{
      display: block;
+  }
+}
+
+#settingsForm{
+  display: flex;
+  flex-direction: column;
+
+  .settingsRadio{
+    display: flex;
+    flex-direction: row;
+    input{
+      position: fixed;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    input:checked + label {
+      color: red;
+    }
   }
 }
 
@@ -130,7 +152,7 @@ main{
     padding: 5px;
 
     .typingWord {
-      font-size: 30px;
+      font-size: 1.5rem;
     }
 
     #highlightWord {
@@ -149,6 +171,12 @@ main{
 
   #gameTypingArea {
     display: block;
+    #gameTypingField{
+      height: 100%;
+      width: 100%;
+      border: 0;
+      margin: 0;
+    }
   }
 }
 

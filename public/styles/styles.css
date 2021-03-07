@@ -1,3 +1,7 @@
+* {
+  font-family: Consolas;
+  font-size: 16px;
+}
 html {
   height: 100%;
 }
@@ -29,7 +33,6 @@ main {
 }
 #gameContainer {
   width: 621px;
-  height: 19rem;
   position: absolute;
 }
 #game {
@@ -37,7 +40,7 @@ main {
   width: 100%;
   border: double;
   display: grid;
-  grid-template-rows: 15% auto 15% 12.5%;
+  grid-template-rows: 2rem 6rem 2rem 2rem;
   gap: 5%;
   padding: 15px 12px;
   box-sizing: border-box;
@@ -55,13 +58,29 @@ main {
   display: none;
 }
 .open#settingsButton {
-  margin-left: 10rem;
+  margin-left: 20%;
 }
 .open#settingsNav {
-  width: 10rem;
+  width: 20%;
 }
 .open#overlay {
   display: block;
+}
+#settingsForm {
+  display: flex;
+  flex-direction: column;
+}
+#settingsForm .settingsRadio {
+  display: flex;
+  flex-direction: row;
+}
+#settingsForm .settingsRadio input {
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+}
+#settingsForm .settingsRadio input:checked + label {
+  color: red;
 }
 #startOverlay {
   z-index: 2;
@@ -90,7 +109,7 @@ main {
   padding: 5px;
 }
 #game #gameWordArea .typingWord {
-  font-size: 30px;
+  font-size: 1.5rem;
 }
 #game #gameWordArea #highlightWord {
   color: orange;
@@ -103,6 +122,12 @@ main {
 }
 #game #gameTypingArea {
   display: block;
+}
+#game #gameTypingArea #gameTypingField {
+  height: 100%;
+  width: 100%;
+  border: 0;
+  margin: 0;
 }
 #gameContainer #startOverlay,
 #gameContainer #finishOverlay {

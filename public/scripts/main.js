@@ -1,6 +1,6 @@
 const gameContainer = document.querySelector(".gameContainer");
 const game = document.querySelector(".game");
-const gameTypingField = document.querySelector(".gameTypingField");
+const gameTypingField = document.querySelector("#gameTypingField");
 const gameWordArea = document.querySelector("#gameWordArea");
 const gameWPM = document.querySelector("#gameWPM");
 const gameAccuracy = document.querySelector("#gameAccuracy");
