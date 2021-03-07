@@ -4,94 +4,98 @@
     <meta charset="utf-8">
     <title>typings</title>
     <link rel="stylesheet" type="text/css" href="styles/styles.css"/>
+
+    <script type="text/javascript" src="scripts/main.js" defer></script>
+    <script type="text/javascript" src="scripts/words.js" defer></script>
+    <script type="text/javascript" src="scripts/game.js" defer></script>
   </head>
   <body>
-    <nav id="settingsSidebar">
+
+    <div id="overlay"></div>
+
+    <nav id="settingsNav">
+      <h3>Settings</h3>
       <form name="settingsForm" onsubmit="newGame(this);return false">
-        <header>
-          <h3>Settings</h3>
-        </header>
+        <select name="test_type" id="test_type">
+          <option value="0">Time</option>
+          <option value="1">Text</option>
+        </select>
+        
+        <select name="test_length" id="test_length">
+          <option value="0">30s/25w</option>
+          <option value="1">1m/50w</option>
+          <option value="2">2m/100w</option>
+        </select>
 
-        <section>
-          <select name="test_type" id="test_type">
-            <option value="0">Time</option>
-            <option value="1">Text</option>
-          </select>
-          <select name="test_length" id="test_length">
-            <option value="0">30s/25w</option>
-            <option value="1">1m/50w</option>
-            <option value="2">2m/100w</option>
-          </select>
+        <button type="button" id="openModal">View words</button>
 
-          <button type="button" id="openModal">View words</button>
-
-          <div id="wordModal" class="modal">
-            <div class="modal_content">
-              
-            </div>
+        <div id="wordModal" class="modal">
+          <div class="modal_content">
+            
           </div>
+        </div>
 
-          <button id="submitButton" type="submit">Submit</button>
-        </section>
+        <button id="submitButton" type="submit">Submit</button>
       </form>
     </nav>
 
     <main>
-      <button type="button" id="settingsButton" onclick="alert('passed');">Settings</button>
-      <div class="game">
-        <div class="gameContainer">
-          <section class="gameArea" id="gameStatsArea">
-            <span class="gameStat" id="gameProgress"></span>
-          </section>
-  
-          <section class="gameArea" id="gameWordArea">
-  
-          </section>
-  
-          <section class="gameArea" id="gameTypingArea">
-            <input type="text" class="gameTypingField">
-          </section>
-  
-          <section class="gameArea" id="gameResetArea">
-            <button type="button" onclick="resetGame()">Reset</button>
-          </section>
-        </div>
-  
-        <div id="startOverlay">
-          <button type="button" onclick="initGame()">Start</button>
-        </div>
-  
-        <div id="finishOverlay">
-          <form id="finishForm" onsubmit="submitFinishForm();return false">
-              <section class="finishArea" id="finishTitleArea">
-                <h1>Test Finished!</h1>
-              </section>
-  
-              <section class="finishArea" id="finishNameArea">
-                <input type="text" class="finishTypingField" name="name" id="finishTypingField">
-              </section>
+      <button type="button" id="settingsButton" onclick="openSettings()"></button>
+
+      <div id="screenContainer">
+        <div id="gameContainer">
+          <div id="game">
+            <section class="gameArea" id="gameStatsArea">
+              <span class="gameStat" id="gameProgress"></span>
+            </section>
     
-              <section class="finishArea" id="finishStatArea">
-                <span class="finishStat StatText" id="finishWPM">WPM</span>
-                <span class="finishStat StatText" id="finishAcc">Accuracy</span>
-                <span class="finishStat StatNum" id="gameWPM" name="WPM"></span>
-                <span class="finishStat StatNumber" id="gameAccuracy" name="Acc"></span>
-              </section>
-            
-              <section class="finishArea" id="finishHiddenForms">
-                <input type="text" name="wpm" id="hiddenWpm" class="hiddenField">
-                <input type="text" name="acc" id="hiddenAcc" class="hiddenField">
-              </section>
-  
-              <section class="finishArea" id="finishRetryArea">
-                <button type="submit" class="finishButton" onclick="finishedReset()">
-                  Retry
-                </button>
-                <button type="submit" class="finishButton" onclick="finishedExit()">
-                  Exit
-                </button>
-              </section>
-          </form>
+            <section class="gameArea" id="gameWordArea"></section>
+    
+            <section class="gameArea" id="gameTypingArea">
+              <input type="text" class="gameTypingField">
+            </section>
+    
+            <section class="gameArea" id="gameResetArea">
+              <button type="button" onclick="resetGame()">Reset</button>
+            </section>
+          </div>
+    
+          <div id="startOverlay">
+            <button id="startButton" type="button" onclick="initGame()">Start</button>
+          </div>
+    
+          <div id="finishOverlay">
+            <form id="finishForm" onsubmit="submitFinishForm();return false">
+                <section class="finishArea" id="finishTitleArea">
+                  <h1>Test Finished!</h1>
+                </section>
+    
+                <section class="finishArea" id="finishNameArea">
+                  <input type="text" class="finishTypingField" name="name" id="finishTypingField">
+                </section>
+      
+                <section class="finishArea" id="finishStatArea">
+                  <span class="finishStat StatText" id="finishWPM">WPM</span>
+                  <span class="finishStat StatText" id="finishAcc">Accuracy</span>
+                  <span class="finishStat StatNum" id="gameWPM" name="WPM"></span>
+                  <span class="finishStat StatNumber" id="gameAccuracy" name="Acc"></span>
+                </section>
+              
+                <section class="finishArea" id="finishHiddenForms">
+                  <input type="text" name="wpm" id="hiddenWpm" class="hiddenField">
+                  <input type="text" name="acc" id="hiddenAcc" class="hiddenField">
+                </section>
+    
+                <section class="finishArea" id="finishRetryArea">
+                  <button type="submit" class="finishButton" onclick="finishedReset()">
+                    Retry
+                  </button>
+                  <button type="submit" class="finishButton" onclick="finishedExit()">
+                    Exit
+                  </button>
+                </section>
+            </form>
+          </div>
         </div>
       </div>
     </main>
@@ -103,9 +107,5 @@
     <nav>
 
     </nav>
-
-    <script type="text/javascript" src="scripts/main.js"></script>
-    <script type="text/javascript" src="scripts/words.js"></script>
-    <script type="text/javascript" src="scripts/game.js"></script>
   </body>
 </html>

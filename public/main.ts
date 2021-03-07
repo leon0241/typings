@@ -12,8 +12,46 @@ const nameInput: HTMLInputElement = document.querySelector("#finishTypingField")
 const hiddenWPMInput: HTMLInputElement = document.querySelector("#hiddenWpm")
 const hiddenAccInput: HTMLInputElement = document.querySelector("#hiddenAcc")
 const finishForm: HTMLFormElement = document.querySelector("#finishForm")
-const navbar: HTMLElement = document.querySelector("#settingsSidebar")
 
+const settingsButton: HTMLElement = document.querySelector("#settingsButton");
+const navbar: HTMLElement = document.querySelector("#settingsNav");
+const overlay: HTMLElement = document.querySelector("#overlay");
+
+// Creates a http request to submit form
+function submitFinishForm(): void {
+  // Gets form with the new data
+  let newFinishForm: HTMLFormElement = document.querySelector("#finishForm")
+  
+  // Sets up new http request
+  let http = new XMLHttpRequest();
+
+  // Setup variable with form data object
+  const formData = new FormData(newFinishForm);
+
+  // Open request method: post, route: finish, true idk
+  http.open("POST", "/finish", true);
+
+  // Send form data
+  http.send(formData);
+}
+
+let openToggle = false
+
+function openSettings(): void {
+  if (openToggle === false) {
+     settingsButton.classList.add("open");
+     navbar.classList.add("open");
+     navbar.style.display = "inline";
+     overlay.classList.add("open");
+     openToggle = true;
+  } else {
+     settingsButton.classList.remove("open")
+     navbar.classList.remove("open");
+     navbar.style.display = "none";
+     overlay.classList.remove("open");
+     openToggle = false;
+  }
+}
 
 // Any functions that require DOM manipulation
 class DOMManipulation {
@@ -178,27 +216,4 @@ class DOMManipulation {
     hiddenWPMInput.value = Game._calculatedStats[0].toString()
     hiddenAccInput.value = Game._calculatedStats[1].toString()
   }
-}
-
-// Creates a http request to submit form
-function submitFinishForm(): void {
-  // Gets form with the new data
-  let newFinishForm: HTMLFormElement = document.querySelector("#finishForm")
-  
-  // Sets up new http request
-  let http = new XMLHttpRequest();
-
-  // Setup variable with form data object
-  const formData = new FormData(newFinishForm);
-
-  // Open request method: post, route: finish, true idk
-  http.open("POST", "/finish", true);
-
-  // Send form data
-  http.send(formData);
-}
-
-function openSettings(): void {
-  alert("pass")
-  navbar.classList.add("openMenu")
 }

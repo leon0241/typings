@@ -11,7 +11,39 @@ const nameInput = document.querySelector("#finishTypingField");
 const hiddenWPMInput = document.querySelector("#hiddenWpm");
 const hiddenAccInput = document.querySelector("#hiddenAcc");
 const finishForm = document.querySelector("#finishForm");
-const navbar = document.querySelector("#settingsSidebar");
+const settingsButton = document.querySelector("#settingsButton");
+const navbar = document.querySelector("#settingsNav");
+const overlay = document.querySelector("#overlay");
+// Creates a http request to submit form
+function submitFinishForm() {
+    // Gets form with the new data
+    let newFinishForm = document.querySelector("#finishForm");
+    // Sets up new http request
+    let http = new XMLHttpRequest();
+    // Setup variable with form data object
+    const formData = new FormData(newFinishForm);
+    // Open request method: post, route: finish, true idk
+    http.open("POST", "/finish", true);
+    // Send form data
+    http.send(formData);
+}
+let openToggle = false;
+function openSettings() {
+    if (openToggle === false) {
+        settingsButton.classList.add("open");
+        navbar.classList.add("open");
+        navbar.style.display = "inline";
+        overlay.classList.add("open");
+        openToggle = true;
+    }
+    else {
+        settingsButton.classList.remove("open");
+        navbar.classList.remove("open");
+        navbar.style.display = "none";
+        overlay.classList.remove("open");
+        openToggle = false;
+    }
+}
 // Any functions that require DOM manipulation
 class DOMManipulation {
     constructor() {
@@ -145,21 +177,4 @@ class DOMManipulation {
         hiddenWPMInput.value = Game._calculatedStats[0].toString();
         hiddenAccInput.value = Game._calculatedStats[1].toString();
     }
-}
-// Creates a http request to submit form
-function submitFinishForm() {
-    // Gets form with the new data
-    let newFinishForm = document.querySelector("#finishForm");
-    // Sets up new http request
-    let http = new XMLHttpRequest();
-    // Setup variable with form data object
-    const formData = new FormData(newFinishForm);
-    // Open request method: post, route: finish, true idk
-    http.open("POST", "/finish", true);
-    // Send form data
-    http.send(formData);
-}
-function openSettings() {
-    alert("pass");
-    navbar.classList.add("openMenu");
 }

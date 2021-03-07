@@ -22,6 +22,8 @@ button {
   background-color: #4b4b4b;
   height: 20%;
   width: 50%;
+  border: groove;
+  padding: 30px;
 }
 .container {
   position: absolute;

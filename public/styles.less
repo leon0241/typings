@@ -1,3 +1,5 @@
+//Functions and variables
+
 @defWidth: 69px;
 @borderStyle: groove;
 @defHeight: 69px;
@@ -7,78 +9,151 @@
   align-items: center;
 }
 
-#settingsSidebar {
-  border: double;
-  height: 100%;
-  width: 0;
-  position: fixed;
-}
 
-#settingsButton{
-  z-index: 1;
-}
+// General body styling
 
-#settingsButton:active{
-  position: fixed;
+html{
+  height: 100%
 }
 
 body{
-  margin: 0;
-  padding: 0;
+  height: 100%;
+  margin:0;
+  padding:0;
+  position:static;
 }
 
 main{
+  position:relative;
+  width: 100%;
+  height: 100%;
+}
+
+#screenContainer{
+  position: absolute;
   width: 100%;
   height: 100%;
   display: flex;
-  position: absolute;
-  .center_object();
+  justify-content: center;
+  align-items: center;
 }
 
-.game{
-  display:inline-block;
-  position: relative;
-  
-  .gameContainer{
-    width: @defWidth * 9;
-    height: @defWidth * 4;
-    border: double;
-    display: grid;
-    grid-template-rows: 15% auto 15% 12.5%;
-    gap: 5%;
-    padding: 15px 12px;
+#overlay{
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
 
-    .gameArea{
-      border: @borderStyle;
-    }
+#gameContainer{
+  width: @defWidth * 9;
+  height: 19rem;
+  position: absolute;
+}
 
-    #gameWordArea{
-      position: relative;
-      overflow: hidden;
-      padding: 5px;
-      .typingWord{
-        font-size: 30px;
-      }
+#game{
+  height: 100%;
+  width: 100%;
+  border: double;
+  display: grid;
+  grid-template-rows: 15% auto 15% 12.5%;
+  gap: 5%;
+  padding: 15px 12px;
+  box-sizing: border-box; 
+}
 
-      #highlightWord{
-        color: orange;
-      }
+// Settings bar
+#settingsButton{
+  position: absolute;
+  height: 50px;
+  width: 50px;
+}
 
-      .correctWord{
-        color: green;
-      }
+#settingsNav{
+  position: fixed;
+  height: 100%;
+  width: 0;
+  background-color: rgb(182, 182, 182);
+  display: none;
+}
 
-      .wrongWord{
-        color: red;
-      }
-
-    }
-
-    #gameTypingArea{
-      display: block;
-    }
+.open{
+  &#settingsButton{
+     margin-left: 10rem;
   }
 
+  &#settingsNav{
+     width: 10rem;
+  }
+
+  &#overlay{
+     display: block;
+  }
+}
+
+// Z-Indexing
+
+#startOverlay{
+  z-index: 2;
+}
+
+#finishOverlay{
+  z-index: 2;
+}
+
+#startButton{
+  z-index: 3;
+}
+
+#overlay{
+  z-index: 4;
+}
+
+#settingsNav{
+  z-index: 5;
+}
+
+#settingsButton{
+  z-index: 5;
+}
+
+// Game window
+#game {
+  .gameArea {
+    border: @borderStyle;
+  }
+
+  #gameWordArea {
+    position: relative;
+    overflow: hidden;
+    padding: 5px;
+
+    .typingWord {
+      font-size: 30px;
+    }
+
+    #highlightWord {
+      color: orange;
+    }
+
+    .correctWord {
+      color: green;
+    }
+
+    .wrongWord {
+      color: red;
+    }
+
+  }
+
+  #gameTypingArea {
+    display: block;
+  }
+}
+
+// Start and finish overlay
+#gameContainer{
   #startOverlay, #finishOverlay{
     height: 100%;
     width: 100%;
@@ -86,58 +161,55 @@ main{
     top: 0;
     right: 0;
   }
-
+  
   #startOverlay{
     backdrop-filter: blur(3px);
-    z-index: 1;
     display: flex;
-    .center_object()
+    .center_object();
   }
-
-}
-
-#finishOverlay{
-  border: groove;
-  background-color: white;
-  z-index: 2;
-  display: none;
-
-  form{
-    display: grid;
-    grid-template-rows: 20% 15% auto 20%;
-    height: 100%;
-
-    .finishArea{
-      display: flex;
-      border: groove;
-    }
-    
-    #finishTitleArea{
-      .center_object();
-    }
-
-    #finishNameArea{
-      .center_object();
-    }
-
-    #finishStatArea{
+  
+  #finishOverlay{
+    border: groove;
+    background-color: white;
+    display: none;
+  
+    form{
       display: grid;
-      padding: 0 10%;
-      grid-template-columns: 50% 50%;
-      grid-template-rows: 30% 70%;
-      .finishStat{
-        justify-self: center;
-        align-self: center;
+      grid-template-rows: 20% 15% auto 20%;
+      height: 100%;
+  
+      .finishArea{
+        display: flex;
+        border: groove;
       }
-    }
-
-    #finishHiddenForms{
-      display: none;
-    }
-
-    #finishRetryArea{
-      justify-content: space-evenly;
-      align-items: center;
+      
+      #finishTitleArea{
+        .center_object();
+      }
+  
+      #finishNameArea{
+        .center_object();
+      }
+  
+      #finishStatArea{
+        display: grid;
+        padding: 0 10%;
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 30% 70%;
+        .finishStat{
+          justify-self: center;
+          align-self: center;
+        }
+      }
+  
+      #finishHiddenForms{
+        display: none;
+      }
+  
+      #finishRetryArea{
+        justify-content: space-evenly;
+        align-items: center;
+      }
     }
   }
 }
