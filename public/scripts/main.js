@@ -132,6 +132,19 @@ class DOMManipulation {
             nodeItem.classList.add("wrongWord");
         }
     }
+    checkRow() {
+        let nodeList = this.nodeList;
+        let item = nodeList.item(this.position);
+        let offset = item.offsetTop;
+        console.log(offset);
+        console.log(item.offsetHeight);
+        /* Checks if the y coordinate of the span relative to the div is more than 107(next row) and deletes the row */
+        if (offset > item.offsetHeight) {
+            this.deleteRow(this.position);
+            //Set the position back to 0
+            this.position = 0;
+        }
+    }
     // Deletes a row - called from wordCheck
     deleteRow(position) {
         let nodeList = this._nodeList;

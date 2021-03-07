@@ -52,7 +52,7 @@ main{
 
 #gameContainer{
   width: 39rem;
-  height: 16rem;
+  height: 18rem;
   position: absolute;
 }
 
@@ -61,15 +61,15 @@ main{
   @lh: 7 / 6;
   @bl: 1/6;
   @text: 4.5rem * @lh + @lh;
-  @grids: 1.5rem * @lh + 1rem;
+  @grids: 1.5rem + 1rem;
 
   border: double;
   height: 100%;
   width: 100%;
   display: grid;
   grid-template-rows: @grids @text @grids @grids;
-  gap: 5%;
-  padding: 12px;
+  gap: 0.75rem;
+  padding: 0.75rem;
   box-sizing: border-box; 
 }
 
@@ -155,8 +155,8 @@ main{
   //TODO: YO U NEED TO FIX THE BOUNDING RECT SHIT
 
   #gameStatsArea {
-    padding: 0.5rem;
     #gameProgress{
+      vertical-align: middle;
       font-size: 1.5rem;
     }
   }

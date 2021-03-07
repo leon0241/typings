@@ -258,15 +258,7 @@ class UserGame extends GameSettings {
 
     // Checking if next word is on next line, and deletes the first line
     // Sets DOMRect of the next word, will test if it is on the next line or not
-    let nodeList = DOMFunctions.nodeList;
-    let offset = nodeList.item(position).offsetTop
-    console.log(offset)
-    /* Checks if the y coordinate of the span relative to the div is more than 107(next row) and deletes the row */
-    if (offset > 5) {
-      DOMFunctions.deleteRow(position);
-      //Set the position back to 0
-      DOMFunctions.position = 0;
-    }
+    DOMFunctions.checkRow();
   }
 
   resetStats(): void {
