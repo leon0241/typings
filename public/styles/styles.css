@@ -171,6 +171,12 @@ main {
   padding-left: 5px;
   font-size: 1.5rem;
 }
+#startButton {
+  height: 5rem;
+  width: 10rem;
+  text-align: center;
+  vertical-align: middle;
+}
 #gameContainer #startOverlay,
 #gameContainer #finishOverlay {
   height: 100%;
