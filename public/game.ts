@@ -4,12 +4,14 @@
 
 // Basic game options - type, length, words array
 class GameSettings {
+  _name: string;
   _type: number;
   _length: number;
   readonly _words: string[];
 
   // ==Constructor==
   constructor(type: number, length: number, words: string[]) {
+    this._name = "";
     // Length of game (0,1,2)
     this._length = length;
     // Type of game(time = 0, words = 1)
@@ -18,6 +20,9 @@ class GameSettings {
     this._words = words;
   }
   // ==Class Getters==
+  get name(): string{
+    return this._name;
+  }
   // 0 = lowest, 1 = standard, 2 = high
   get length(): number {
     return this._length;
@@ -80,6 +85,11 @@ class GameSettings {
 
     return output;
   }
+
+  setName(): void{
+    let textbox: HTMLInputElement = document.querySelector("#finishTypingField")
+    this._name = textbox.value;
+  }
 }
 
 // Methods used to modify values by the player throughout the game
@@ -94,6 +104,7 @@ class UserGame extends GameSettings {
   // ==Constructor==
   constructor(...args: [number, number, string[]]) {
     super(...args);
+    
     // WPM and Accuracy of player
     this._calculatedStats = [0, 0];
     // Number of characters typed
@@ -189,19 +200,11 @@ class UserGame extends GameSettings {
     // Calculate accuracy
     let accuracy = (totalWords - errors) / totalWords * 100;
 
-    // Big console table for stats
-    //let display1 = [["characters", chars], ["time", time], ["errors", errors], ["total words", totalWords], ["net words", netWords], ["net wpm", netWPM], ["accuracy", accuracy], ]
-    //console.table(display1)
-
     // Rounds each result to the nearest integer
     let tempStats = [netWPM, accuracy];
     let stats = [];
     tempStats.forEach((element) => stats.push(Math.round(element)));
     this._calculatedStats = stats;
-
-    // console table for rounded stats
-    //let display = [["net WPM", stats[0]], ["accuracy", stats[1]]]
-    //console.table(display)
   }
 
   // Changes length and type when settings are edited
@@ -229,7 +232,6 @@ class UserGame extends GameSettings {
 
   // Appends a new word to the araray
   newWord(): void {
-    console.log("pass")
     let gameWords = this._gameWords;
     // Random number up to the length of total words array
     let randint = Math.floor(Math.random() * (words.length));
@@ -365,12 +367,8 @@ class GameFunctions extends UserGame {
       inGameSeconds += interval
       if (inGameSeconds % 1000 === 0) {
         time++;
-        console.log("time: ", time);
-        console.log("userWordCount: ", this._userWordCount, "totalWordCount: ", totalWordCount)
       }
     }, interval) // Repeat every 1/10 seconds so there is no delay when finishing game
-
-    console.log("wc: ", this._userWordCount);
   }
 
   finishGame(): void {
@@ -382,7 +380,6 @@ class GameFunctions extends UserGame {
 
   // Functions and methods called after a word is typed
   goToNextWord(): void {
-    console.log("%cnext word", "color: yellow");
     DOMFunctions.updateNodeList();
     // Increase word count
     this.incrementWordCount();
@@ -401,8 +398,7 @@ class GameFunctions extends UserGame {
     // Clears the value of the field
     gameTypingField.value = "";
 
-    //
-    console.log(typeof (this._type))
+    //debugger;
     if (this._type === 1) {
       DOMFunctions.changeGameProgress(this.getCalculatedLength() - this._userWordCount);
     }
@@ -415,7 +411,7 @@ class GameFunctions extends UserGame {
 
 function newGame(that: any) {
   let type: string = that.test_type.value;
-  let length: string = that.test_length.value;
+  let length: string = (type === "0") ? that.time_length.value : that.word_length.value
   let newType: number = parseInt(type, 10)
   let newLength: number = parseInt(length, 10)
 
@@ -440,11 +436,15 @@ function initGame() {
 }
 
 function finishedReset() {
+  Game.setName()
+  DOMFunctions.submitToLocalStorage(Game.name, Game.calculatedStats[0])
   DOMFunctions.hideFinish()
   resetGame()
 }
 
 function finishedExit() {
+  Game.setName()
+  DOMFunctions.submitToLocalStorage(Game.name, Game.calculatedStats[0])
   DOMFunctions.hideFinish()
   resetGame()
   DOMFunctions.showStart()
@@ -463,19 +463,16 @@ gameTypingField.onclick = () => {
 }
 
 // On character pressed in the typing field
-gameTypingField.onkeydown = (e) => {
+gameTypingField.onkeyup = (e) => {
   // Check if clicked is true, and start game if met
   if (clicked === true) {
     Game.startGame();
     clicked = false;
   }
-
   // Check if inGame is true before doing any calculations
   if (inGame === true) {
-    //console.log(e.keyCode)
     // Increment the character count with keycode of typed letter
     Game.incrementCharacters(e.keyCode);
-    //console.log(Game.characters);
 
     // If spacebar is pressed => function go to next word
     if (e.keyCode == 32) {
@@ -495,3 +492,10 @@ let Game = new GameFunctions(1, 0, words); // Words = 1, time = 0
 let DOMFunctions = new DOMManipulation();
 Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
+
+window.onload = (event) => {
+  let len = localStorage.length
+  console.log(len)
+  DOMFunctions.userIndex = len + 1;
+  console.log(DOMFunctions.userIndex)
+};

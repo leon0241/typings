@@ -14,25 +14,28 @@ const hiddenAccInput: HTMLInputElement = document.querySelector("#hiddenAcc")
 const finishForm: HTMLFormElement = document.querySelector("#finishForm")
 
 const settingsButton: HTMLElement = document.querySelector("#settingsButton");
-const navbar: HTMLElement = document.querySelector("#settingsNav");
+const settingsNav: HTMLElement = document.querySelector("#settingsNav");
+
+const scoresButton: HTMLElement = document.querySelector("#scoresButton");
+const scoresNav: HTMLElement = document.querySelector("#scoresNav");
 const overlay: HTMLElement = document.querySelector("#overlay");
 
 // Creates a http request to submit form
 function submitFinishForm(): void {
-  // Gets form with the new data
-  let newFinishForm: HTMLFormElement = document.querySelector("#finishForm")
+  // // Gets form with the new data
+  // let newFinishForm: HTMLFormElement = document.querySelector("#finishForm")
   
-  // Sets up new http request
-  let http = new XMLHttpRequest();
+  // // Sets up new http request
+  // let http = new XMLHttpRequest();
 
-  // Setup variable with form data object
-  const formData = new FormData(newFinishForm);
+  // // Setup variable with form data object
+  // const formData = new FormData(newFinishForm);
 
-  // Open request method: post, route: finish, true idk
-  http.open("POST", "/finish", true);
+  // // Open request method: post, route: finish, true idk
+  // http.open("POST", "/finish", true);
 
-  // Send form data
-  http.send(formData);
+  // // Send form data
+  // http.send(formData);
 }
 
 let openToggle = false
@@ -40,23 +43,52 @@ let openToggle = false
 function openSettings(): void {
   if (openToggle === false) {
      settingsButton.classList.add("open");
-     navbar.classList.add("open");
-     navbar.style.display = "inline";
+     settingsNav.classList.add("open");
+     settingsNav.style.display = "inline";
      overlay.classList.add("open");
      openToggle = true;
   } else {
      settingsButton.classList.remove("open")
-     navbar.classList.remove("open");
-     navbar.style.display = "none";
+     settingsNav.classList.remove("open");
+     settingsNav.style.display = "none";
      overlay.classList.remove("open");
      openToggle = false;
   }
+}
+
+function openScores(): void {
+  if (openToggle === false) {
+    scoresButton.classList.add("open");
+    scoresNav.classList.add("open");
+    scoresNav.style.display = "inline";
+    overlay.classList.add("open");
+    openToggle = true;
+  } else {
+    scoresButton.classList.remove("open")
+    scoresNav.classList.remove("open");
+    scoresNav.style.display = "none";
+    overlay.classList.remove("open");
+    openToggle = false;
+  }
+
+  showScoreboard()
+}
+
+function showScoreboard() {
+  let arr = []
+  for (let i = 0; i < localStorage.length; i++) {
+    let raw = localStorage.getItem((i+1).toString())
+    let parsed = JSON.parse(raw)
+    arr[i] = Object.values(parsed)
+  }
+  console.log(arr)
 }
 
 // Any functions that require DOM manipulation
 class DOMManipulation {
   _position: number
   _nodeList: NodeListOf<HTMLElement>
+  _userIndex: number
 
   constructor() {
     // How far a word is down a line
@@ -79,15 +111,28 @@ class DOMManipulation {
     return gameWordArea;
   }
 
+  get userIndex() {
+    return this._userIndex;
+  }
+
   // ==Class Setters==
 
   set position(value: number) {
     this._position = value;
   }
 
+  set userIndex(value: number) {
+    this._userIndex = value
+  }
+
   // ==Class Functions==
 
   // updates the node list
+
+  incrementUserIndex(): void{
+    this._userIndex ++;
+  }
+
   updateNodeList(): void {
     this._nodeList = gameWordArea.querySelectorAll(".typingWord");
   }
@@ -166,8 +211,6 @@ class DOMManipulation {
     let nodeList = this.nodeList;
     let item = nodeList.item(this.position)
     let offset = item.offsetTop
-    console.log(offset)
-    console.log(item.offsetHeight)
     /* Checks if the y coordinate of the span relative to the div is more than 107(next row) and deletes the row */
     if (offset > item.offsetHeight) {
       this.deleteRow(this.position);
@@ -194,7 +237,6 @@ class DOMManipulation {
 
     gameWPM.textContent = wpm.toString();
     gameAccuracy.textContent = time.toString();
-
   }
 
   // Sets the timer/word countdown to value
@@ -230,5 +272,20 @@ class DOMManipulation {
   appendFormData(): void {
     hiddenWPMInput.value = Game._calculatedStats[0].toString()
     hiddenAccInput.value = Game._calculatedStats[1].toString()
+  }
+
+  submitToLocalStorage(name: string, wpm: number): void{
+    console.log(DOMFunctions.userIndex.toString())
+    let stat = {name, wpm}
+
+    localStorage.setItem(DOMFunctions.userIndex.toString(), JSON.stringify(stat));
+
+    console.log(localStorage.getItem(DOMFunctions.userIndex.toString()))
+
+    for (let i = 0;i < localStorage.length;i++){
+      console.log(localStorage.key(i))
+    }
+
+    DOMFunctions.incrementUserIndex()
   }
 }

@@ -46,22 +46,38 @@ main {
   padding: 0.75rem;
   box-sizing: border-box;
 }
-#settingsButton {
+#settingsButton,
+#scoresButton {
   position: absolute;
   height: 50px;
   width: 50px;
 }
-#settingsNav {
+#scoresButton {
+  top: 0px;
+  right: 0px;
+}
+#settingsNav,
+#scoresNav {
   position: fixed;
   height: 100%;
-  width: 0;
+  width: 50px;
   background-color: #b6b6b6;
   display: none;
+}
+#scoresNav {
+  top: 0px;
+  right: 0px;
 }
 .open#settingsButton {
   margin-left: 20%;
 }
 .open#settingsNav {
+  width: 20%;
+}
+.open#scoresButton {
+  margin-right: 20%;
+}
+.open#scoresNav {
   width: 20%;
 }
 .open#overlay {
@@ -71,9 +87,22 @@ main {
   display: flex;
   flex-direction: column;
 }
+#settingsForm > label {
+  font-size: 1.5rem;
+  font-weight: 100;
+}
 #settingsForm .settingsRadio {
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
+}
+#settingsForm .settingsRadio > label {
+  font-size: 1.2rem;
+  border: solid 1px;
+  height: 2rem;
+  width: 7rem;
+  vertical-align: middle;
+  text-align: center;
 }
 #settingsForm .settingsRadio input {
   position: fixed;
@@ -95,10 +124,12 @@ main {
 #overlay {
   z-index: 4;
 }
-#settingsNav {
+#settingsNav,
+#scoresNav {
   z-index: 5;
 }
-#settingsButton {
+#settingsButton,
+#scoresButton {
   z-index: 5;
 }
 #game .gameArea {
@@ -136,6 +167,8 @@ main {
   border: 0;
   margin: 0;
   padding: 0;
+  padding-left: 5px;
+  font-size: 1.5rem;
 }
 #gameContainer #startOverlay,
 #gameContainer #finishOverlay {

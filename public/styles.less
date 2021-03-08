@@ -74,18 +74,28 @@ main{
 }
 
 // Settings bar
-#settingsButton{
+#settingsButton, #scoresButton{
   position: absolute;
   height: 50px;
   width: 50px;
 }
 
-#settingsNav{
+#scoresButton{
+  top: 0px;
+  right: 0px;
+}
+
+#settingsNav, #scoresNav{
   position: fixed;
   height: 100%;
-  width: 0;
+  width: 50px;
   background-color: rgb(182, 182, 182);
   display: none;
+}
+
+#scoresNav{
+  top: 0px;
+  right: 0px;
 }
 
 .open{
@@ -97,6 +107,14 @@ main{
      width: 20%;
   }
 
+  &#scoresButton{
+    margin-right: 20%;
+ }
+
+  &#scoresNav{
+    width: 20%;
+  }
+
   &#overlay{
      display: block;
   }
@@ -106,9 +124,25 @@ main{
   display: flex;
   flex-direction: column;
 
+  > label{
+    font-size: 1.5rem;
+    font-weight:100;
+  }
+
   .settingsRadio{
     display: flex;
     flex-direction: row;
+    justify-content: space-evenly;
+
+    > label{
+      font-size: 1.2rem;
+      border: solid 1px;
+      height: 2rem;
+      width: 7rem;
+      vertical-align: middle;
+      text-align: center;
+    }
+
     input{
       position: fixed;
       opacity: 0;
@@ -139,11 +173,11 @@ main{
   z-index: 4;
 }
 
-#settingsNav{
+#settingsNav, #scoresNav{
   z-index: 5;
 }
 
-#settingsButton{
+#settingsButton, #scoresButton{
   z-index: 5;
 }
 
@@ -152,7 +186,6 @@ main{
   .gameArea {
     border: @borderStyle;
   }
-  //TODO: YO U NEED TO FIX THE BOUNDING RECT SHIT
 
   #gameStatsArea {
     #gameProgress{
@@ -194,6 +227,8 @@ main{
       border: 0;
       margin: 0;
       padding: 0;
+      padding-left: 5px;
+      font-size: 1.5rem;
     }
   }
 }
