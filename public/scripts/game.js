@@ -221,6 +221,8 @@ class UserGame extends GameSettings {
         this._userWordCount = 0;
         this._wordErrors = 0;
         DOMFunctions.position = 0;
+        let textbox = document.querySelector("#finishTypingField");
+        nameInput.value = "";
     }
 }
 // Methods that are used to control the game

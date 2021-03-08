@@ -20,6 +20,8 @@ const scoresButton: HTMLElement = document.querySelector("#scoresButton");
 const scoresNav: HTMLElement = document.querySelector("#scoresNav");
 const overlay: HTMLElement = document.querySelector("#overlay");
 
+const tempscore: HTMLElement = document.querySelector("#tempscores")
+
 // Creates a http request to submit form
 function submitFinishForm(): void {
   // // Gets form with the new data
@@ -60,7 +62,7 @@ function openScores(): void {
   if (openToggle === false) {
     scoresButton.classList.add("open");
     scoresNav.classList.add("open");
-    scoresNav.style.display = "inline";
+    scoresNav.style.display = "flex";
     overlay.classList.add("open");
     openToggle = true;
   } else {
@@ -75,6 +77,7 @@ function openScores(): void {
 }
 
 function showScoreboard() {
+  scoresNav.innerHTML = ""
   let arr = []
   for (let i = 0; i < localStorage.length; i++) {
     let raw = localStorage.getItem((i+1).toString())
@@ -82,6 +85,27 @@ function showScoreboard() {
     arr[i] = Object.values(parsed)
   }
   console.log(arr)
+  let sortedArr = selectionSort(arr)
+  for (let i = 0; i < sortedArr.length; i++) {
+    let tempnav = document.createElement("span")
+    tempnav.textContent = sortedArr[i]
+    scoresNav.appendChild(tempnav)
+  }
+}
+
+function selectionSort(list) {
+  let max = list.length
+  let swaps = 0
+  for(let i = 1;i < max;i++){
+    let j = i
+    while(j > 0 && list[j - 1][1] > list[j][1]){
+      let buffer = list[j - 1][1]
+      list[j - 1][1] = list[j][1]
+      list[j][1] = buffer
+      j--
+    }
+  }
+  return list
 }
 
 // Any functions that require DOM manipulation

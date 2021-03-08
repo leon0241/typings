@@ -271,6 +271,8 @@ class UserGame extends GameSettings {
     this._userWordCount = 0
     this._wordErrors = 0
     DOMFunctions.position = 0
+    let textbox: HTMLInputElement = document.querySelector("#finishTypingField")
+    nameInput.value = "";
   }
 }
 
