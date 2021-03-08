@@ -379,7 +379,7 @@ gameTypingField.onclick = () => {
     }
 };
 // On character pressed in the typing field
-gameTypingField.onkeyup = (e) => {
+gameTypingField.onkeydown = (e) => {
     // Check if clicked is true, and start game if met
     if (clicked === true) {
         Game.startGame();

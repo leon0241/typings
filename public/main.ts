@@ -105,6 +105,7 @@ function selectionSort(list) {
       j--
     }
   }
+  list.reverse();
   return list
 }
 

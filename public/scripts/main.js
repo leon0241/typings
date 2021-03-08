@@ -92,6 +92,7 @@ function selectionSort(list) {
             j--;
         }
     }
+    list.reverse();
     return list;
 }
 // Any functions that require DOM manipulation
