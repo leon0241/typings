@@ -70,7 +70,7 @@ class GameSettings {
 
       // Words(25 words, 50 words, 100 words)
       case "10": {
-        output = 25; //TODO: yo fix this shit
+        output = 5; //TODO: yo fix this shit
         break;
       }
       case "11": {
@@ -439,15 +439,17 @@ function initGame() {
 
 function finishedReset() {
   Game.setName()
-  DOMFunctions.submitToLocalStorage(Game.name, Game.calculatedStats[0])
   DOMFunctions.hideFinish()
+  Scores.submitToLocalStorage(Game.name, Game.calculatedStats[0])
+  Scores.updateScoreboard()
   resetGame()
 }
 
 function finishedExit() {
   Game.setName()
-  DOMFunctions.submitToLocalStorage(Game.name, Game.calculatedStats[0])
   DOMFunctions.hideFinish()
+  Scores.submitToLocalStorage(Game.name, Game.calculatedStats[0])
+  Scores.updateScoreboard()
   resetGame()
   DOMFunctions.showStart()
 }
@@ -492,12 +494,12 @@ let inGame = false;
 let clicked = false;
 let Game = new GameFunctions(1, 0, words); // Words = 1, time = 0
 let DOMFunctions = new DOMManipulation();
+let Scores = new Scoreboard();
 Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
 
 window.onload = (event) => {
-  let len = localStorage.length
-  console.log(len)
-  DOMFunctions.userIndex = len + 1;
-  console.log(DOMFunctions.userIndex)
+  Scores.initScoreboard()
 };
+
+//TODO: reset needs to clear input box

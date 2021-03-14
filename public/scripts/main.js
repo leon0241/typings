@@ -17,6 +17,7 @@ const scoresButton = document.querySelector("#scoresButton");
 const scoresNav = document.querySelector("#scoresNav");
 const overlay = document.querySelector("#overlay");
 const tempscore = document.querySelector("#tempscores");
+const scoreboard = document.querySelector("#scoreboard");
 // Creates a http request to submit form
 function submitFinishForm() {
     // // Gets form with the new data
@@ -62,27 +63,11 @@ function openScores() {
         overlay.classList.remove("open");
         openToggle = false;
     }
-    showScoreboard();
+    //updateScoreboard()
 }
-function showScoreboard() {
-    scoresNav.innerHTML = "";
-    let arr = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        let raw = localStorage.getItem((i + 1).toString());
-        let parsed = JSON.parse(raw);
-        arr[i] = Object.values(parsed);
-    }
-    console.log(arr);
-    let sortedArr = selectionSort(arr);
-    for (let i = 0; i < sortedArr.length; i++) {
-        let tempnav = document.createElement("span");
-        tempnav.textContent = sortedArr[i];
-        scoresNav.appendChild(tempnav);
-    }
-}
-function selectionSort(list) {
+function insertionSort(list) {
+    console.log(list);
     let max = list.length;
-    let swaps = 0;
     for (let i = 1; i < max; i++) {
         let j = i;
         while (j > 0 && list[j - 1][1] > list[j][1]) {
@@ -90,10 +75,97 @@ function selectionSort(list) {
             list[j - 1][1] = list[j][1];
             list[j][1] = buffer;
             j--;
+            console.log("do smth");
         }
     }
-    list.reverse();
+    console.log(list);
     return list;
+}
+function bubbleSort(list) {
+    let swapped = true;
+    let max = list.length;
+    while (swapped = true) {
+        swapped = false;
+        for (let i = 1; i < max; i++) {
+            if (list[i - 1][1] > list[i][1]) {
+                let buffer = list[i - 1][1];
+                list[i - 1][1] = list[i][1];
+                list[i][1] = buffer;
+                swapped = true;
+            }
+        }
+    }
+    return list;
+}
+class Scoreboard {
+    constructor() {
+        this._userIndex = localStorage.length;
+        this._scores = [];
+    }
+    get userIndex() {
+        return this._userIndex;
+    }
+    get strIndex() {
+        return this._userIndex.toString();
+    }
+    get strLen() {
+        return localStorage.length.toString();
+    }
+    get scores() {
+        return this._scores;
+    }
+    set scores(value) {
+        this._scores = value;
+    }
+    set newScore(value) {
+        this._scores.push(value);
+    }
+    incrementIndex() {
+        this._userIndex += 1;
+    }
+    submitToLocalStorage(name, wpm) {
+        console.log(this.strLen);
+        let stat = { name, wpm };
+        localStorage.setItem(this.strLen, JSON.stringify(stat));
+        console.log(localStorage.key(0));
+        console.log(localStorage.getItem(this.strLen));
+    }
+    parseItem(index) {
+        let raw = localStorage.getItem(index.toString());
+        let parsed = JSON.parse(raw);
+        let score = Object.values(parsed);
+        return score;
+    }
+    initScoreboard() {
+        let arr = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            arr[i] = this.parseItem(i);
+        }
+        let sortedArr = insertionSort(arr);
+        sortedArr.reverse();
+        this.scores = sortedArr;
+        for (let i = 0; i < sortedArr.length; i++) {
+            this.insertRow(sortedArr[i]);
+        }
+    }
+    updateScoreboard() {
+        let item = this.parseItem(localStorage.length);
+        this.newScore = item;
+        let sortedArr = bubbleSort(this._scores);
+        sortedArr.reverse();
+        this.scores = sortedArr;
+        for (let i = 0; i < sortedArr.length; i++) {
+            this.insertRow(sortedArr[i]);
+        }
+    }
+    insertRow(array) {
+        let newRow = scoreboard.insertRow(-1);
+        for (let i = 0; i < 2; i++) {
+            let cell = newRow.insertCell(i);
+            let text = document.createTextNode(array[i].toString());
+            cell.appendChild(text);
+        }
+    }
 }
 // Any functions that require DOM manipulation
 class DOMManipulation {
@@ -113,21 +185,12 @@ class DOMManipulation {
     get area() {
         return gameWordArea;
     }
-    get userIndex() {
-        return this._userIndex;
-    }
     // ==Class Setters==
     set position(value) {
         this._position = value;
     }
-    set userIndex(value) {
-        this._userIndex = value;
-    }
     // ==Class Functions==
     // updates the node list
-    incrementUserIndex() {
-        this._userIndex++;
-    }
     updateNodeList() {
         this._nodeList = gameWordArea.querySelectorAll(".typingWord");
     }
@@ -247,15 +310,5 @@ class DOMManipulation {
     appendFormData() {
         hiddenWPMInput.value = Game._calculatedStats[0].toString();
         hiddenAccInput.value = Game._calculatedStats[1].toString();
-    }
-    submitToLocalStorage(name, wpm) {
-        console.log(DOMFunctions.userIndex.toString());
-        let stat = { name, wpm };
-        localStorage.setItem(DOMFunctions.userIndex.toString(), JSON.stringify(stat));
-        console.log(localStorage.getItem(DOMFunctions.userIndex.toString()));
-        for (let i = 0; i < localStorage.length; i++) {
-            console.log(localStorage.key(i));
-        }
-        DOMFunctions.incrementUserIndex();
     }
 }
