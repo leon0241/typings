@@ -37,7 +37,7 @@
     </div>
 
     <!-- Settings nav bar -->
-    <nav id="settingsNav">
+    <nav id="settingsNav" class="navbar">
       <h3>Settings</h3>
 
       <!-- Form with settings -->
@@ -102,11 +102,10 @@
     <!-- Game window -->
     <main>
       <!-- Button to open settings -->
-      <button type="button" id="settingsButton" onclick="openSettings()">
+      <button type="button" id="settingsButton" class="navButton" onclick="openSettings()">
       </button>
-
       <!-- Full screen container -->
-      <div id="screenContainer">
+      <section id="screenContainer">
         <!-- Game size container -->
         <div id="gameContainer">
           <!-- Game window -->
@@ -200,15 +199,22 @@
             </form>
           </div>
         </div>
-      </div>
+      </section>
+
+      <section id="topText">
+        <h1>typer</h1>
+        <p>
+          A simple typing program. Press space to enter a word.
+        </p>
+      </section>
 
       <!-- Button to open scores -->
-      <button type="button" id="scoresButton" onclick="openScores()">
+      <button type="button" id="scoresButton" class="navButton" onclick="openScores()">
       </button>
     </main>
 
     <!-- Scores nav bar -->
-    <nav id="scoresNav">
+    <nav id="scoresNav" class="navbar">
       <!-- Title -->
       <h3>Scoreboard</h3>
 

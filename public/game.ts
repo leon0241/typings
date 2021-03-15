@@ -20,7 +20,7 @@ class GameSettings {
     this._words = words;
   }
   // ==Class Getters==
-  get name(): string{
+  get name(): string {
     return this._name;
   }
   // 0 = lowest, 1 = standard, 2 = high
@@ -86,7 +86,7 @@ class GameSettings {
     return output;
   }
 
-  setName(): void{
+  setName(): void {
     let textbox: HTMLInputElement = document.querySelector("#finishTypingField")
     this._name = textbox.value;
   }
@@ -104,7 +104,7 @@ class UserGame extends GameSettings {
   // ==Constructor==
   constructor(...args: [number, number, string[]]) {
     super(...args);
-    
+
     // WPM and Accuracy of player
     this._calculatedStats = [0, 0];
     // Number of characters typed
@@ -149,7 +149,7 @@ class UserGame extends GameSettings {
   set calculatedStats(value: number[]) {
     this._calculatedStats = value;
   }
-  
+
   set timeTaken(value: number) {
     this._timeTaken = value;
   }
@@ -194,8 +194,9 @@ class UserGame extends GameSettings {
     // Calculate WPM
     let netWPM = (netWords < 0)
       //Account for error where most words that appear are less than 5 letters resulting in negative WPM
-      ? ((totalWords - errors) / timeFactor)
-      : (netWords / timeFactor);
+      ?
+      ((totalWords - errors) / timeFactor) :
+      (netWords / timeFactor);
 
     // Calculate accuracy
     let accuracy = (totalWords - errors) / totalWords * 100;
@@ -307,7 +308,7 @@ class GameFunctions extends UserGame {
       if (inGame === false) {
         clearInterval(gameTimer)
         return
-      } 
+      }
       // if timer over the max time
       else if (time >= duration) {
         // Stop timer
@@ -327,7 +328,7 @@ class GameFunctions extends UserGame {
       time++;
     }, 1000)
   }
-  
+
   // Callback function for word game
   goToWordGame(): void {
     let gameLength = this.getCalculatedLength();
@@ -348,11 +349,11 @@ class GameFunctions extends UserGame {
 
     // SetInterval - timer
     let gameTimer = setInterval(() => {
-      
+
       if (inGame === false) {
         clearInterval(gameTimer)
         return
-      } 
+      }
       // If word count is above total words
       else if (this._userWordCount >= totalWordCount) {
         // Stop timer

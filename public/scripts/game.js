@@ -155,8 +155,9 @@ class UserGame extends GameSettings {
         // Calculate WPM
         let netWPM = (netWords < 0)
             //Account for error where most words that appear are less than 5 letters resulting in negative WPM
-            ? ((totalWords - errors) / timeFactor)
-            : (netWords / timeFactor);
+            ?
+                ((totalWords - errors) / timeFactor) :
+            (netWords / timeFactor);
         // Calculate accuracy
         let accuracy = (totalWords - errors) / totalWords * 100;
         // Rounds each result to the nearest integer
