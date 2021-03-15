@@ -62,6 +62,7 @@ main {
   height: 100%;
   background-color: #b6b6b6;
   display: none;
+  flex-direction: column;
 }
 #scoresNav {
   top: 0px;
@@ -138,6 +139,9 @@ main {
   border: 1px solid #888;
   width: 80%;
   /* Could be more or less, depending on screen size */
+}
+#wordModal #modalContent #modalHeader span {
+  float: right;
 }
 #wordModal #modalContent #modalWords {
   display: flex;

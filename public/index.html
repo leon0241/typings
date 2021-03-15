@@ -16,7 +16,10 @@
     <div id="wordModal" class="modal">
       <div id="modalContent">
         <header id="modalHeader" class="modalSection">
-          <h1>modal<span>&times;</span></h1>
+          <h1>
+            modal
+            <span id="modalExit" onclick="closeModal()">&times;</span>
+          </h1>
         </header>
 
         <section id="modalButtons" class="modalSection">
@@ -44,21 +47,21 @@
 
         <label for="time_length">Test length</label>
         <section class="settingsRadio" id="timeSelector">
-          <input type="radio" name="time_length" id="radio30s" value="0">
+          <input type="radio" name="time_length" id="radio30s" class="lengthRadio" value="0">
           <label for="radio30s">30 secs</label>
-          <input type="radio" name="time_length" id="radio1m" value="1">
+          <input type="radio" name="time_length" id="radio1m" class="lengthRadio" value="1">
           <label for="radio1m">1 min</label>
-          <input type="radio" name="time_length" id="radio2m" value="2">
+          <input type="radio" name="time_length" id="radio2m" class="lengthRadio" value="2">
           <label for="radio2m">2 min</label>
         </section>
 
         <label for="word_length">Test length</label>
         <section class="settingsRadio" id="wordSelector">
-          <input type="radio" name="word_length" id="radio25w" value="0">
+          <input type="radio" name="word_length" id="radio25w" class="lengthRadio" value="0">
           <label for="radio25w">25 words</label>
-          <input type="radio" name="word_length" id="radio50w" value="1">
+          <input type="radio" name="word_length" id="radio50w" class="lengthRadio" value="1">
           <label for="radio50w">50 words</label>
-          <input type="radio" name="word_length" id="radio100w" value="2">
+          <input type="radio" name="word_length" id="radio100w" class="lengthRadio" value="2">
           <label for="radio100w">100 words</label>
         </section>
 

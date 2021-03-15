@@ -90,6 +90,7 @@ main{
   height: 100%;
   background-color: rgb(182, 182, 182);
   display: none;
+  flex-direction: column;
 }
 
 #scoresNav{
@@ -174,6 +175,12 @@ main{
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+
+    #modalHeader{
+      span{
+        float: right
+      }
+    }
 
     #modalWords{
       display: flex;

@@ -16,6 +16,11 @@ const finishForm: HTMLFormElement = document.querySelector("#finishForm")
 const settingsButton: HTMLElement = document.querySelector("#settingsButton");
 const settingsNav: HTMLElement = document.querySelector("#settingsNav");
 
+const radiotime: HTMLElement = document.querySelector("#radiotime")
+const radiowords: HTMLElement = document.querySelector("#radiowords")
+const wordSelector: HTMLElement = document.querySelector("#wordSelector")
+const timeSelector: HTMLElement = document.querySelector("#timeSelector")
+
 const scoresButton: HTMLElement = document.querySelector("#scoresButton");
 const scoresNav: HTMLElement = document.querySelector("#scoresNav");
 const overlay: HTMLElement = document.querySelector("#overlay");
@@ -27,6 +32,7 @@ const scorebody: HTMLTableSectionElement = document.querySelector("#scorebody")
 const modal: HTMLElement = document.querySelector("#wordModal")
 const openModal: HTMLButtonElement = document.querySelector("#openModal")
 const modalWords: HTMLElement = document.querySelector("#modalWords")
+const modalExit: HTMLElement = document.querySelector("#modalExit")
 
 // Creates a http request to submit form
 function submitFinishForm(): void {
@@ -50,42 +56,72 @@ let openToggle = false
 
 function openSettings(): void {
   if (openToggle === false) {
-     settingsButton.classList.add("open");
-     settingsNav.classList.add("open");
-     settingsNav.style.display = "inline";
-     overlay.classList.add("open");
-     scoresButton.style.zIndex = "2"
-     openToggle = true;
+    sidebarDOM(settingsButton, settingsNav, scoresButton, "open")
+    openToggle = true;
   } else {
-     settingsButton.classList.remove("open")
-     settingsNav.classList.remove("open");
-     settingsNav.style.display = "none";
-     overlay.classList.remove("open");
-     scoresButton.style.zIndex = "4"
-     openToggle = false;
+    sidebarDOM(settingsButton, settingsNav, scoresButton, "close")
+    openToggle = false;
   }
 }
 
 function openScores(): void {
   if (openToggle === false) {
-    scoresButton.classList.add("open");
-    scoresNav.classList.add("open");
-    scoresNav.style.display = "flex";
-    overlay.classList.add("open");
-    settingsButton.style.zIndex = "2"
+    sidebarDOM(scoresButton, scoresNav, settingsButton, "open")
     openToggle = true;
   } else {
-    scoresButton.classList.remove("open")
-    scoresNav.classList.remove("open");
-    scoresNav.style.display = "none";
-    overlay.classList.remove("open");
-    settingsButton.style.zIndex = "4"
+    sidebarDOM(scoresButton, scoresNav, settingsButton, "close")
     openToggle = false;
+  }
+}
+
+function sidebarDOM(button, nav, button2, state): void{
+  if (state === "open"){
+    button.classList.add("open");
+    nav.classList.add("open");
+    nav.style.display = "flex";
+    overlay.classList.add("open");
+    button2.style.zIndex = "2"
+  } else{
+    button.classList.remove("open")
+    nav.classList.remove("open");
+    nav.style.display = "none";
+    overlay.classList.remove("open");
+    button2.style.zIndex = "4"
   }
 }
 
 openModal.onclick = (event) => {
   modal.style.display = "flex"
+}
+
+radiotime.onclick = () => {
+  chooseTimeWords(wordSelector, timeSelector)
+}
+
+radiowords.onclick = () => {
+  chooseTimeWords(timeSelector, wordSelector)
+}
+
+function chooseTimeWords(a: HTMLElement, b: HTMLElement) {
+  a.classList.add("deselected")
+  let group = a.querySelectorAll(".lengthRadio")
+  group.forEach((element: any) => {
+    element.disabled = true
+    element.checked = false
+    console.log("test")
+  })
+  if (b.classList.contains("deselected")) {
+    b.classList.remove("deselected")
+    let group = b.querySelectorAll(".lengthRadio")
+    group.forEach((element: any) => {
+      element.disabled = false
+      console.log("test2")
+    })
+  }
+}
+
+function closeModal(): void {
+  modal.style.display = "none"
 }
 
 function freqSortf(): void {
@@ -99,10 +135,12 @@ function lengthSortf(): void {
 }
 
 function alphaSortf(): void {
-  let arr = words.sort((a, b) => {
+  let wordDummy = [...words]
+  let arr = wordDummy.sort((a, b) => {
     return a.toLowerCase().localeCompare(b.toLowerCase());
 });
   writeWords(arr)
+  console.log(words)
 }
 
 function writeWords(arr: string[]): void {
@@ -144,7 +182,6 @@ function insertionSort2d(list: [string, number][]) {
       j--
     }
   }
-  console.log(list)
   return list
 }
 
