@@ -22,6 +22,11 @@ const overlay: HTMLElement = document.querySelector("#overlay");
 
 const tempscore: HTMLElement = document.querySelector("#tempscores")
 const scoreboard: HTMLTableElement = document.querySelector("#scoreboard")
+const scorebody: HTMLTableSectionElement = document.querySelector("#scorebody")
+
+const modal: HTMLElement = document.querySelector("#wordModal")
+const openModal: HTMLButtonElement = document.querySelector("#openModal")
+const modalWords: HTMLElement = document.querySelector("#modalWords")
 
 // Creates a http request to submit form
 function submitFinishForm(): void {
@@ -49,12 +54,14 @@ function openSettings(): void {
      settingsNav.classList.add("open");
      settingsNav.style.display = "inline";
      overlay.classList.add("open");
+     scoresButton.style.zIndex = "2"
      openToggle = true;
   } else {
      settingsButton.classList.remove("open")
      settingsNav.classList.remove("open");
      settingsNav.style.display = "none";
      overlay.classList.remove("open");
+     scoresButton.style.zIndex = "4"
      openToggle = false;
   }
 }
@@ -65,46 +72,93 @@ function openScores(): void {
     scoresNav.classList.add("open");
     scoresNav.style.display = "flex";
     overlay.classList.add("open");
+    settingsButton.style.zIndex = "2"
     openToggle = true;
   } else {
     scoresButton.classList.remove("open")
     scoresNav.classList.remove("open");
     scoresNav.style.display = "none";
     overlay.classList.remove("open");
+    settingsButton.style.zIndex = "4"
     openToggle = false;
   }
-
-  //updateScoreboard()
 }
 
-function insertionSort(list) {
+openModal.onclick = (event) => {
+  modal.style.display = "flex"
+}
+
+function freqSortf(): void {
+  let arr = words
+  writeWords(arr)
+}
+
+function lengthSortf(): void {
+  let arr = sortWordsByLength()
+  writeWords(arr)
+}
+
+function alphaSortf(): void {
+  let arr = words.sort((a, b) => {
+    return a.toLowerCase().localeCompare(b.toLowerCase());
+});
+  writeWords(arr)
+}
+
+function writeWords(arr: string[]): void {
+  modalWords.innerHTML = ""
+  for (let i = 0; i < arr.length; i++) {
+    let appenderSpan = document.createElement('span');
+    appenderSpan.classList.add("modalWord");
+    appenderSpan.textContent = arr[i]
+    modalWords.appendChild(appenderSpan);
+  }
+}
+
+function sortWordsByLength(): string[] {
+  let lengthArr: [string, number][] = []
+
+  for (let i = 0; i < words.length; i++) {
+    let element = words[i];
+    lengthArr[i] = [element, element.length]
+  }
+  let sortedArr = insertionSort2d(lengthArr)
+  sortedArr.reverse
+
+  let finalArr: string[] = []
+  for (let i = 0; i < words.length; i++) {
+    finalArr[i] = sortedArr[i][0]
+  }
+  return finalArr
+}
+
+function insertionSort2d(list: [string, number][]) {
   console.log(list)
   let max = list.length
   for(let i = 1;i < max;i++){
     let j = i
     while(j > 0 && list[j - 1][1] > list[j][1]){
-      let buffer = list[j - 1][1]
-      list[j - 1][1] = list[j][1]
-      list[j][1] = buffer
+      let buffer = list[j - 1]
+      list[j - 1] = list[j]
+      list[j] = buffer
       j--
-      console.log("do smth")
     }
   }
   console.log(list)
   return list
 }
 
-function bubbleSort(list) {
+function bubbleSort2d(list: [string, number][]) {
   let swapped = true
   let max = list.length
-  while (swapped = true) {
+  while (swapped === true) {
     swapped = false
     for (let i = 1; i < max; i++) {
 
       if (list[i - 1][1] > list[i][1]) {
-        let buffer = list[i - 1][1]
-        list[i - 1][1] = list[i][1]
-        list[i][1] = buffer
+        let buffer = list[i - 1]
+        list[i - 1] = list[i]
+        list[i] = buffer
         swapped = true
       }
     }
@@ -112,21 +166,13 @@ function bubbleSort(list) {
   return list
 }
 
+
+
 class Scoreboard {
-  _userIndex: number;
   _scores: [string, number][]
 
   constructor() {
-    this._userIndex = localStorage.length;
     this._scores = []
-  }
-
-  get userIndex(): number {
-    return this._userIndex;
-  }
-
-  get strIndex(): string {
-    return this._userIndex.toString()
   }
 
   get strLen(): string {
@@ -141,12 +187,8 @@ class Scoreboard {
     this._scores = value
   }
 
-  set newScore(value: [string, number]) {
+  addNewScore(value: [string, number]) {
     this._scores.push(value)
-  }
-
-  incrementIndex() {
-    this._userIndex += 1;
   }
 
   submitToLocalStorage(name: string, wpm: number): void{
@@ -170,21 +212,29 @@ class Scoreboard {
     for (let i = 0; i < localStorage.length; i++) {
       arr[i] = this.parseItem(i)
     }
-    let sortedArr = insertionSort(arr)
+    let sortedArr = insertionSort2d(arr)
     sortedArr.reverse();
-    this.scores = sortedArr
+    this._scores = sortedArr
 
+    scorebody.innerHTML = ""
     for (let i = 0; i < sortedArr.length; i++) {
       this.insertRow(sortedArr[i])
     }
   }
 
   updateScoreboard() {
-    let item = this.parseItem(localStorage.length)
-    this.newScore = item
-    let sortedArr = bubbleSort(this._scores)
+
+    console.log(localStorage.getItem((localStorage.length-1).toString()))
+    let item = this.parseItem(localStorage.length - 1)
+    this.addNewScore(item)
+
+    let sortedArr = bubbleSort2d(this._scores)
     sortedArr.reverse();
     this.scores = sortedArr
+
+    console.log(scorebody)
+    scorebody.innerHTML = ""
+    console.log(scorebody.innerHTML);
 
     for (let i = 0; i < sortedArr.length; i++) {
       this.insertRow(sortedArr[i])
@@ -192,7 +242,7 @@ class Scoreboard {
   }
 
   insertRow(array: [string, number]) {
-    let newRow = scoreboard.insertRow(-1)
+    let newRow = scorebody.insertRow(-1)
     for (let i = 0;i < 2; i++) {
       let cell = newRow.insertCell(i)
       let text = document.createTextNode(array[i].toString())

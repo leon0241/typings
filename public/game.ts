@@ -437,25 +437,15 @@ function initGame() {
   DOMFunctions.showBackdrop()
 }
 
-function finishedReset() {
+function finishedReset(exit) {
   Game.setName()
   DOMFunctions.hideFinish()
   Scores.submitToLocalStorage(Game.name, Game.calculatedStats[0])
   Scores.updateScoreboard()
   resetGame()
-}
-
-function finishedExit() {
-  Game.setName()
-  DOMFunctions.hideFinish()
-  Scores.submitToLocalStorage(Game.name, Game.calculatedStats[0])
-  Scores.updateScoreboard()
-  resetGame()
-  DOMFunctions.showStart()
-}
-
-function getWordList() {
-
+  if (exit === true) {
+    DOMFunctions.showStart()
+  }
 }
 
 // On mouse click on typing field

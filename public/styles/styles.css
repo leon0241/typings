@@ -113,24 +113,57 @@ main {
 #settingsForm .settingsRadio input:checked + label {
   color: red;
 }
+#wordModal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: #000000;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Black w/ opacity */
+  justify-content: center;
+}
+#wordModal #modalContent {
+  background-color: #b6b6b6;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  /* Could be more or less, depending on screen size */
+}
+#wordModal #modalContent #modalWords {
+  display: flex;
+  flex-wrap: wrap;
+}
+#wordModal #modalContent #modalWords .modalWord {
+  padding: 2px;
+}
 #startOverlay {
   z-index: 2;
 }
 #finishOverlay {
   z-index: 2;
 }
-#startButton {
-  z-index: 3;
-}
 #overlay {
-  z-index: 4;
+  z-index: 3;
 }
 #settingsNav,
 #scoresNav {
-  z-index: 5;
+  z-index: 4;
 }
 #settingsButton,
 #scoresButton {
+  z-index: 4;
+}
+#wordModal {
   z-index: 5;
 }
 #game .gameArea {

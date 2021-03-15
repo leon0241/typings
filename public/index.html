@@ -5,13 +5,31 @@
     <title>typings</title>
     <link rel="stylesheet" type="text/css" href="styles/styles.css"/>
 
-    <script type="text/javascript" src="scripts/main.js" defer></script>
     <script type="text/javascript" src="scripts/words.js" defer></script>
+    <script type="text/javascript" src="scripts/main.js" defer></script>
     <script type="text/javascript" src="scripts/game.js" defer></script>
   </head>
   <body>
 
     <div id="overlay"></div>
+
+    <div id="wordModal" class="modal">
+      <div id="modalContent">
+        <header id="modalHeader" class="modalSection">
+          <h1>modal<span>&times;</span></h1>
+        </header>
+
+        <section id="modalButtons" class="modalSection">
+          <button id="freqSort" class="modalButton" onclick="freqSortf()">Sort by frequency</button>
+          <button id="lengthSort" class="modalButton" onclick="lengthSortf()">Sort by length</button>
+          <button id="alphaSort" class="modalButton" onclick="alphaSortf()">Sort alphabetically</button>
+        </section>
+
+        <section id="modalWords" class="modalSection">
+
+        </section>
+      </div>
+    </div>
 
     <nav id="settingsNav">
       <h3>Settings</h3>
@@ -45,13 +63,8 @@
         </section>
 
         <button type="button" onclick="localStorage.clear()">Clear local storage</button>
-        <!-- <button type="button" id="openModal">View words</button> -->
 
-        <div id="wordModal" class="modal">
-          <div class="modal_content">
-            
-          </div>
-        </div>
+        <button type="button" id="openModal">View words</button>
 
         <button id="submitButton" type="submit">Submit</button>
       </form>
@@ -105,10 +118,10 @@
                 </section>
     
                 <section class="finishArea" id="finishRetryArea">
-                  <button type="submit" class="finishButton" onclick="finishedReset()">
+                  <button type="submit" class="finishButton" onclick="finishedReset(false)">
                     Retry
                   </button>
-                  <button type="submit" class="finishButton" onclick="finishedExit()">
+                  <button type="submit" class="finishButton" onclick="finishedReset(true)">
                     Exit
                   </button>
                 </section>
@@ -129,7 +142,7 @@
             <th>WPM</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="scorebody">
 
         </tbody>
       </table>
