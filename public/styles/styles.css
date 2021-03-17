@@ -18,12 +18,6 @@ body nav {
 body input {
   background-color: #f9fafb;
 }
-body #settingsNav input:checked + label {
-  color: #88C0D0;
-}
-body #settingsNav .radioSelector {
-  background-color: #E5E9F0;
-}
 #gameContainer #game {
   border: 1px solid #3B4252;
   border-radius: 4px;
@@ -47,6 +41,17 @@ body #settingsNav .radioSelector {
 }
 #gameContainer #game #gameWordArea .wrongWord {
   color: #BF616A;
+}
+#gameContainer #startOverlay #startButton {
+  background-color: #f9fafb;
+  color: #2E3440;
+  border: 1px solid #2E3440;
+  border-radius: 5px;
+}
+#gameContainer #startOverlay #startButton:hover {
+  background-color: #ECEFF4;
+  color: #88C0D0;
+  border: 1px solid #88C0D0;
 }
 #gameContainer #finishOverlay {
   border: 1px solid #3B4252;
@@ -77,11 +82,6 @@ body .radioHeader {
 }
 body .radioSelector {
   font-size: 1.25rem;
-  border: solid 1px;
-  height: 2rem;
-  width: 7rem;
-  vertical-align: middle;
-  text-align: center;
 }
 html {
   height: 100%;
@@ -121,29 +121,65 @@ html body main #screenContainer {
   justify-content: center;
   align-items: center;
 }
-#gameContainer {
-  width: 39rem;
-  height: 18rem;
-  position: absolute;
-}
-#gameContainer #game {
-  height: 100%;
-  width: 100%;
-  display: grid;
-  grid-template-rows: 2.5rem 6.08333333rem 2.5rem 2.5rem;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  box-sizing: border-box;
-}
 html main #settingsButton,
 html main #scoresButton {
   position: absolute;
   height: 50px;
   width: 50px;
+  padding: 0;
+  background-color: #f9fafb;
+  color: #2E3440;
+  border: 1px solid #2E3440;
+  border-radius: 5px;
+}
+html main #settingsButton:hover,
+html main #scoresButton:hover {
+  background-color: #ECEFF4;
+  color: #88C0D0;
+  border: 1px solid #88C0D0;
+}
+html main #settingsButton .navIcon,
+html main #scoresButton .navIcon {
+  height: 80%;
+  margin: 10%;
+}
+html main #settingsButton .tooltip,
+html main #scoresButton .tooltip {
+  margin: 20% 5px auto;
+  height: 50%;
+  visibility: hidden;
+  width: 120px;
+  background-color: #3B4252;
+  color: #ECEFF4;
+  text-align: center;
+  padding: 5% 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+html main #settingsButton #scoreTooltip,
+html main #scoresButton #scoreTooltip {
+  right: 105%;
+}
+html main #settingsButton:hover .tooltip,
+html main #scoresButton:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }
 html main #scoresButton {
   top: 0px;
   right: 0px;
+}
+html #settingsButton:focus {
+  outline: none;
+}
+html #settingsButton img {
+  transition: transform 0.3s;
+}
+html #settingsButton:hover img {
+  transform: rotate(45deg);
 }
 html #settingsNav,
 html #scoresNav {
@@ -159,16 +195,16 @@ html #scoresNav {
   flex-direction: column;
 }
 html .open#settingsButton {
-  margin-left: 20%;
+  margin-left: 25rem;
 }
 html .open#settingsNav {
-  width: 20%;
+  width: 25rem;
 }
 html .open#scoresButton {
-  margin-right: 20%;
+  margin-right: 25rem;
 }
 html .open#scoresNav {
-  width: 20%;
+  width: 25rem;
 }
 html .open#overlay {
   display: block;
@@ -176,6 +212,9 @@ html .open#overlay {
 #settingsForm {
   display: flex;
   flex-direction: column;
+}
+#settingsForm .radioHeader {
+  text-align: center;
 }
 #settingsForm .settingsRadio {
   display: flex;
@@ -186,6 +225,39 @@ html .open#overlay {
   position: fixed;
   opacity: 0;
   pointer-events: none;
+}
+#settingsForm .settingsRadio input:checked + label {
+  color: #5E81AC;
+  border: solid 1px #5E81AC;
+}
+#settingsForm .settingsRadio .radioSelector {
+  background-color: #E5E9F0;
+  border: solid 1px #3B4252;
+  margin: 5px;
+  border-radius: 5px;
+  height: 2rem;
+  width: 7rem;
+  vertical-align: middle;
+  text-align: center;
+}
+#settingsForm .settingsRadio .radioSelector:hover {
+  border: solid 1px #88C0D0;
+  color: #88C0D0;
+  transition: border 0.3s;
+}
+#settingsForm .settingsMenuButton {
+  width: 15rem;
+  height: 3rem;
+  margin: 10px;
+  font-size: 1.25rem;
+  color: #3B4252;
+  border: 1px solid #3B4252;
+  border-radius: 5px;
+  align-self: center;
+}
+#settingsForm .settingsMenuButton:hover {
+  border: 1px solid #88C0D0;
+  color: #88C0D0;
 }
 #wordModal {
   display: none;
@@ -227,6 +299,20 @@ html .navButton {
 }
 html #wordModal {
   z-index: 5;
+}
+#gameContainer {
+  width: 39rem;
+  height: 18rem;
+  position: absolute;
+}
+#gameContainer #game {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 2.5rem 6.08333333rem 2.5rem 2.5rem;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  box-sizing: border-box;
 }
 #game #gameStatsArea {
   display: flex;

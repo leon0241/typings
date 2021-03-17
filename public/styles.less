@@ -6,6 +6,12 @@
 @borderStyle: groove;
 @defHeight: 69px;
 
+@hoverCol: @nord8;
+@selectedCol: @nord10;
+@highlightText: @nord0;
+@mediumText: @nord1;
+@borderOutline: @nord1;
+
 .center_object() {
   justify-content: center;
   align-items: center;
@@ -17,9 +23,22 @@
 }
 
 .containerStyle() {
-  border: 1px solid @nord1;
+  border: 1px solid @borderOutline;
   border-radius: 4px;
   background-color: @nord6;
+}
+
+.buttonStyle() {
+  background-color: @polarbg;
+  color: @nord0;
+  border: 1px solid @nord0;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: @nord6;
+    color: @hoverCol;
+    border: 1px solid @hoverCol;
+  }
 }
 
 // Colours
@@ -38,7 +57,7 @@ body {
   }
 
   p, label {
-    color: @nord1;
+    color: @mediumText;
   }
 
   nav {
@@ -48,17 +67,6 @@ body {
   input {
     background-color: @polarbg;
   }
-
-  #settingsNav {
-    input:checked+label {
-      color: @nord8;
-    }
-
-    .radioSelector {
-      background-color: @nord5;
-    }
-  }
-
 }
 
 #gameContainer {
@@ -67,8 +75,6 @@ body {
 
     .gameArea {
       background-color: @nord6;
-      //border: 1px solid @nord1;
-      //border-radius: 2px;
     }
 
     #statBox {
@@ -92,6 +98,12 @@ body {
       .wrongWord {
         color: @nord11;
       }
+    }
+  }
+
+  #startOverlay {
+    #startButton {
+      .buttonStyle();
     }
   }
 
@@ -136,11 +148,6 @@ body {
 
   .radioSelector {
     font-size: 1.25rem;
-    border: solid 1px;
-    height: 2rem;
-    width: 7rem;
-    vertical-align: middle;
-    text-align: center;
   }
 }
 
@@ -188,26 +195,6 @@ html {
   }
 }
 
-#gameContainer {
-  width: 39rem;
-  height: 18rem;
-  position: absolute;
-
-  #game {
-    @lh: 7 / 6;
-    @bl: 1/6;
-    @text: 4.5rem * @lh + 5/6;
-    @grids: 2.5rem;
-
-    .full_screen();
-    display: grid;
-    grid-template-rows: @grids @text @grids @grids;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    box-sizing: border-box;
-  }
-}
-
 // Sidebar
 html {
   main {
@@ -216,6 +203,40 @@ html {
       position: absolute;
       height: 50px;
       width: 50px;
+      padding: 0;
+      .buttonStyle();
+
+      .navIcon {
+        height: 80%;
+        margin: 10%;
+      }
+
+      .tooltip {
+        margin: 20% 5px auto;
+        height: 50%;
+        visibility: hidden;
+        width: 120px;
+        background-color: @nord1;
+        color: @nord6;
+        text-align: center;
+        padding: 5% 0;
+        border-radius: 6px;
+
+        position: absolute;
+        z-index: 10;
+
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      #scoreTooltip {
+        right: 105%;
+      }
+
+      &:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
     }
 
     #scoresButton {
@@ -223,6 +244,21 @@ html {
       right: 0px;
     }
   }
+
+  #settingsButton {
+    &:focus {
+      outline: none;
+    }
+
+    img {
+      transition: transform 0.3s;
+    }
+
+    &:hover img {
+      transform: rotate(45deg);
+    }
+  }
+
 
   #settingsNav,
   #scoresNav {
@@ -241,19 +277,19 @@ html {
 
   .open {
     &#settingsButton {
-      margin-left: 20%;
+      margin-left: 25rem;
     }
   
     &#settingsNav {
-      width: 20%;
+      width: 25rem;
     }
   
     &#scoresButton {
-      margin-right: 20%;
+      margin-right: 25rem;
     }
   
     &#scoresNav {
-      width: 20%;
+      width: 25rem;
     }
   
     &#overlay {
@@ -266,6 +302,10 @@ html {
   display: flex;
   flex-direction: column;
 
+  .radioHeader {
+    text-align: center;
+  }
+
   .settingsRadio {
     display: flex;
     flex-direction: row;
@@ -275,6 +315,43 @@ html {
       position: fixed;
       opacity: 0;
       pointer-events: none;
+      &:checked+label {
+        color: @selectedCol;
+        border: solid 1px @selectedCol;
+      }
+    }
+
+    .radioSelector {
+      background-color: @nord5;
+      border: solid 1px @borderOutline;
+      margin: 5px;
+      border-radius: 5px;
+      height: 2rem;
+      width: 7rem;
+      vertical-align: middle;
+      text-align: center;
+  
+      &:hover {
+        border: solid 1px @hoverCol;
+        color: @hoverCol;
+        transition: border 0.3s;
+      }
+    }
+  }
+
+  .settingsMenuButton {
+    width: 15rem;
+    height: 3rem;
+    margin: 10px;
+    font-size: 1.25rem;
+    color: @mediumText;
+    border: 1px solid @borderOutline;
+    border-radius: 5px;
+    align-self: center;
+
+    &:hover {
+      border: 1px solid @hoverCol;
+      color: @hoverCol;
     }
   }
 }
@@ -335,8 +412,28 @@ html {
 }
 
 // Game window
-#game {
 
+#gameContainer {
+  width: 39rem;
+  height: 18rem;
+  position: absolute;
+
+  #game {
+    @lh: 7 / 6;
+    @bl: 1/6;
+    @text: 4.5rem * @lh + 5/6;
+    @grids: 2.5rem;
+
+    .full_screen();
+    display: grid;
+    grid-template-rows: @grids @text @grids @grids;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    box-sizing: border-box;
+  }
+}
+
+#game {
   #gameStatsArea {
     display: flex;
     align-items: center;

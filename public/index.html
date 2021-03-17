@@ -13,7 +13,7 @@
 
     <!-- Overlay for nav bars -->
     <div id="overlay"></div>
-
+    
     <!-- Modal to view words -->
     <div id="wordModal" class="modal">
       <div id="modalContent">
@@ -85,23 +85,28 @@
           <label for="radio100w" class="radioSelector">100 words</label>
         </section>
 
+        <br>
         <!-- Clear local storage button -->
-        <button type="button" onclick="localStorage.clear()">
+        <button type="button" class="settingsMenuButton" onclick="localStorage.clear()">
           Clear local storage
         </button>
 
         <!-- Open modal button -->
-        <button type="button" id="openModal">View words</button>
+        <button type="button" class="settingsMenuButton" id="openModal">View words</button>
 
         <!-- Submit button -->
-        <button id="submitButton" type="submit">Submit</button>
+        <button id="submitButton" class="settingsMenuButton" type="submit">Submit</button>
       </form>
     </nav>
 
     <!-- Game window -->
     <main>
       <!-- Button to open settings -->
-      <button type="button" id="settingsButton" class="navButton" onclick="openSettings()">
+      <button type="button" id="settingsButton" 
+      class="navButton" onclick="openSettings()">
+        <img src="resources/images/settings.png" 
+        class="navIcon" alt="Settings">
+        <span class="tooltip">Settings</span>
       </button>
       <!-- Full screen container -->
       <section id="screenContainer">
@@ -203,14 +208,19 @@
       </section>
 
       <section id="topText">
-        <h1>(づ｡◕‿‿◕｡)づ</h1>
+        <!-- <h1>(づ｡◕‿‿◕｡)づ</h1> -->
+        <h1>typing</h1>
         <p>
           A simple typing program. Press space to enter a word.
         </p>
       </section>
 
       <!-- Button to open scores -->
-      <button type="button" id="scoresButton" class="navButton" onclick="openScores()">
+      <button type="button" id="scoresButton" class="navButton" 
+      onclick="openScores()">
+        <img src="resources/images/trophy.png" class="navIcon" 
+        alt="Scores">
+        <span class="tooltip" id="scoreTooltip">Scoreboard</span>
       </button>
     </main>
 
@@ -237,3 +247,11 @@
     </nav>
   </body>
 </html>
+
+
+<!-- <div>Icons made by <a
+   href="https://www.freepik.com" 
+   title="Freepik">Freepik</a> from 
+   <a href="https://www.flaticon.com/"
+    title="Flaticon">www.flaticon.com
+  </a></div> -->
