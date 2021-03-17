@@ -1,3 +1,5 @@
+@import "colors.less";
+
 //Functions and variables
 
 @defWidth: 69px;
@@ -14,17 +16,132 @@
   width: 100%;
 }
 
+.containerStyle() {
+  border: 1px solid @nord1;
+  border-radius: 4px;
+  background-color: @nord6;
+}
+
+// Colours
+
+body {
+  #screenContainer {
+    background-color: @nord5;
+  }
+
+  #modalContent {
+    background-color: @nord4;
+  }
+
+  h1, h2 {
+    color: @nord0;
+  }
+
+  p, label {
+    color: @nord1;
+  }
+
+  nav {
+    background-color: @nord4;
+  }
+
+  input {
+    background-color: @polarbg;
+  }
+
+  #settingsNav {
+    input:checked+label {
+      color: @nord8;
+    }
+
+    .radioSelector {
+      background-color: @nord5;
+    }
+  }
+
+}
+
+#gameContainer {
+  #game {
+    .containerStyle();
+
+    .gameArea {
+      background-color: @nord6;
+      //border: 1px solid @nord1;
+      //border-radius: 2px;
+    }
+
+    #statBox {
+      background-color: @polarbg;
+    }
+
+    #gameWordArea {
+      .typingWord {
+        font-size: 1.5rem;
+        text-overflow: clip;
+      }
+  
+      #highlightWord {
+        color: @nord8;
+      }
+  
+      .correctWord {
+        color: @nord14;
+      }
+  
+      .wrongWord {
+        color: @nord11;
+      }
+    }
+  }
+
+  #finishOverlay {
+    background-color: @nord6;
+    .containerStyle();
+
+    #finishStatArea {
+      .finishStat {
+        color: @nord1;
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  #gameTypingField {
+    border-radius: 5px;
+    outline: none;
+  }
+}
+
+// Fonts
+
 * {
   font-family: Consolas;
   font-size: 16px;
 }
 
-h1{
-  font-size: 2rem;
-}
+body {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
 
-h3{
-  font-size: 1.75rem;
+  .radioHeader {
+    font-size: 1.5rem;
+    font-weight: 100;
+  }
+
+  .radioSelector {
+    font-size: 1.25rem;
+    border: solid 1px;
+    height: 2rem;
+    width: 7rem;
+    vertical-align: middle;
+    text-align: center;
+  }
 }
 
 // General body styling
@@ -79,10 +196,9 @@ html {
   #game {
     @lh: 7 / 6;
     @bl: 1/6;
-    @text: 4.5rem * @lh + @lh;
-    @grids: 1.5rem + 1rem;
-  
-    border: double;
+    @text: 4.5rem * @lh + 5/6;
+    @grids: 2.5rem;
+
     .full_screen();
     display: grid;
     grid-template-rows: @grids @text @grids @grids;
@@ -112,7 +228,6 @@ html {
   #scoresNav {
     position: fixed;
     height: 100%;
-    background-color: rgb(182, 182, 182);
     display: none;
     flex-direction: column;
   }
@@ -151,33 +266,15 @@ html {
   display: flex;
   flex-direction: column;
 
-  >label {
-    font-size: 1.5rem;
-    font-weight: 100;
-  }
-
   .settingsRadio {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
 
-    >label {
-      font-size: 1.2rem;
-      border: solid 1px;
-      height: 2rem;
-      width: 7rem;
-      vertical-align: middle;
-      text-align: center;
-    }
-
     input {
       position: fixed;
       opacity: 0;
       pointer-events: none;
-    }
-
-    input:checked+label {
-      color: red;
     }
   }
 }
@@ -191,7 +288,6 @@ html {
   justify-content: center;
 
   #modalContent {
-    background-color: rgb(182, 182, 182);
     margin: 15% auto;
     /* 15% from the top and centered */
     padding: 20px;
@@ -240,14 +336,23 @@ html {
 
 // Game window
 #game {
-  .gameArea {
-    border: @borderStyle;
-  }
 
   #gameStatsArea {
-    #gameProgress {
-      vertical-align: middle;
-      font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    #statBox {
+      width: 2.5rem;
+      height: 100%;
+      display: flex;
+      border-radius: 50%;
+      justify-content: center;
+
+      #gameProgress {
+        line-height: 2.5rem;
+        font-size: 1.5rem;
+      }
     }
   }
 
@@ -257,30 +362,14 @@ html {
     padding: 0.5rem;
     padding-bottom: 0.5rem + 1rem * 1/6;
 
-    .typingWord {
-      font-size: 1.5rem;
-      text-overflow: clip;
-    }
-
-    #highlightWord {
-      color: orange;
-    }
-
-    .correctWord {
-      color: green;
-    }
-
-    .wrongWord {
-      color: red;
-    }
-
   }
 
   #gameTypingArea {
     display: block;
 
     #gameTypingField {
-      .full_screen();
+      height: 100%;
+      width: calc(100% - 5px);
       border: 0;
       margin: 0;
       padding: 0;
@@ -315,8 +404,6 @@ html {
   }
 
   #finishOverlay {
-    border: groove;
-    background-color: white;
     display: none;
 
     form {
@@ -326,7 +413,6 @@ html {
 
       .finishArea {
         display: flex;
-        border: groove;
       }
 
       #finishTitleArea {

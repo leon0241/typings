@@ -1,12 +1,87 @@
+body #screenContainer {
+  background-color: #E5E9F0;
+}
+body #modalContent {
+  background-color: #D8DEE9;
+}
+body h1,
+body h2 {
+  color: #2E3440;
+}
+body p,
+body label {
+  color: #3B4252;
+}
+body nav {
+  background-color: #D8DEE9;
+}
+body input {
+  background-color: #f9fafb;
+}
+body #settingsNav input:checked + label {
+  color: #88C0D0;
+}
+body #settingsNav .radioSelector {
+  background-color: #E5E9F0;
+}
+#gameContainer #game {
+  border: 1px solid #3B4252;
+  border-radius: 4px;
+  background-color: #ECEFF4;
+}
+#gameContainer #game .gameArea {
+  background-color: #ECEFF4;
+}
+#gameContainer #game #statBox {
+  background-color: #f9fafb;
+}
+#gameContainer #game #gameWordArea .typingWord {
+  font-size: 1.5rem;
+  text-overflow: clip;
+}
+#gameContainer #game #gameWordArea #highlightWord {
+  color: #88C0D0;
+}
+#gameContainer #game #gameWordArea .correctWord {
+  color: #A3BE8C;
+}
+#gameContainer #game #gameWordArea .wrongWord {
+  color: #BF616A;
+}
+#gameContainer #finishOverlay {
+  border: 1px solid #3B4252;
+  border-radius: 4px;
+  background-color: #ECEFF4;
+}
+#gameContainer #finishOverlay #finishStatArea .finishStat {
+  color: #3B4252;
+  font-size: 1.25rem;
+}
+#gameContainer #gameTypingField {
+  border-radius: 5px;
+  outline: none;
+}
 * {
   font-family: Consolas;
   font-size: 16px;
 }
-h1 {
+body h1 {
   font-size: 2rem;
 }
-h3 {
+body h2 {
   font-size: 1.75rem;
+}
+body .radioHeader {
+  font-size: 1.5rem;
+  font-weight: 100;
+}
+body .radioSelector {
+  font-size: 1.25rem;
+  border: solid 1px;
+  height: 2rem;
+  width: 7rem;
+  vertical-align: middle;
+  text-align: center;
 }
 html {
   height: 100%;
@@ -52,11 +127,10 @@ html body main #screenContainer {
   position: absolute;
 }
 #gameContainer #game {
-  border: double;
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-rows: 2.5rem 6.41666667rem 2.5rem 2.5rem;
+  grid-template-rows: 2.5rem 6.08333333rem 2.5rem 2.5rem;
   gap: 0.75rem;
   padding: 0.75rem;
   box-sizing: border-box;
@@ -75,7 +149,6 @@ html #settingsNav,
 html #scoresNav {
   position: fixed;
   height: 100%;
-  background-color: #b6b6b6;
   display: none;
   flex-direction: column;
 }
@@ -104,30 +177,15 @@ html .open#overlay {
   display: flex;
   flex-direction: column;
 }
-#settingsForm > label {
-  font-size: 1.5rem;
-  font-weight: 100;
-}
 #settingsForm .settingsRadio {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
-#settingsForm .settingsRadio > label {
-  font-size: 1.2rem;
-  border: solid 1px;
-  height: 2rem;
-  width: 7rem;
-  vertical-align: middle;
-  text-align: center;
-}
 #settingsForm .settingsRadio input {
   position: fixed;
   opacity: 0;
   pointer-events: none;
-}
-#settingsForm .settingsRadio input:checked + label {
-  color: red;
 }
 #wordModal {
   display: none;
@@ -139,7 +197,6 @@ html .open#overlay {
   justify-content: center;
 }
 #wordModal #modalContent {
-  background-color: #b6b6b6;
   margin: 15% auto;
   /* 15% from the top and centered */
   padding: 20px;
@@ -171,11 +228,20 @@ html .navButton {
 html #wordModal {
   z-index: 5;
 }
-#game .gameArea {
-  border: groove;
+#game #gameStatsArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-#game #gameStatsArea #gameProgress {
-  vertical-align: middle;
+#game #gameStatsArea #statBox {
+  width: 2.5rem;
+  height: 100%;
+  display: flex;
+  border-radius: 50%;
+  justify-content: center;
+}
+#game #gameStatsArea #statBox #gameProgress {
+  line-height: 2.5rem;
   font-size: 1.5rem;
 }
 #game #gameWordArea {
@@ -184,25 +250,12 @@ html #wordModal {
   padding: 0.5rem;
   padding-bottom: 0.66666667rem;
 }
-#game #gameWordArea .typingWord {
-  font-size: 1.5rem;
-  text-overflow: clip;
-}
-#game #gameWordArea #highlightWord {
-  color: orange;
-}
-#game #gameWordArea .correctWord {
-  color: green;
-}
-#game #gameWordArea .wrongWord {
-  color: red;
-}
 #game #gameTypingArea {
   display: block;
 }
 #game #gameTypingArea #gameTypingField {
   height: 100%;
-  width: 100%;
+  width: calc(100% - 5px);
   border: 0;
   margin: 0;
   padding: 0;
@@ -230,8 +283,6 @@ html #wordModal {
   vertical-align: middle;
 }
 #gameContainer #finishOverlay {
-  border: groove;
-  background-color: white;
   display: none;
 }
 #gameContainer #finishOverlay form {
@@ -241,7 +292,6 @@ html #wordModal {
 }
 #gameContainer #finishOverlay form .finishArea {
   display: flex;
-  border: groove;
 }
 #gameContainer #finishOverlay form #finishTitleArea {
   justify-content: center;

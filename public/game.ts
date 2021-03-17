@@ -70,7 +70,7 @@ class GameSettings {
 
       // Words(25 words, 50 words, 100 words)
       case "10": {
-        output = 5; //TODO: yo fix this shit
+        output = 25;
         break;
       }
       case "11": {
