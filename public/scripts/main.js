@@ -125,7 +125,7 @@ function alphaSortf() {
 function writeWords(arr) {
     modalWords.innerHTML = "";
     for (let i = 0; i < arr.length; i++) {
-        let appenderSpan = document.createElement('span');
+        let appenderSpan = document.createElement("span");
         appenderSpan.classList.add("modalWord");
         appenderSpan.textContent = arr[i];
         modalWords.appendChild(appenderSpan);
@@ -270,7 +270,7 @@ class DOMManipulation {
     // Updates the area and puts in the specified word in the array
     // Array gamewords, position i
     updateWords(gameWords, i) {
-        let appenderSpan = document.createElement('span');
+        let appenderSpan = document.createElement("span");
         appenderSpan.classList.add("typingWord");
         appenderSpan.textContent = `${gameWords[i]} `;
         gameWordArea.appendChild(appenderSpan);

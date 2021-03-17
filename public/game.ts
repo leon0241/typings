@@ -87,7 +87,9 @@ class GameSettings {
   }
 
   setName(): void {
-    let textbox: HTMLInputElement = document.querySelector("#finishTypingField")
+    let textbox: HTMLInputElement = document.querySelector(
+      "#finishTypingField"
+    );
     this._name = textbox.value;
   }
 }
@@ -187,19 +189,19 @@ class UserGame extends GameSettings {
     let totalWords = this._userWordCount;
 
     // netWords: The number of correct words (assuming a word is 5 letters)
-    let netWords = (chars / 5) - errors;
+    let netWords = chars / 5 - errors;
     // Value to divide to get words per minute
     let timeFactor = time / 60;
 
     // Calculate WPM
-    let netWPM = (netWords < 0)
-      //Account for error where most words that appear are less than 5 letters resulting in negative WPM
-      ?
-      ((totalWords - errors) / timeFactor) :
-      (netWords / timeFactor);
+    let netWPM =
+      netWords < 0
+        ? //Account for error where most words that appear are less than 5 letters resulting in negative WPM
+          (totalWords - errors) / timeFactor
+        : netWords / timeFactor;
 
     // Calculate accuracy
-    let accuracy = (totalWords - errors) / totalWords * 100;
+    let accuracy = ((totalWords - errors) / totalWords) * 100;
 
     // Rounds each result to the nearest integer
     let tempStats = [netWPM, accuracy];
@@ -224,7 +226,7 @@ class UserGame extends GameSettings {
 
     for (let i = 0; i < 50; i++) {
       // Random integer from 0 to length of array and assigns
-      let randint = Math.floor(Math.random() * (words.length));
+      let randint = Math.floor(Math.random() * words.length);
       tempGameWords[i] = this._words[randint];
     }
 
@@ -235,11 +237,11 @@ class UserGame extends GameSettings {
   newWord(): void {
     let gameWords = this._gameWords;
     // Random number up to the length of total words array
-    let randint = Math.floor(Math.random() * (words.length));
+    let randint = Math.floor(Math.random() * words.length);
     gameWords.push(words[randint]);
 
     // Goes to updateWords with array gameWords, position length of gameWords - 1 (for 0 counting array)
-    DOMFunctions.updateWords(this._gameWords, (this._gameWords.length - 1));
+    DOMFunctions.updateWords(this._gameWords, this._gameWords.length - 1);
   }
 
   // Checks if the word is correct or not
@@ -265,14 +267,16 @@ class UserGame extends GameSettings {
   }
 
   resetStats(): void {
-    this._calculatedStats = [0, 0]
-    this._characters = 0
-    this._gameWords = [""]
-    this._timeTaken = 0
-    this._userWordCount = 0
-    this._wordErrors = 0
-    DOMFunctions.position = 0
-    let textbox: HTMLInputElement = document.querySelector("#finishTypingField")
+    this._calculatedStats = [0, 0];
+    this._characters = 0;
+    this._gameWords = [""];
+    this._timeTaken = 0;
+    this._userWordCount = 0;
+    this._wordErrors = 0;
+    DOMFunctions.position = 0;
+    let textbox: HTMLInputElement = document.querySelector(
+      "#finishTypingField"
+    );
     nameInput.value = "";
   }
 }
@@ -280,22 +284,22 @@ class UserGame extends GameSettings {
 // Methods that are used to control the game
 class GameFunctions extends UserGame {
   constructor(...args: [number, number, string[]]) {
-    super(...args)
+    super(...args);
   }
-
 
   // Starts the game
   startGame(): void {
     inGame = true;
-    let gameType = this._type === 0 ? this.goToTimedGame() : this.goToWordGame(); // TODO: maybe fix this idk
+    let gameType =
+      this._type === 0 ? this.goToTimedGame() : this.goToWordGame(); // TODO: maybe fix this idk
   }
 
   // Callback function for timed game
   goToTimedGame(): void {
-    DOMFunctions.changeGameProgress(this.getCalculatedLength())
+    DOMFunctions.changeGameProgress(this.getCalculatedLength());
     this.timeTimer(() => {
-      this.finishGame()
-    })
+      this.finishGame();
+    });
   }
 
   // setInterval timer for a timed game
@@ -306,8 +310,8 @@ class GameFunctions extends UserGame {
     // SetInterval - timer
     let gameTimer = setInterval(() => {
       if (inGame === false) {
-        clearInterval(gameTimer)
-        return
+        clearInterval(gameTimer);
+        return;
       }
       // if timer over the max time
       else if (time >= duration) {
@@ -326,7 +330,7 @@ class GameFunctions extends UserGame {
 
       // Add 1 to time
       time++;
-    }, 1000)
+    }, 1000);
   }
 
   // Callback function for word game
@@ -334,8 +338,8 @@ class GameFunctions extends UserGame {
     let gameLength = this.getCalculatedLength();
     DOMFunctions.changeGameProgress(gameLength);
     this.wordTimer(() => {
-      this.finishGame()
-    })
+      this.finishGame();
+    });
   }
   // setInterval timer for a word game
   wordTimer(callback: any): void {
@@ -349,15 +353,14 @@ class GameFunctions extends UserGame {
 
     // SetInterval - timer
     let gameTimer = setInterval(() => {
-
       if (inGame === false) {
-        clearInterval(gameTimer)
-        return
+        clearInterval(gameTimer);
+        return;
       }
       // If word count is above total words
       else if (this._userWordCount >= totalWordCount) {
         // Stop timer
-        clearInterval(gameTimer)
+        clearInterval(gameTimer);
 
         // Set time taken to the duration
         this._timeTaken = time;
@@ -367,11 +370,11 @@ class GameFunctions extends UserGame {
       }
 
       // if time is divisible by 1000 then add a second
-      inGameSeconds += interval
+      inGameSeconds += interval;
       if (inGameSeconds % 1000 === 0) {
         time++;
       }
-    }, interval) // Repeat every 1/10 seconds so there is no delay when finishing game
+    }, interval); // Repeat every 1/10 seconds so there is no delay when finishing game
   }
 
   finishGame(): void {
@@ -403,7 +406,9 @@ class GameFunctions extends UserGame {
 
     //debugger;
     if (this._type === 1) {
-      DOMFunctions.changeGameProgress(this.getCalculatedLength() - this._userWordCount);
+      DOMFunctions.changeGameProgress(
+        this.getCalculatedLength() - this._userWordCount
+      );
     }
   }
 }
@@ -414,9 +419,10 @@ class GameFunctions extends UserGame {
 
 function newGame(that: any) {
   let type: string = that.test_type.value;
-  let length: string = (type === "0") ? that.time_length.value : that.word_length.value
-  let newType: number = parseInt(type, 10)
-  let newLength: number = parseInt(length, 10)
+  let length: string =
+    type === "0" ? that.time_length.value : that.word_length.value;
+  let newType: number = parseInt(type, 10);
+  let newLength: number = parseInt(length, 10);
 
   Game.resetStats;
   Game.editGameData(newType, newLength);
@@ -429,23 +435,23 @@ function resetGame() {
   inGame = false;
   clicked = false;
   Game.resetStats();
-  Game.initialiseArray()
-  DOMFunctions.showArray(Game.gameWords)
+  Game.initialiseArray();
+  DOMFunctions.showArray(Game.gameWords);
   DOMFunctions.changeGameProgress("");
 }
 
 function initGame() {
-  DOMFunctions.showBackdrop()
+  DOMFunctions.showBackdrop();
 }
 
 function finishedReset(exit) {
-  Game.setName()
-  DOMFunctions.hideFinish()
-  Scores.submitToLocalStorage(Game.name, Game.calculatedStats[0])
-  Scores.updateScoreboard()
-  resetGame()
+  Game.setName();
+  DOMFunctions.hideFinish();
+  Scores.submitToLocalStorage(Game.name, Game.calculatedStats[0]);
+  Scores.updateScoreboard();
+  resetGame();
   if (exit === true) {
-    DOMFunctions.showStart()
+    DOMFunctions.showStart();
   }
 }
 
@@ -455,7 +461,7 @@ gameTypingField.onclick = () => {
   if (inGame === false) {
     clicked = true;
   }
-}
+};
 
 // On character pressed in the typing field
 gameTypingField.onkeydown = (e) => {
@@ -474,8 +480,7 @@ gameTypingField.onkeydown = (e) => {
       Game.goToNextWord();
     }
   }
-}
-
+};
 
 /*================
  *     GAME
@@ -490,7 +495,7 @@ Game.initialiseArray();
 DOMFunctions.showArray(Game.gameWords);
 
 window.onload = (event) => {
-  Scores.initScoreboard()
+  Scores.initScoreboard();
 };
 
 //TODO: reset needs to clear input box

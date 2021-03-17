@@ -149,17 +149,16 @@ class UserGame extends GameSettings {
         let errors = this._wordErrors;
         let totalWords = this._userWordCount;
         // netWords: The number of correct words (assuming a word is 5 letters)
-        let netWords = (chars / 5) - errors;
+        let netWords = chars / 5 - errors;
         // Value to divide to get words per minute
         let timeFactor = time / 60;
         // Calculate WPM
-        let netWPM = (netWords < 0)
-            //Account for error where most words that appear are less than 5 letters resulting in negative WPM
-            ?
-                ((totalWords - errors) / timeFactor) :
-            (netWords / timeFactor);
+        let netWPM = netWords < 0
+            ? //Account for error where most words that appear are less than 5 letters resulting in negative WPM
+                (totalWords - errors) / timeFactor
+            : netWords / timeFactor;
         // Calculate accuracy
-        let accuracy = (totalWords - errors) / totalWords * 100;
+        let accuracy = ((totalWords - errors) / totalWords) * 100;
         // Rounds each result to the nearest integer
         let tempStats = [netWPM, accuracy];
         let stats = [];
@@ -180,7 +179,7 @@ class UserGame extends GameSettings {
         let tempGameWords = [];
         for (let i = 0; i < 50; i++) {
             // Random integer from 0 to length of array and assigns
-            let randint = Math.floor(Math.random() * (words.length));
+            let randint = Math.floor(Math.random() * words.length);
             tempGameWords[i] = this._words[randint];
         }
         this._gameWords = tempGameWords;
@@ -189,10 +188,10 @@ class UserGame extends GameSettings {
     newWord() {
         let gameWords = this._gameWords;
         // Random number up to the length of total words array
-        let randint = Math.floor(Math.random() * (words.length));
+        let randint = Math.floor(Math.random() * words.length);
         gameWords.push(words[randint]);
         // Goes to updateWords with array gameWords, position length of gameWords - 1 (for 0 counting array)
-        DOMFunctions.updateWords(this._gameWords, (this._gameWords.length - 1));
+        DOMFunctions.updateWords(this._gameWords, this._gameWords.length - 1);
     }
     // Checks if the word is correct or not
     wordCheck() {
@@ -337,7 +336,7 @@ class GameFunctions extends UserGame {
  ================*/
 function newGame(that) {
     let type = that.test_type.value;
-    let length = (type === "0") ? that.time_length.value : that.word_length.value;
+    let length = type === "0" ? that.time_length.value : that.word_length.value;
     let newType = parseInt(type, 10);
     let newLength = parseInt(length, 10);
     Game.resetStats;

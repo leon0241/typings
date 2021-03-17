@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>typings</title>
-    <link rel="stylesheet" type="text/css" href="styles/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/styles.min.css" />
 
     <script type="text/javascript" src="scripts/words.js" defer></script>
     <script type="text/javascript" src="scripts/main.js" defer></script>
     <script type="text/javascript" src="scripts/game.js" defer></script>
   </head>
   <body>
-
     <!-- Overlay for nav bars -->
     <div id="overlay"></div>
-    
+
     <!-- Modal to view words -->
     <div id="wordModal" class="modal">
       <div id="modalContent">
@@ -25,9 +24,15 @@
         </header>
 
         <section id="modalButtons" class="modalSection">
-          <button id="freqSort" class="modalButton" onclick="freqSortf()">Sort by frequency</button>
-          <button id="lengthSort" class="modalButton" onclick="lengthSortf()">Sort by length</button>
-          <button id="alphaSort" class="modalButton" onclick="alphaSortf()">Sort alphabetically</button>
+          <button id="freqSort" class="modalButton" onclick="freqSortf()">
+            Sort by frequency
+          </button>
+          <button id="lengthSort" class="modalButton" onclick="lengthSortf()">
+            Sort by length
+          </button>
+          <button id="alphaSort" class="modalButton" onclick="alphaSortf()">
+            Sort alphabetically
+          </button>
         </section>
 
         <section id="modalWords" class="modalSection">
@@ -41,16 +46,20 @@
       <h2>Settings</h2>
 
       <!-- Form with settings -->
-      <form name="settingsForm" id="settingsForm" onsubmit="newGame(this);return false">
+      <form
+        name="settingsForm"
+        id="settingsForm"
+        onsubmit="newGame(this);return false"
+      >
         <!-- Test type -->
         <label for="test_type" class="radioHeader">Test type</label>
         <section class="settingsRadio" id="typeSelector">
           <!-- Time -->
-          <input type="radio" name="test_type" id="radiotime" value="0">
+          <input type="radio" name="test_type" id="radiotime" value="0" />
           <label for="radiotime" class="radioSelector">Time</label>
 
           <!-- Words -->
-          <input type="radio" name="test_type" id="radiowords" value="1">
+          <input type="radio" name="test_type" id="radiowords" value="1" />
           <label for="radiowords" class="radioSelector">Words</label>
         </section>
 
@@ -58,54 +67,105 @@
         <label for="time_length" class="radioHeader">Test length</label>
         <section class="settingsRadio" id="timeSelector">
           <!-- 30 seconds -->
-          <input type="radio" name="time_length" id="radio30s" class="lengthRadio" value="0">
+          <input
+            type="radio"
+            name="time_length"
+            id="radio30s"
+            class="lengthRadio"
+            value="0"
+          />
           <label for="radio30s" class="radioSelector">30 secs</label>
 
           <!-- 1 minute -->
-          <input type="radio" name="time_length" id="radio1m" class="lengthRadio" value="1">
+          <input
+            type="radio"
+            name="time_length"
+            id="radio1m"
+            class="lengthRadio"
+            value="1"
+          />
           <label for="radio1m" class="radioSelector">1 min</label>
 
           <!-- 2 minutes -->
-          <input type="radio" name="time_length" id="radio2m" class="lengthRadio" value="2">
+          <input
+            type="radio"
+            name="time_length"
+            id="radio2m"
+            class="lengthRadio"
+            value="2"
+          />
           <label for="radio2m" class="radioSelector">2 min</label>
         </section>
 
         <!-- Test Length - Words -->
         <section class="settingsRadio" id="wordSelector">
           <!-- 25 words -->
-          <input type="radio" name="word_length" id="radio25w" class="lengthRadio" value="0">
+          <input
+            type="radio"
+            name="word_length"
+            id="radio25w"
+            class="lengthRadio"
+            value="0"
+          />
           <label for="radio25w" class="radioSelector">25 words</label>
 
           <!-- 50 words -->
-          <input type="radio" name="word_length" id="radio50w" class="lengthRadio" value="1">
+          <input
+            type="radio"
+            name="word_length"
+            id="radio50w"
+            class="lengthRadio"
+            value="1"
+          />
           <label for="radio50w" class="radioSelector">50 words</label>
 
           <!-- 100 words -->
-          <input type="radio" name="word_length" id="radio100w" class="lengthRadio" value="2">
+          <input
+            type="radio"
+            name="word_length"
+            id="radio100w"
+            class="lengthRadio"
+            value="2"
+          />
           <label for="radio100w" class="radioSelector">100 words</label>
         </section>
 
-        <br>
+        <br />
         <!-- Clear local storage button -->
-        <button type="button" class="settingsMenuButton" onclick="localStorage.clear()">
+        <button
+          type="button"
+          class="settingsMenuButton"
+          onclick="localStorage.clear()"
+        >
           Clear local storage
         </button>
 
         <!-- Open modal button -->
-        <button type="button" class="settingsMenuButton" id="openModal">View words</button>
+        <button type="button" class="settingsMenuButton" id="openModal">
+          View words
+        </button>
 
         <!-- Submit button -->
-        <button id="submitButton" class="settingsMenuButton" type="submit">Submit</button>
+        <button id="submitButton" class="settingsMenuButton" type="submit">
+          Submit
+        </button>
       </form>
     </nav>
 
     <!-- Game window -->
     <main>
       <!-- Button to open settings -->
-      <button type="button" id="settingsButton" 
-      class="navButton" onclick="openSettings()">
-        <img src="resources/images/settings.png" 
-        class="navIcon" alt="Settings">
+      <button
+        type="button"
+        id="settingsButton"
+        class="navButton"
+        onclick="openSettings()"
+      >
+        <img
+          src="resources/images/settings.png"
+          class="navIcon"
+          alt="Settings"
+        />
         <span class="tooltip">Settings</span>
       </button>
       <!-- Full screen container -->
@@ -120,30 +180,30 @@
                 <span class="gameStat" id="gameProgress"></span>
               </div>
             </section>
-    
+
             <!-- Game word display -->
             <section class="gameArea" id="gameWordArea">
               <!-- Empty and will be filled with DOM -->
             </section>
-    
+
             <!-- Game typing field -->
             <section class="gameArea" id="gameTypingArea">
-              <input type="text" id="gameTypingField">
+              <input type="text" id="gameTypingField" />
             </section>
-    
+
             <!-- Game reset button -->
             <section class="gameArea" id="gameResetArea">
               <button type="button" onclick="resetGame()">Reset</button>
             </section>
           </div>
-    
+
           <!-- Start overlay window -->
           <div id="startOverlay">
             <button id="startButton" type="button" onclick="initGame()">
               Click to start
             </button>
           </div>
-    
+
           <!-- Finish overlay window -->
           <div id="finishOverlay">
             <!-- Form with information -->
@@ -152,18 +212,21 @@
               <section class="finishArea" id="finishTitleArea">
                 <h2>Test Finished!</h2>
               </section>
-  
+
               <!-- Name typing field -->
               <section class="finishArea" id="finishNameArea">
-                <input type="text" class="finishTypingField" name="name" id="finishTypingField">
+                <input
+                  type="text"
+                  class="finishTypingField"
+                  name="name"
+                  id="finishTypingField"
+                />
               </section>
-    
+
               <!-- WPM and Acc display -->
               <section class="finishArea" id="finishStatArea">
                 <!-- WPM label -->
-                <span class="finishStat StatText" id="finishWPM">
-                  WPM
-                </span>
+                <span class="finishStat StatText" id="finishWPM"> WPM </span>
 
                 <!-- Accuracy label -->
                 <span class="finishStat StatText" id="finishAcc">
@@ -176,29 +239,51 @@
                 </span>
 
                 <!-- Accuracy count -->
-                <span class="finishStat StatNumber" id="gameAccuracy" name="Acc">
+                <span
+                  class="finishStat StatNumber"
+                  id="gameAccuracy"
+                  name="Acc"
+                >
                   <!-- Empty and will be filled with DOM -->
                 </span>
               </section>
-            
+
               <!-- Hidden form inputs to submit info -->
               <section class="finishArea" id="finishHiddenForms">
                 <!-- WPM -->
-                <input type="text" name="wpm" id="hiddenWpm" class="hiddenField">
+                <input
+                  type="text"
+                  name="wpm"
+                  id="hiddenWpm"
+                  class="hiddenField"
+                />
 
                 <!-- Accuracy -->
-                <input type="text" name="acc" id="hiddenAcc" class="hiddenField">
+                <input
+                  type="text"
+                  name="acc"
+                  id="hiddenAcc"
+                  class="hiddenField"
+                />
               </section>
-  
+
               <!-- Submit buttons -->
               <section class="finishArea" id="finishRetryArea">
                 <!-- Submit and retry -->
-                <button type="submit" class="finishButton" onclick="finishedReset(false)">
+                <button
+                  type="submit"
+                  class="finishButton"
+                  onclick="finishedReset(false)"
+                >
                   Retry
                 </button>
 
                 <!-- Submit and exit -->
-                <button type="submit" class="finishButton" onclick="finishedReset(true)">
+                <button
+                  type="submit"
+                  class="finishButton"
+                  onclick="finishedReset(true)"
+                >
                   Exit
                 </button>
               </section>
@@ -210,16 +295,17 @@
       <section id="topText">
         <!-- <h1>(づ｡◕‿‿◕｡)づ</h1> -->
         <h1>typing</h1>
-        <p>
-          A simple typing program. Press space to enter a word.
-        </p>
+        <p>A simple typing program. Press space to enter a word.</p>
       </section>
 
       <!-- Button to open scores -->
-      <button type="button" id="scoresButton" class="navButton" 
-      onclick="openScores()">
-        <img src="resources/images/trophy.png" class="navIcon" 
-        alt="Scores">
+      <button
+        type="button"
+        id="scoresButton"
+        class="navButton"
+        onclick="openScores()"
+      >
+        <img src="resources/images/trophy.png" class="navIcon" alt="Scores" />
         <span class="tooltip" id="scoreTooltip">Scoreboard</span>
       </button>
     </main>
@@ -247,7 +333,6 @@
     </nav>
   </body>
 </html>
-
 
 <!-- <div>Icons made by <a
    href="https://www.freepik.com" 

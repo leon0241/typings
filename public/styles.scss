@@ -1,86 +1,85 @@
-@import "colors.less";
-
 //Functions and variables
+@use 'colors';
 
-@defWidth: 69px;
-@borderStyle: groove;
-@defHeight: 69px;
+$defWidth: 69px;
+$borderStyle: groove;
+$defHeight: 69px;
 
-@hoverCol: @nord8;
-@selectedCol: @nord10;
-@highlightText: @nord0;
-@mediumText: @nord1;
-@borderOutline: @nord1;
+$hoverCol: colors.$nord8;
+$selectedCol: colors.$nord10;
+$highlightText: colors.$nord0;
+$mediumText: colors.$nord1;
+$borderOutline: colors.$nord1;
 
-.center_object() {
-  justify-content: center;
-  align-items: center;
-}
+// .center_object() {
+//   justify-content: center;
+//   align-items: center;
+// }
 
-.full_screen() {
-  height: 100%;
-  width: 100%;
-}
+// .full_screen() {
+//   height: 100%;
+//   width: 100%;
+// }
 
-.containerStyle() {
-  border: 1px solid @borderOutline;
-  border-radius: 4px;
-  background-color: @nord6;
-}
+// .containerStyle() {
+//   border: 1px solid $borderOutline;
+//   border-radius: 4px;
+//   background-color: $nord6;
+// }
 
-.buttonStyle() {
-  background-color: @polarbg;
-  color: @nord0;
-  border: 1px solid @nord0;
-  border-radius: 5px;
+// .buttonStyle() {
+//   background-color: $polarbg;
+//   color: $nord0;
+//   border: 1px solid $nord0;
+//   border-radius: 5px;
 
-  &:hover {
-    background-color: @nord6;
-    color: @hoverCol;
-    border: 1px solid @hoverCol;
-  }
-}
+//   &:hover {
+//     background-color: $nord6;
+//     color: $hoverCol;
+//     border: 1px solid $hoverCol;
+//   }
+// }
 
 // Colours
 
 body {
   #screenContainer {
-    background-color: @nord5;
+    background-color: $nord5;
   }
 
   #modalContent {
-    background-color: @nord4;
+    background-color: $nord4;
   }
 
   h1,
   h2 {
-    color: @nord0;
+    color: $nord0;
   }
 
   p,
   label {
-    color: @mediumText;
+    color: $mediumText;
   }
 
   nav {
-    background-color: @nord4;
+    background-color: $nord4;
   }
 
   input {
-    background-color: @polarbg;
+    background-color: $polarbg;
   }
 }
 
 #gameContainer {
   #game {
-    .containerStyle();
+   //  .containerStyle();
 
     .gameArea {
-      background-color: @nord6;
+      background-color: $nord6;
     }
 
     #statBox {
-      background-color: @polarbg;
+      background-color: $polarbg;
     }
 
     #gameWordArea {
@@ -90,32 +89,32 @@ body {
       }
 
       #highlightWord {
-        color: @nord8;
+        color: $nord8;
       }
 
       .correctWord {
-        color: @nord14;
+        color: $nord14;
       }
 
       .wrongWord {
-        color: @nord11;
+        color: $nord11;
       }
     }
   }
 
   #startOverlay {
     #startButton {
-      .buttonStyle();
+      // .buttonStyle();
     }
   }
 
   #finishOverlay {
-    background-color: @nord6;
-    .containerStyle();
+    background-color: $nord6;
+   //  .containerStyle();
 
     #finishStatArea {
       .finishStat {
-        color: @nord1;
+        color: $nord1;
         font-size: 1.25rem;
       }
     }
@@ -167,13 +166,13 @@ html {
     #overlay {
       background-color: rgba(0, 0, 0, 0.5);
       display: none;
-      .full_screen();
+      // .full_screen();
       position: fixed;
     }
 
     main {
       position: relative;
-      .full_screen();
+      // .full_screen();
       display: flex;
       flex-direction: column;
 
@@ -188,7 +187,7 @@ html {
       #screenContainer {
         flex: 1 1 0;
         position: absolute;
-        .full_screen();
+      //   .full_screen();
         display: flex;
         justify-content: center;
         align-items: center;
@@ -206,7 +205,7 @@ html {
       height: 50px;
       width: 50px;
       padding: 0;
-      .buttonStyle();
+      // .buttonStyle();
 
       .navIcon {
         height: 80%;
@@ -218,8 +217,8 @@ html {
         height: 50%;
         visibility: hidden;
         width: 120px;
-        background-color: @nord1;
-        color: @nord6;
+        background-color: $nord1;
+        color: $nord6;
         text-align: center;
         padding: 5% 0;
         border-radius: 6px;
@@ -317,14 +316,14 @@ html {
       opacity: 0;
       pointer-events: none;
       &:checked + label {
-        color: @selectedCol;
-        border: solid 1px @selectedCol;
+        color: $selectedCol;
+        border: solid 1px $selectedCol;
       }
     }
 
     .radioSelector {
-      background-color: @nord5;
-      border: solid 1px @borderOutline;
+      background-color: $nord5;
+      border: solid 1px $borderOutline;
       margin: 5px;
       border-radius: 5px;
       height: 2rem;
@@ -333,8 +332,8 @@ html {
       text-align: center;
 
       &:hover {
-        border: solid 1px @hoverCol;
-        color: @hoverCol;
+        border: solid 1px $hoverCol;
+        color: $hoverCol;
         transition: border 0.3s;
       }
     }
@@ -345,14 +344,14 @@ html {
     height: 3rem;
     margin: 10px;
     font-size: 1.25rem;
-    color: @mediumText;
-    border: 1px solid @borderOutline;
+    color: $mediumText;
+    border: 1px solid $borderOutline;
     border-radius: 5px;
     align-self: center;
 
     &:hover {
-      border: 1px solid @hoverCol;
-      color: @hoverCol;
+      border: 1px solid $hoverCol;
+      color: $hoverCol;
     }
   }
 }
@@ -360,7 +359,7 @@ html {
 #wordModal {
   display: none;
   position: fixed;
-  .full_screen();
+//   .full_screen();
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
@@ -420,14 +419,14 @@ html {
   position: absolute;
 
   #game {
-    @lh: 7 / 6;
-    @bl: 1/6;
-    @text: 4.5rem * @lh + 5/6;
-    @grids: 2.5rem;
+    $lh: 7 / 6;
+    $bl: 1/6;
+    $text: 4.5rem * $lh + 5/6;
+    $grids: 2.5rem;
 
-    .full_screen();
+   //  .full_screen();
     display: grid;
-    grid-template-rows: @grids @text @grids @grids;
+    grid-template-rows: $grids $text $grids $grids;
     gap: 0.75rem;
     padding: 0.75rem;
     box-sizing: border-box;
@@ -480,7 +479,7 @@ html {
 #gameContainer {
   #startOverlay,
   #finishOverlay {
-    .full_screen();
+   //  .full_screen();
     position: absolute;
     top: 0;
     right: 0;
@@ -489,7 +488,7 @@ html {
   #startOverlay {
     backdrop-filter: blur(3px);
     display: flex;
-    .center_object();
+   //  .center_object();
 
     #startButton {
       height: 5rem;
@@ -512,11 +511,11 @@ html {
       }
 
       #finishTitleArea {
-        .center_object();
+      //   .center_object();
       }
 
       #finishNameArea {
-        .center_object();
+      //   .center_object();
       }
 
       #finishStatArea {
