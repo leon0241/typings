@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>typings</title>
-    <link rel="stylesheet" type="text/css" href="styles/styles.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/styles.css" />
 
     <script type="text/javascript" src="scripts/words.js" defer></script>
     <script type="text/javascript" src="scripts/main.js" defer></script>
@@ -41,119 +41,119 @@
       </div>
     </div>
 
-    <!-- Settings nav bar -->
-    <nav id="settingsNav" class="navbar">
-      <h2>Settings</h2>
-
-      <!-- Form with settings -->
-      <form
-        name="settingsForm"
-        id="settingsForm"
-        onsubmit="newGame(this);return false"
-      >
-        <!-- Test type -->
-        <label for="test_type" class="radioHeader">Test type</label>
-        <section class="settingsRadio" id="typeSelector">
-          <!-- Time -->
-          <input type="radio" name="test_type" id="radiotime" value="0" />
-          <label for="radiotime" class="radioSelector">Time</label>
-
-          <!-- Words -->
-          <input type="radio" name="test_type" id="radiowords" value="1" />
-          <label for="radiowords" class="radioSelector">Words</label>
-        </section>
-
-        <!-- Test Length - Time -->
-        <label for="time_length" class="radioHeader">Test length</label>
-        <section class="settingsRadio" id="timeSelector">
-          <!-- 30 seconds -->
-          <input
-            type="radio"
-            name="time_length"
-            id="radio30s"
-            class="lengthRadio"
-            value="0"
-          />
-          <label for="radio30s" class="radioSelector">30 secs</label>
-
-          <!-- 1 minute -->
-          <input
-            type="radio"
-            name="time_length"
-            id="radio1m"
-            class="lengthRadio"
-            value="1"
-          />
-          <label for="radio1m" class="radioSelector">1 min</label>
-
-          <!-- 2 minutes -->
-          <input
-            type="radio"
-            name="time_length"
-            id="radio2m"
-            class="lengthRadio"
-            value="2"
-          />
-          <label for="radio2m" class="radioSelector">2 min</label>
-        </section>
-
-        <!-- Test Length - Words -->
-        <section class="settingsRadio" id="wordSelector">
-          <!-- 25 words -->
-          <input
-            type="radio"
-            name="word_length"
-            id="radio25w"
-            class="lengthRadio"
-            value="0"
-          />
-          <label for="radio25w" class="radioSelector">25 words</label>
-
-          <!-- 50 words -->
-          <input
-            type="radio"
-            name="word_length"
-            id="radio50w"
-            class="lengthRadio"
-            value="1"
-          />
-          <label for="radio50w" class="radioSelector">50 words</label>
-
-          <!-- 100 words -->
-          <input
-            type="radio"
-            name="word_length"
-            id="radio100w"
-            class="lengthRadio"
-            value="2"
-          />
-          <label for="radio100w" class="radioSelector">100 words</label>
-        </section>
-
-        <br />
-        <!-- Clear local storage button -->
-        <button
-          type="button"
-          class="settingsMenuButton"
-          onclick="localStorage.clear()"
-        >
-          Clear local storage
-        </button>
-
-        <!-- Open modal button -->
-        <button type="button" class="settingsMenuButton" id="openModal">
-          View words
-        </button>
-
-        <!-- Submit button -->
-        <button id="submitButton" class="settingsMenuButton" type="submit">
-          Submit
-        </button>
-      </form>
-    </nav>
-
     <!-- Game window -->
     <main>
+      <!-- Settings nav bar -->
+      <nav id="settingsNav" class="navbar">
+        <h2>Settings</h2>
+  
+        <!-- Form with settings -->
+        <form
+          name="settingsForm"
+          id="settingsForm"
+          onsubmit="newGame(this);return false"
+        >
+          <!-- Test type -->
+          <label for="test_type" class="radioHeader">Test type</label>
+          <section class="settingsRadio" id="typeSelector">
+            <!-- Time -->
+            <input type="radio" name="test_type" id="radiotime" value="0" />
+            <label for="radiotime" class="radioSelector">Time</label>
+  
+            <!-- Words -->
+            <input type="radio" name="test_type" id="radiowords" value="1" />
+            <label for="radiowords" class="radioSelector">Words</label>
+          </section>
+  
+          <!-- Test Length - Time -->
+          <label for="time_length" class="radioHeader">Test length</label>
+          <section class="settingsRadio" id="timeSelector">
+            <!-- 30 seconds -->
+            <input
+              type="radio"
+              name="time_length"
+              id="radio30s"
+              class="lengthRadio"
+              value="0"
+            />
+            <label for="radio30s" class="radioSelector">30 secs</label>
+  
+            <!-- 1 minute -->
+            <input
+              type="radio"
+              name="time_length"
+              id="radio1m"
+              class="lengthRadio"
+              value="1"
+            />
+            <label for="radio1m" class="radioSelector">1 min</label>
+  
+            <!-- 2 minutes -->
+            <input
+              type="radio"
+              name="time_length"
+              id="radio2m"
+              class="lengthRadio"
+              value="2"
+            />
+            <label for="radio2m" class="radioSelector">2 min</label>
+          </section>
+  
+          <!-- Test Length - Words -->
+          <section class="settingsRadio" id="wordSelector">
+            <!-- 25 words -->
+            <input
+              type="radio"
+              name="word_length"
+              id="radio25w"
+              class="lengthRadio"
+              value="0"
+            />
+            <label for="radio25w" class="radioSelector">25 words</label>
+  
+            <!-- 50 words -->
+            <input
+              type="radio"
+              name="word_length"
+              id="radio50w"
+              class="lengthRadio"
+              value="1"
+            />
+            <label for="radio50w" class="radioSelector">50 words</label>
+  
+            <!-- 100 words -->
+            <input
+              type="radio"
+              name="word_length"
+              id="radio100w"
+              class="lengthRadio"
+              value="2"
+            />
+            <label for="radio100w" class="radioSelector">100 words</label>
+          </section>
+  
+          <br />
+          <!-- Clear local storage button -->
+          <button
+            type="button"
+            class="settingsMenuButton"
+            onclick="localStorage.clear()"
+          >
+            Clear local storage
+          </button>
+  
+          <!-- Open modal button -->
+          <button type="button" class="settingsMenuButton" id="openModal">
+            View words
+          </button>
+  
+          <!-- Submit button -->
+          <button id="submitButton" class="settingsMenuButton" type="submit">
+            Submit
+          </button>
+        </form>
+      </nav>
+
       <!-- Button to open settings -->
       <button
         type="button"
@@ -198,14 +198,14 @@
           </div>
 
           <!-- Start overlay window -->
-          <div id="startOverlay">
+          <div id="startOverlay" class="gameOverlay">
             <button id="startButton" type="button" onclick="initGame()">
               Click to start
             </button>
           </div>
 
           <!-- Finish overlay window -->
-          <div id="finishOverlay">
+          <div id="finishOverlay" class="gameOverlay">
             <!-- Form with information -->
             <form id="finishForm" onsubmit="submitFinishForm();return false">
               <!-- Title -->
@@ -308,29 +308,29 @@
         <img src="resources/images/trophy.png" class="navIcon" alt="Scores" />
         <span class="tooltip" id="scoreTooltip">Scoreboard</span>
       </button>
+
+      <!-- Scores nav bar -->
+      <nav id="scoresNav" class="navbar">
+        <!-- Title -->
+        <h2>Scoreboard</h2>
+
+        <!-- Table with values -->
+        <table id="scoreboard">
+          <!-- Headers -->
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>WPM</th>
+            </tr>
+          </thead>
+
+          <!-- Scores -->
+          <tbody id="scorebody">
+            <!-- Empty and will be filled with DOM -->
+          </tbody>
+        </table>
+      </nav>
     </main>
-
-    <!-- Scores nav bar -->
-    <nav id="scoresNav" class="navbar">
-      <!-- Title -->
-      <h2>Scoreboard</h2>
-
-      <!-- Table with values -->
-      <table id="scoreboard">
-        <!-- Headers -->
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>WPM</th>
-          </tr>
-        </thead>
-
-        <!-- Scores -->
-        <tbody id="scorebody">
-          <!-- Empty and will be filled with DOM -->
-        </tbody>
-      </table>
-    </nav>
   </body>
 </html>
 

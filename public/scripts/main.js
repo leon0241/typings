@@ -65,14 +65,12 @@ function sidebarDOM(button, nav, button2, state) {
     if (state === "open") {
         button.classList.add("open");
         nav.classList.add("open");
-        nav.style.display = "flex";
         overlay.classList.add("open");
         button2.style.zIndex = "2";
     }
     else {
         button.classList.remove("open");
         nav.classList.remove("open");
-        nav.style.display = "none";
         overlay.classList.remove("open");
         button2.style.zIndex = "4";
     }
@@ -364,11 +362,11 @@ class DOMManipulation {
     }
     // Show starting display
     showStart() {
-        startOverlay.style.display = "flex";
+        startOverlay.classList.remove("hide");
     }
     // Show main display
     showBackdrop() {
-        startOverlay.style.display = "none";
+        startOverlay.classList.add("hide");
     }
     // Show finish screen
     showFinish() {

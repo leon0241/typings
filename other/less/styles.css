@@ -18,7 +18,6 @@ body nav {
 body input {
   background-color: #f9fafb;
 }
-
 #gameContainer #game {
   border: 1px solid #3B4252;
   border-radius: 4px;
@@ -45,10 +44,9 @@ body input {
 }
 #gameContainer #startOverlay #startButton {
   background-color: #f9fafb;
-  color: #3B4252;
-  border: 1px solid #3B4252;
+  color: #2E3440;
+  border: 1px solid #2E3440;
   border-radius: 5px;
-  transition: all 0.3s;
 }
 #gameContainer #startOverlay #startButton:hover {
   background-color: #ECEFF4;
@@ -56,7 +54,6 @@ body input {
   border: 1px solid #88C0D0;
 }
 #gameContainer #finishOverlay {
-  background-color: #ECEFF4;
   border: 1px solid #3B4252;
   border-radius: 4px;
   background-color: #ECEFF4;
@@ -69,12 +66,10 @@ body input {
   border-radius: 5px;
   outline: none;
 }
-
 * {
   font-family: Consolas;
   font-size: 16px;
 }
-
 body h1 {
   font-size: 2rem;
 }
@@ -88,81 +83,68 @@ body .radioHeader {
 body .radioSelector {
   font-size: 1.25rem;
 }
-
 html {
   height: 100%;
 }
-
-body {
+html body {
   height: 100%;
   margin: 0;
   padding: 0;
   position: static;
 }
-body #wordModal {
+html body #overlay {
   background-color: rgba(0, 0, 0, 0.5);
   display: none;
+  height: 100%;
+  width: 100%;
   position: fixed;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-  justify-content: center;
 }
-body #overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-  display: none;
-  position: fixed;
-  height: 100%;
-  width: 100%;
-}
-body main {
-  height: 100%;
-  width: 100%;
+html body main {
   position: relative;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
-body main #screenContainer {
+html body main h1 {
+  text-align: center;
+}
+html body main p {
+  text-align: center;
+}
+html body main #screenContainer {
+  flex: 1 1 0;
+  position: absolute;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1 1 0;
-  position: absolute;
 }
-
-main h1 {
-  text-align: center;
-}
-main p {
-  text-align: center;
-}
-
-main .navButton {
+html main #settingsButton,
+html main #scoresButton {
   position: absolute;
   height: 50px;
   width: 50px;
   padding: 0;
   background-color: #f9fafb;
-  color: #3B4252;
-  border: 1px solid #3B4252;
+  color: #2E3440;
+  border: 1px solid #2E3440;
   border-radius: 5px;
-  transition: all 0.3s;
 }
-main .navButton:hover {
+html main #settingsButton:hover,
+html main #scoresButton:hover {
   background-color: #ECEFF4;
   color: #88C0D0;
   border: 1px solid #88C0D0;
 }
-main .navButton:focus {
-  outline: none;
-}
-main .navButton .navIcon {
+html main #settingsButton .navIcon,
+html main #scoresButton .navIcon {
   height: 80%;
   margin: 10%;
 }
-main .navButton .tooltip {
+html main #settingsButton .tooltip,
+html main #scoresButton .tooltip {
   margin: 20% 5px auto;
   height: 50%;
   visibility: hidden;
@@ -171,61 +153,62 @@ main .navButton .tooltip {
   color: #ECEFF4;
   text-align: center;
   padding: 5% 0;
-  border-radius: 5px;
+  border-radius: 6px;
   position: absolute;
   z-index: 10;
   opacity: 0;
   transition: opacity 0.3s;
 }
-main .navButton #scoreTooltip {
+html main #settingsButton #scoreTooltip,
+html main #scoresButton #scoreTooltip {
   right: 105%;
 }
-main .navButton:hover .tooltip {
+html main #settingsButton:hover .tooltip,
+html main #scoresButton:hover .tooltip {
   visibility: visible;
   opacity: 1;
 }
-main #scoresButton {
+html main #scoresButton {
   top: 0px;
   right: 0px;
 }
-main #settingsButton img {
+html #settingsButton:focus {
+  outline: none;
+}
+html #settingsButton img {
   transition: transform 0.3s;
 }
-main #settingsButton:hover img {
+html #settingsButton:hover img {
   transform: rotate(45deg);
 }
-
-body .navbar {
+html #settingsNav,
+html #scoresNav {
   position: fixed;
-  overflow: hidden;
   height: 100%;
-  width: 0;
-  opacity: 0;
+  display: none;
   flex-direction: column;
-  transition: width 0.3s, opacity 0.15s;
 }
-body #scoresNav {
+html #scoresNav {
   top: 0px;
   right: 0px;
+  display: none;
+  flex-direction: column;
 }
-body .open#settingsButton {
+html .open#settingsButton {
   margin-left: 25rem;
 }
-body .open#settingsNav {
+html .open#settingsNav {
   width: 25rem;
-  opacity: 1;
 }
-body .open#scoresButton {
+html .open#scoresButton {
   margin-right: 25rem;
 }
-body .open#scoresNav {
+html .open#scoresNav {
   width: 25rem;
-  opacity: 1;
 }
-body .open#overlay {
+html .open#overlay {
   display: block;
 }
-
 #settingsForm {
   display: flex;
   flex-direction: column;
@@ -244,51 +227,54 @@ body .open#overlay {
   pointer-events: none;
 }
 #settingsForm .settingsRadio input:checked + label {
-  background-color: #ECEFF4;
-  color: #88C0D0;
-  border: 1px solid #88C0D0;
+  color: #5E81AC;
+  border: solid 1px #5E81AC;
 }
 #settingsForm .settingsRadio .radioSelector {
-  background-color: #f9fafb;
-  color: #3B4252;
-  border: 1px solid #3B4252;
-  border-radius: 5px;
-  transition: all 0.3s;
-  text-align: center;
-  vertical-align: middle;
+  background-color: #E5E9F0;
+  border: solid 1px #3B4252;
   margin: 5px;
+  border-radius: 5px;
   height: 2rem;
   width: 7rem;
+  vertical-align: middle;
+  text-align: center;
 }
 #settingsForm .settingsRadio .radioSelector:hover {
-  background-color: #ECEFF4;
+  border: solid 1px #88C0D0;
   color: #88C0D0;
-  border: 1px solid #88C0D0;
+  transition: border 0.3s;
 }
 #settingsForm .settingsMenuButton {
-  background-color: #f9fafb;
-  color: #3B4252;
-  border: 1px solid #3B4252;
-  border-radius: 5px;
-  transition: all 0.3s;
   width: 15rem;
   height: 3rem;
   margin: 10px;
   font-size: 1.25rem;
+  color: #3B4252;
+  border: 1px solid #3B4252;
+  border-radius: 5px;
   align-self: center;
 }
 #settingsForm .settingsMenuButton:hover {
-  background-color: #ECEFF4;
-  color: #88C0D0;
   border: 1px solid #88C0D0;
+  color: #88C0D0;
 }
-
+#wordModal {
+  display: none;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+}
 #wordModal #modalContent {
   margin: 15% auto;
+  /* 15% from the top and centered */
   padding: 20px;
-  border: 1px solid #3B4252;
+  border: 1px solid #888;
   width: 80%;
-  height: 50%;
+  /* Could be more or less, depending on screen size */
 }
 #wordModal #modalContent #modalHeader span {
   float: right;
@@ -300,7 +286,6 @@ body .open#overlay {
 #wordModal #modalContent #modalWords .modalWord {
   padding: 2px;
 }
-
 html #gameContainer,
 html #topText {
   z-index: 2;
@@ -315,7 +300,6 @@ html .navButton {
 html #wordModal {
   z-index: 5;
 }
-
 #gameContainer {
   width: 39rem;
   height: 18rem;
@@ -325,16 +309,15 @@ html #wordModal {
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-rows: 2.5rem 6.0833333333rem 2.5rem 2.5rem;
+  grid-template-rows: 2.5rem 6.08333333rem 2.5rem 2.5rem;
   gap: 0.75rem;
   padding: 0.75rem;
   box-sizing: border-box;
 }
-
 #game #gameStatsArea {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 #game #gameStatsArea #statBox {
   width: 2.5rem;
@@ -351,7 +334,7 @@ html #wordModal {
   position: relative;
   overflow: hidden;
   padding: 0.5rem;
-  padding-bottom: 0.6666666667rem;
+  padding-bottom: 0.66666667rem;
 }
 #game #gameTypingArea {
   display: block;
@@ -365,27 +348,19 @@ html #wordModal {
   padding-left: 5px;
   font-size: 1.5rem;
 }
-
-#gameContainer .gameOverlay {
+#gameContainer #startOverlay,
+#gameContainer #finishOverlay {
   height: 100%;
   width: 100%;
-  top: 0px;
-  right: 0px;
   position: absolute;
+  top: 0;
+  right: 0;
 }
 #gameContainer #startOverlay {
+  backdrop-filter: blur(3px);
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(3px);
-  opacity: 1;
-  height: 100%;
-}
-#gameContainer #startOverlay.hide {
-  backdrop-filter: blur(0);
-  opacity: 0;
-  height: 0;
-  transition: backdrop-filter 0.3s, opacity 0.03s, height 0s 0.3s;
 }
 #gameContainer #startOverlay #startButton {
   height: 5rem;
@@ -401,13 +376,14 @@ html #wordModal {
   grid-template-rows: 20% 15% auto 20%;
   height: 100%;
 }
-#gameContainer #finishOverlay form #finishTitleArea {
+#gameContainer #finishOverlay form .finishArea {
   display: flex;
+}
+#gameContainer #finishOverlay form #finishTitleArea {
   justify-content: center;
   align-items: center;
 }
 #gameContainer #finishOverlay form #finishNameArea {
-  display: flex;
   justify-content: center;
   align-items: center;
 }
