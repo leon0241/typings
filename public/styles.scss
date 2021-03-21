@@ -19,14 +19,22 @@ $defHeight: 69px;
 }
 
 @mixin full_screen {
-  height: 100%;
-  width: 100%;
+  @include width_height(100%);
+}
+
+@mixin width_height($width, $height: $width) {
+  width: $width;
+  height: $height;
 }
 
 @mixin container_style {
-  border: 1px solid $borderOutline;
-  border-radius: 4px;
+  border: 2px solid $borderOutline;
+  border-radius: 7px;
   background-color: c.$nord6;
+}
+
+@mixin border_style {
+  border: 1px solid $borderOutline;
 }
 
 @mixin button_hover {
@@ -36,7 +44,7 @@ $defHeight: 69px;
 }
 
 @mixin button_style {
-  background-color: c.$polarbg;
+  background-color: $focusBg;
   color: $mediumText;
   border: 1px solid $borderOutline;
   border-radius: 5px;
@@ -91,7 +99,7 @@ body {
 
 #gameContainer {
   #game {
-   @include container_style;
+    @include container_style;
 
     .gameArea {
       background-color: $gameBg;
@@ -137,11 +145,6 @@ body {
         font-size: 1.25rem;
       }
     }
-  }
-
-  #gameTypingField {
-    border-radius: 5px;
-    outline: none;
   }
 }
 
@@ -208,6 +211,8 @@ body {
   }
 }
 
+// Main elements
+
 main {
   h1 {
     text-align: center;
@@ -218,12 +223,11 @@ main {
   }
 }
 
-// Sidebar
+// Sidebar buttons
 main {
   .navButton {
     position: absolute;
-    height: 50px;
-    width: 50px;
+    @include width_height(50px);
     padding: 0;
     @include button_style;
 
@@ -237,10 +241,9 @@ main {
     }
 
     .tooltip {
+      @include width_height(120px, 50%);
       margin: 20% 5px auto;
-      height: 50%;
       visibility: hidden;
-      width: 120px;
       background-color: $mediumText;
       color: c.$nord6;
       text-align: center;
@@ -268,28 +271,29 @@ main {
     @include top_right;
   }
 
-  #settingsButton {  
+  #settingsButton {
     img {
       transition: transform 0.3s;
     }
-  
+
     &:hover img {
       transform: rotate(45deg);
     }
   }
 }
 
+// Sidebar and open animation
 body {
   .navbar {
+    @include width_height(0, 100%);
+    display: flex;
+    flex-direction: column;
     position: fixed;
     overflow: hidden;
-    height: 100%;
-    width: 0;
     opacity: 0;
-    flex-direction: column;
     transition: width 0.3s, opacity 0.15s;
   }
-  
+
   #scoresNav {
     @include top_right;
   }
@@ -298,26 +302,28 @@ body {
     &#settingsButton {
       margin-left: $menuSize;
     }
-  
+
     &#settingsNav {
       width: $menuSize;
       opacity: 1;
     }
-  
+
     &#scoresButton {
       margin-right: $menuSize;
     }
-  
+
     &#scoresNav {
       width: $menuSize;
       opacity: 1;
     }
-  
+
     &#overlay {
       display: block;
     }
   }
 }
+
+// Settings form
 
 #settingsForm {
   display: flex;
@@ -345,29 +351,33 @@ body {
     .radioSelector {
       @include button_style;
       @include center_text;
+      @include width_height(7rem, 2rem);
       margin: 5px;
-      height: 2rem;
-      width: 7rem;
+    }
+
+    .lengthRadio:disabled + label {
+      opacity: 0.5;
+      pointer-events: none;
     }
   }
 
   .settingsMenuButton {
     @include button_style;
-    width: 15rem;
-    height: 3rem;
+    @include width_height(15rem, 3rem);
     margin: 10px;
     font-size: 1.25rem;
     align-self: center;
   }
 }
 
+// View words
+
 #wordModal {
   #modalContent {
     margin: 15% auto;
     padding: 20px;
     border: 1px solid c.$nord1;
-    width: 80%;
-    height: 50%;
+    @include width_height(80%, 50%);
 
     #modalHeader {
       span {
@@ -381,6 +391,32 @@ body {
 
       .modalWord {
         padding: 2px;
+      }
+    }
+  }
+}
+
+// Scoreboard
+
+#scoresNav {
+  align-items: center;
+  #scoreboard {
+    width: 90%;
+    background-color: $focusBg;
+    table-layout: fixed;
+
+    #scorebody {
+      tr {
+        text-align: center;
+        width: 50%;
+
+        &:nth-child(odd) {
+          background-color: c.$nord5;
+        }
+
+        &:nth-child(even) {
+          background-color: $focusBg;
+        }
       }
     }
   }
@@ -411,8 +447,7 @@ html {
 // Game window
 
 #gameContainer {
-  width: 39rem;
-  height: 18rem;
+  @include width_height(39rem, 18rem);
   position: absolute;
 
   #game {
@@ -435,8 +470,7 @@ html {
     @include center_flex_element;
 
     #statBox {
-      width: 2.5rem;
-      height: 100%;
+      @include width_height(2.5rem, 100%);
       display: flex;
       border-radius: 50%;
       justify-content: center;
@@ -459,13 +493,21 @@ html {
     display: block;
 
     #gameTypingField {
-      height: 100%;
-      width: calc(100% - 5px);
+      @include width_height(100%, calc(100% - 5px));
       border: 0;
       margin: 0;
       padding: 0;
+      border-radius: 5px;
+      outline: none;
       padding-left: 5px;
       font-size: 1.5rem;
+    }
+  }
+
+  #gameResetArea {
+    #gameResetButton {
+      @include button_style;
+      @include width_height(5rem, 80%);
     }
   }
 }
@@ -492,8 +534,7 @@ html {
     }
 
     #startButton {
-      height: 5rem;
-      width: 10rem;
+      @include width_height(10rem, 5rem);
       @include center_text;
     }
   }
@@ -512,6 +553,15 @@ html {
 
       #finishNameArea {
         @include center_flex_element;
+
+        #finishTypingField {
+          margin: 0;
+          height: 1.5rem;
+          outline: 0;
+          border: 1px solid $borderOutline;
+          border-radius: 5px;
+          text-align: center;
+        }
       }
 
       #finishStatArea {
@@ -531,8 +581,14 @@ html {
       }
 
       #finishRetryArea {
+        display: flex;
         justify-content: space-evenly;
         align-items: center;
+
+        .finishButton {
+          @include button_style;
+          @include width_height(5rem, 2rem);
+        }
       }
     }
   }

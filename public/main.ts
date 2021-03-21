@@ -1,6 +1,3 @@
-const gameContainer: HTMLElement = document.querySelector(".gameContainer");
-const game: HTMLElement = document.querySelector(".game");
-
 const gameTypingField: HTMLInputElement = document.querySelector(
   "#gameTypingField"
 );
@@ -106,14 +103,12 @@ function chooseTimeWords(a: HTMLElement, b: HTMLElement) {
   group.forEach((element: any) => {
     element.disabled = true;
     element.checked = false;
-    console.log("test");
   });
   if (b.classList.contains("deselected")) {
     b.classList.remove("deselected");
     let group = b.querySelectorAll(".lengthRadio");
     group.forEach((element: any) => {
       element.disabled = false;
-      console.log("test2");
     });
   }
 }
@@ -138,7 +133,6 @@ function alphaSortf(): void {
     return a.toLowerCase().localeCompare(b.toLowerCase());
   });
   writeWords(arr);
-  console.log(words);
 }
 
 function writeWords(arr: string[]): void {
@@ -169,7 +163,6 @@ function sortWordsByLength(): string[] {
 }
 
 function insertionSort2d(list: [string, number][]) {
-  console.log(list);
   let max = list.length;
   for (let i = 1; i < max; i++) {
     let j = i;
@@ -224,12 +217,9 @@ class Scoreboard {
   }
 
   submitToLocalStorage(name: string, wpm: number): void {
-    console.log(this.strLen);
     let stat = { name, wpm };
 
     localStorage.setItem(this.strLen, JSON.stringify(stat));
-    console.log(localStorage.key(0));
-    console.log(localStorage.getItem(this.strLen));
   }
 
   parseItem(index: number) {
@@ -255,7 +245,6 @@ class Scoreboard {
   }
 
   updateScoreboard() {
-    console.log(localStorage.getItem((localStorage.length - 1).toString()));
     let item = this.parseItem(localStorage.length - 1);
     this.addNewScore(item);
 
@@ -263,9 +252,7 @@ class Scoreboard {
     sortedArr.reverse();
     this.scores = sortedArr;
 
-    console.log(scorebody);
     scorebody.innerHTML = "";
-    console.log(scorebody.innerHTML);
 
     for (let i = 0; i < sortedArr.length; i++) {
       this.insertRow(sortedArr[i]);
@@ -432,12 +419,12 @@ class DOMManipulation {
 
   // Show starting display
   showStart(): void {
-    startOverlay.classList.remove("hide")
+    startOverlay.classList.remove("hide");
   }
 
   // Show main display
   showBackdrop(): void {
-    startOverlay.classList.add("hide")
+    startOverlay.classList.add("hide");
   }
 
   // Show finish screen

@@ -42,6 +42,10 @@ class GameSettings {
     this._type = value;
   }
 
+  set name(value: string) {
+    this._name = value;
+  }
+
   // ==Class Functions==
   // Gets the Length in terms of time/number of words
   getCalculatedLength(): number {
@@ -86,12 +90,40 @@ class GameSettings {
     return output;
   }
 
+  // Reads the name from the input box and stores it
   setName(): void {
+    // Read input element
     let textbox: HTMLInputElement = document.querySelector(
       "#finishTypingField"
     );
-    this._name = textbox.value;
+
+    // If name is empty, set name to "Anon"
+    let name = textbox.value;
+    if (name === "") {
+      name = "Anon";
+    }
+    this._name = name;
   }
+
+  // idk if this works or not
+  setCookies(): void {
+    let date = new Date();
+    let currentTime = date.getTime();
+    let expire = currentTime + 1000 * 60 * 60 * 24 * 365;
+    date.setTime(expire);
+    let expireStr = "expires=" + date.toUTCString();
+
+    let type = "type=" + this._type;
+    let length = "length=" + this._length.toString();
+    document.cookie = type + ";" + length + ";" + expireStr;
+
+    console.log(expireStr);
+    console.log(type, length);
+    console.log(type + ";" + length + ";" + expireStr);
+    console.log(document.cookie);
+  }
+
+  getCookies(): void {}
 }
 
 // Methods used to modify values by the player throughout the game
@@ -274,10 +306,7 @@ class UserGame extends GameSettings {
     this._userWordCount = 0;
     this._wordErrors = 0;
     DOMFunctions.position = 0;
-    let textbox: HTMLInputElement = document.querySelector(
-      "#finishTypingField"
-    );
-    nameInput.value = "";
+    gameTypingField.value = "";
   }
 }
 
@@ -426,6 +455,7 @@ function newGame(that: any) {
 
   Game.resetStats;
   Game.editGameData(newType, newLength);
+  Game.setCookies();
   Game.initialiseArray();
   DOMFunctions.showArray(Game.gameWords);
   DOMFunctions.changeGameProgress("");
@@ -491,11 +521,11 @@ let clicked = false;
 let Game = new GameFunctions(1, 0, words); // Words = 1, time = 0
 let DOMFunctions = new DOMManipulation();
 let Scores = new Scoreboard();
-Game.initialiseArray();
-DOMFunctions.showArray(Game.gameWords);
 
 window.onload = (event) => {
   Scores.initScoreboard();
+  Game.initialiseArray();
+  DOMFunctions.showArray(Game.gameWords);
 };
 
 //TODO: reset needs to clear input box

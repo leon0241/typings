@@ -1,5 +1,3 @@
-const gameContainer = document.querySelector(".gameContainer");
-const game = document.querySelector(".game");
 const gameTypingField = document.querySelector("#gameTypingField");
 const gameWordArea = document.querySelector("#gameWordArea");
 const gameWPM = document.querySelector("#gameWPM");
@@ -90,14 +88,12 @@ function chooseTimeWords(a, b) {
     group.forEach((element) => {
         element.disabled = true;
         element.checked = false;
-        console.log("test");
     });
     if (b.classList.contains("deselected")) {
         b.classList.remove("deselected");
         let group = b.querySelectorAll(".lengthRadio");
         group.forEach((element) => {
             element.disabled = false;
-            console.log("test2");
         });
     }
 }
@@ -118,7 +114,6 @@ function alphaSortf() {
         return a.toLowerCase().localeCompare(b.toLowerCase());
     });
     writeWords(arr);
-    console.log(words);
 }
 function writeWords(arr) {
     modalWords.innerHTML = "";
@@ -144,7 +139,6 @@ function sortWordsByLength() {
     return finalArr;
 }
 function insertionSort2d(list) {
-    console.log(list);
     let max = list.length;
     for (let i = 1; i < max; i++) {
         let j = i;
@@ -190,11 +184,8 @@ class Scoreboard {
         this._scores.push(value);
     }
     submitToLocalStorage(name, wpm) {
-        console.log(this.strLen);
         let stat = { name, wpm };
         localStorage.setItem(this.strLen, JSON.stringify(stat));
-        console.log(localStorage.key(0));
-        console.log(localStorage.getItem(this.strLen));
     }
     parseItem(index) {
         let raw = localStorage.getItem(index.toString());
@@ -216,15 +207,12 @@ class Scoreboard {
         }
     }
     updateScoreboard() {
-        console.log(localStorage.getItem((localStorage.length - 1).toString()));
         let item = this.parseItem(localStorage.length - 1);
         this.addNewScore(item);
         let sortedArr = bubbleSort2d(this._scores);
         sortedArr.reverse();
         this.scores = sortedArr;
-        console.log(scorebody);
         scorebody.innerHTML = "";
-        console.log(scorebody.innerHTML);
         for (let i = 0; i < sortedArr.length; i++) {
             this.insertRow(sortedArr[i]);
         }

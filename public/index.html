@@ -46,7 +46,7 @@
       <!-- Settings nav bar -->
       <nav id="settingsNav" class="navbar">
         <h2>Settings</h2>
-  
+
         <!-- Form with settings -->
         <form
           name="settingsForm"
@@ -59,12 +59,12 @@
             <!-- Time -->
             <input type="radio" name="test_type" id="radiotime" value="0" />
             <label for="radiotime" class="radioSelector">Time</label>
-  
+
             <!-- Words -->
             <input type="radio" name="test_type" id="radiowords" value="1" />
             <label for="radiowords" class="radioSelector">Words</label>
           </section>
-  
+
           <!-- Test Length - Time -->
           <label for="time_length" class="radioHeader">Test length</label>
           <section class="settingsRadio" id="timeSelector">
@@ -77,7 +77,7 @@
               value="0"
             />
             <label for="radio30s" class="radioSelector">30 secs</label>
-  
+
             <!-- 1 minute -->
             <input
               type="radio"
@@ -87,7 +87,7 @@
               value="1"
             />
             <label for="radio1m" class="radioSelector">1 min</label>
-  
+
             <!-- 2 minutes -->
             <input
               type="radio"
@@ -98,7 +98,7 @@
             />
             <label for="radio2m" class="radioSelector">2 min</label>
           </section>
-  
+
           <!-- Test Length - Words -->
           <section class="settingsRadio" id="wordSelector">
             <!-- 25 words -->
@@ -110,7 +110,7 @@
               value="0"
             />
             <label for="radio25w" class="radioSelector">25 words</label>
-  
+
             <!-- 50 words -->
             <input
               type="radio"
@@ -120,7 +120,7 @@
               value="1"
             />
             <label for="radio50w" class="radioSelector">50 words</label>
-  
+
             <!-- 100 words -->
             <input
               type="radio"
@@ -131,7 +131,7 @@
             />
             <label for="radio100w" class="radioSelector">100 words</label>
           </section>
-  
+
           <br />
           <!-- Clear local storage button -->
           <button
@@ -141,12 +141,12 @@
           >
             Clear local storage
           </button>
-  
+
           <!-- Open modal button -->
           <button type="button" class="settingsMenuButton" id="openModal">
             View words
           </button>
-  
+
           <!-- Submit button -->
           <button id="submitButton" class="settingsMenuButton" type="submit">
             Submit
@@ -193,7 +193,9 @@
 
             <!-- Game reset button -->
             <section class="gameArea" id="gameResetArea">
-              <button type="button" onclick="resetGame()">Reset</button>
+              <button type="button" onclick="resetGame()" id="gameResetButton">
+                Reset
+              </button>
             </section>
           </div>
 

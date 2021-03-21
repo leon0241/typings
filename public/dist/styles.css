@@ -20,8 +20,8 @@ body input {
 }
 
 #gameContainer #game {
-  border: 2px solid #3B4252;
-  border-radius: 7px;
+  border: 1px solid #3B4252;
+  border-radius: 4px;
   background-color: #ECEFF4;
 }
 #gameContainer #game .gameArea {
@@ -57,13 +57,17 @@ body input {
 }
 #gameContainer #finishOverlay {
   background-color: #ECEFF4;
-  border: 2px solid #3B4252;
-  border-radius: 7px;
+  border: 1px solid #3B4252;
+  border-radius: 4px;
   background-color: #ECEFF4;
 }
 #gameContainer #finishOverlay #finishStatArea .finishStat {
   color: #3B4252;
   font-size: 1.25rem;
+}
+#gameContainer #gameTypingField {
+  border-radius: 5px;
+  outline: none;
 }
 
 * {
@@ -99,8 +103,8 @@ body #wordModal {
   background-color: rgba(0, 0, 0, 0.5);
   display: none;
   position: fixed;
-  width: 100%;
   height: 100%;
+  width: 100%;
   overflow: auto;
   justify-content: center;
 }
@@ -108,19 +112,19 @@ body #overlay {
   background-color: rgba(0, 0, 0, 0.5);
   display: none;
   position: fixed;
-  width: 100%;
   height: 100%;
+  width: 100%;
 }
 body main {
-  width: 100%;
   height: 100%;
+  width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
 }
 body main #screenContainer {
-  width: 100%;
   height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -137,8 +141,8 @@ main p {
 
 main .navButton {
   position: absolute;
-  width: 50px;
   height: 50px;
+  width: 50px;
   padding: 0;
   background-color: #f9fafb;
   color: #3B4252;
@@ -159,10 +163,10 @@ main .navButton .navIcon {
   margin: 10%;
 }
 main .navButton .tooltip {
-  width: 120px;
-  height: 50%;
   margin: 20% 5px auto;
+  height: 50%;
   visibility: hidden;
+  width: 120px;
   background-color: #3B4252;
   color: #ECEFF4;
   text-align: center;
@@ -192,13 +196,12 @@ main #settingsButton:hover img {
 }
 
 body .navbar {
-  width: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
   position: fixed;
   overflow: hidden;
+  height: 100%;
+  width: 0;
   opacity: 0;
+  flex-direction: column;
   transition: width 0.3s, opacity 0.15s;
 }
 body #scoresNav {
@@ -253,18 +256,14 @@ body .open#overlay {
   transition: all 0.3s;
   text-align: center;
   vertical-align: middle;
-  width: 7rem;
-  height: 2rem;
   margin: 5px;
+  height: 2rem;
+  width: 7rem;
 }
 #settingsForm .settingsRadio .radioSelector:hover {
   background-color: #ECEFF4;
   color: #88C0D0;
   border: 1px solid #88C0D0;
-}
-#settingsForm .settingsRadio .lengthRadio:disabled + label {
-  opacity: 0.5;
-  pointer-events: none;
 }
 #settingsForm .settingsMenuButton {
   background-color: #f9fafb;
@@ -302,25 +301,6 @@ body .open#overlay {
   padding: 2px;
 }
 
-#scoresNav {
-  align-items: center;
-}
-#scoresNav #scoreboard {
-  width: 90%;
-  background-color: #f9fafb;
-  table-layout: fixed;
-}
-#scoresNav #scoreboard #scorebody tr {
-  text-align: center;
-  width: 50%;
-}
-#scoresNav #scoreboard #scorebody tr:nth-child(odd) {
-  background-color: #E5E9F0;
-}
-#scoresNav #scoreboard #scorebody tr:nth-child(even) {
-  background-color: #f9fafb;
-}
-
 html #gameContainer,
 html #topText {
   z-index: 2;
@@ -342,8 +322,8 @@ html #wordModal {
   position: absolute;
 }
 #gameContainer #game {
-  width: 100%;
   height: 100%;
+  width: 100%;
   display: grid;
   grid-template-rows: 2.5rem 6.0833333333rem 2.5rem 2.5rem;
   gap: 0.75rem;
@@ -377,34 +357,18 @@ html #wordModal {
   display: block;
 }
 #game #gameTypingArea #gameTypingField {
-  width: 100%;
-  height: calc(100% - 5px);
+  height: 100%;
+  width: calc(100% - 5px);
   border: 0;
   margin: 0;
   padding: 0;
-  border-radius: 5px;
-  outline: none;
   padding-left: 5px;
   font-size: 1.5rem;
 }
-#game #gameResetArea #gameResetButton {
-  background-color: #f9fafb;
-  color: #3B4252;
-  border: 1px solid #3B4252;
-  border-radius: 5px;
-  transition: all 0.3s;
-  width: 5rem;
-  height: 80%;
-}
-#game #gameResetArea #gameResetButton:hover {
-  background-color: #ECEFF4;
-  color: #88C0D0;
-  border: 1px solid #88C0D0;
-}
 
 #gameContainer .gameOverlay {
-  width: 100%;
   height: 100%;
+  width: 100%;
   top: 0px;
   right: 0px;
   position: absolute;
@@ -424,8 +388,8 @@ html #wordModal {
   transition: backdrop-filter 0.3s, opacity 0.03s, height 0s 0.3s;
 }
 #gameContainer #startOverlay #startButton {
-  width: 10rem;
   height: 5rem;
+  width: 10rem;
   text-align: center;
   vertical-align: middle;
 }
@@ -447,14 +411,6 @@ html #wordModal {
   justify-content: center;
   align-items: center;
 }
-#gameContainer #finishOverlay form #finishNameArea #finishTypingField {
-  margin: 0;
-  height: 1.5rem;
-  outline: 0;
-  border: 1px solid #3B4252;
-  border-radius: 5px;
-  text-align: center;
-}
 #gameContainer #finishOverlay form #finishStatArea {
   display: grid;
   padding: 0 10%;
@@ -469,21 +425,6 @@ html #wordModal {
   display: none;
 }
 #gameContainer #finishOverlay form #finishRetryArea {
-  display: flex;
   justify-content: space-evenly;
   align-items: center;
-}
-#gameContainer #finishOverlay form #finishRetryArea .finishButton {
-  background-color: #f9fafb;
-  color: #3B4252;
-  border: 1px solid #3B4252;
-  border-radius: 5px;
-  transition: all 0.3s;
-  width: 5rem;
-  height: 2rem;
-}
-#gameContainer #finishOverlay form #finishRetryArea .finishButton:hover {
-  background-color: #ECEFF4;
-  color: #88C0D0;
-  border: 1px solid #88C0D0;
 }
