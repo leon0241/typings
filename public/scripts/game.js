@@ -421,7 +421,10 @@ let Game = new GameFunctions(1, 0, words); // Words = 1, time = 0
 let DOMFunctions = new DOMManipulation();
 let Scores = new Scoreboard();
 window.onload = (event) => {
-    Scores.initScoreboard();
+    console.log(localStorage.length);
+    if (localStorage.length > 0) {
+        Scores.initScoreboard();
+    }
     Game.initialiseArray();
     DOMFunctions.showArray(Game.gameWords);
 };
