@@ -194,7 +194,12 @@ body {
 
 #wordModal {
   #modalContent {
-
+    #modalWords {
+      background-color: var(--focusBackground);
+      .modalWord {
+        color: var(--mediumText);
+      }
+    }
   }
 }
 

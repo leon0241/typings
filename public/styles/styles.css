@@ -139,6 +139,13 @@ body input {
   background-color: var(--scoreboard2);
 }
 
+#wordModal #modalContent #modalWords {
+  background-color: var(--focusBackground);
+}
+#wordModal #modalContent #modalWords .modalWord {
+  color: var(--mediumText);
+}
+
 * {
   font-family: Consolas;
   font-size: 16px;
