@@ -1,3 +1,4 @@
+const body = document.querySelector('body');
 const gameTypingField = document.querySelector("#gameTypingField");
 const gameWordArea = document.querySelector("#gameWordArea");
 const gameWPM = document.querySelector("#gameWPM");
@@ -58,6 +59,15 @@ function openScores() {
         sidebarDOM(scoresButton, scoresNav, settingsButton, "close");
         openToggle = false;
     }
+}
+function changeToLight() {
+    body.classList.replace("dark", "light");
+}
+function changeToDark() {
+    body.classList.replace("light", "dark");
+}
+function initGame() {
+    DOMFunctions.showBackdrop();
 }
 function sidebarDOM(button, nav, button2, state) {
     if (state === "open") {
@@ -314,6 +324,7 @@ class DOMManipulation {
             nodeItem.classList.add("wrongWord");
         }
     }
+    // Check if the word is on the second row, and delete the first row if it is
     checkRow() {
         let nodeList = this.nodeList;
         let item = nodeList.item(this.position);

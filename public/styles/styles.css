@@ -1,69 +1,142 @@
+.light {
+  --highlightText: #2E3440;
+  --mediumText: #3B4252;
+  --backgroundColor: #D8DEE9;
+  --navBackground: #E5E9F0;
+  --gameBackground: #ECEFF4;
+  --focusBackground: #f9fafb;
+  --hoverCol: #88C0D0;
+  --selectedCol: #5E81AC;
+  --borderOutline: #3B4252;
+  --buttonHover: #ECEFF4;
+  --containerBorder: 2px solid var(--borderOutline);
+  --buttonBorder: 1px solid var(--borderOutline);
+  --scoreboard1: #D8DEE9;
+  --scoreboard2: #f9fafb;
+  --typingWord: #3B4252;
+  --highlightWord: #88C0D0;
+  --correctWord: #A3BE8C;
+  --wrongWord: #BF616A;
+}
+
+.dark {
+  --highlightText: #ECEFF4;
+  --mediumText: #E5E9F0;
+  --smallText: rgba(216, 222, 233, 0.87);
+  --backgroundColor: #2E3440;
+  --gameBackground: #3B4252;
+  --navBackground: #434C5E;
+  --focusBackground: #4C566A;
+  --hoverCol: #88C0D0;
+  --selectedCol: #5E81AC;
+  --borderOutline: rgba(216, 222, 233, 0.87);
+  --buttonHover: #434C5E;
+  --containerBorder: 2px solid var(--borderOutline);
+  --buttonBorder: 1px solid var(--borderOutline);
+  --scoreboard1: #3B4252;
+  --scoreboard2: #4C566A;
+  --typingWord: #D8DEE9;
+  --highlightWord: #88C0D0;
+  --correctWord: #A3BE8C;
+  --wrongWord: #BF616A;
+}
+
+* {
+  transition: background-color 0.5s, color 1s;
+}
+
 body #screenContainer {
-  background-color: #E5E9F0;
+  background-color: var(--backgroundColor);
 }
 body #modalContent {
-  background-color: #D8DEE9;
+  background-color: var(--navBackground);
+}
+body .navButton .tooltip {
+  background-color: var(--mediumText);
+  color: var(--gameBackground);
 }
 body h1,
 body h2 {
-  color: #2E3440;
+  color: var(--highlightText);
 }
 body p,
 body label {
-  color: #3B4252;
+  color: var(--mediumText);
 }
 body nav {
-  background-color: #D8DEE9;
+  background-color: var(--navBackground);
 }
 body input {
-  background-color: #f9fafb;
+  background-color: var(--focusBackground);
 }
 
 #gameContainer #game {
-  border: 2px solid #3B4252;
+  border: var(--containerBorder);
   border-radius: 7px;
-  background-color: #ECEFF4;
+  background-color: var(--gameBackground);
 }
 #gameContainer #game .gameArea {
-  background-color: #ECEFF4;
+  background-color: var(--gameBackground);
 }
 #gameContainer #game #statBox {
-  background-color: #f9fafb;
+  background-color: var(--focusBackground);
+  color: var(--mediumText);
 }
 #gameContainer #game #gameWordArea .typingWord {
   font-size: 1.5rem;
   text-overflow: clip;
+  color: var(--typingWord);
+  transition: color 0.2s;
 }
 #gameContainer #game #gameWordArea #highlightWord {
-  color: #88C0D0;
+  color: var(--highlightWord);
 }
 #gameContainer #game #gameWordArea .correctWord {
-  color: #A3BE8C;
+  color: var(--correctWord);
 }
 #gameContainer #game #gameWordArea .wrongWord {
-  color: #BF616A;
+  color: var(--wrongWord);
+}
+#gameContainer #game #gameTypingArea #gameTypingField {
+  color: var(--highlightText);
 }
 #gameContainer #startOverlay #startButton {
-  background-color: #f9fafb;
-  color: #3B4252;
-  border: 1px solid #3B4252;
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
   border-radius: 5px;
   transition: all 0.3s;
 }
 #gameContainer #startOverlay #startButton:hover {
-  background-color: #ECEFF4;
-  color: #88C0D0;
-  border: 1px solid #88C0D0;
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
 }
 #gameContainer #finishOverlay {
-  background-color: #ECEFF4;
-  border: 2px solid #3B4252;
+  background-color: var(--gameBackground);
+  border: var(--containerBorder);
   border-radius: 7px;
-  background-color: #ECEFF4;
+  background-color: var(--gameBackground);
 }
 #gameContainer #finishOverlay #finishStatArea .finishStat {
-  color: #3B4252;
+  color: var(--mediumText);
   font-size: 1.25rem;
+}
+
+#scoresNav #scoreboard {
+  background-color: var(--focusBackground);
+}
+#scoresNav #scoreboard .scoreHeader {
+  color: var(--mediumText);
+}
+#scoresNav #scoreboard #scorebody > tr {
+  color: var(--smallText);
+}
+#scoresNav #scoreboard #scorebody > tr:nth-child(odd) {
+  background-color: var(--scoreboard1);
+}
+#scoresNav #scoreboard #scorebody > tr:nth-child(even) {
+  background-color: var(--scoreboard2);
 }
 
 * {
@@ -136,20 +209,21 @@ main p {
 }
 
 main .navButton {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  padding: 0;
-  background-color: #f9fafb;
-  color: #3B4252;
-  border: 1px solid #3B4252;
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
   border-radius: 5px;
   transition: all 0.3s;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  margin: 15px;
+  padding: 0;
 }
 main .navButton:hover {
-  background-color: #ECEFF4;
-  color: #88C0D0;
-  border: 1px solid #88C0D0;
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
 }
 main .navButton:focus {
   outline: none;
@@ -163,8 +237,6 @@ main .navButton .tooltip {
   height: 50%;
   margin: 20% 5px auto;
   visibility: hidden;
-  background-color: #3B4252;
-  color: #ECEFF4;
   text-align: center;
   padding: 5% 0;
   border-radius: 5px;
@@ -206,14 +278,14 @@ body #scoresNav {
   right: 0px;
 }
 body .open#settingsButton {
-  margin-left: 25rem;
+  margin-left: calc(25rem + 15px);
 }
 body .open#settingsNav {
   width: 25rem;
   opacity: 1;
 }
 body .open#scoresButton {
-  margin-right: 25rem;
+  margin-right: calc(25rem + 15px);
 }
 body .open#scoresNav {
   width: 25rem;
@@ -226,6 +298,10 @@ body .open#overlay {
 #settingsForm {
   display: flex;
   flex-direction: column;
+  height: 100%;
+}
+#settingsForm #settingsHeader {
+  padding-left: 15px;
 }
 #settingsForm .radioHeader {
   text-align: center;
@@ -241,14 +317,14 @@ body .open#overlay {
   pointer-events: none;
 }
 #settingsForm .settingsRadio input:checked + label {
-  background-color: #ECEFF4;
-  color: #88C0D0;
-  border: 1px solid #88C0D0;
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
 }
 #settingsForm .settingsRadio .radioSelector {
-  background-color: #f9fafb;
-  color: #3B4252;
-  border: 1px solid #3B4252;
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
   border-radius: 5px;
   transition: all 0.3s;
   text-align: center;
@@ -258,18 +334,18 @@ body .open#overlay {
   margin: 5px;
 }
 #settingsForm .settingsRadio .radioSelector:hover {
-  background-color: #ECEFF4;
-  color: #88C0D0;
-  border: 1px solid #88C0D0;
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
 }
 #settingsForm .settingsRadio .lengthRadio:disabled + label {
   opacity: 0.5;
   pointer-events: none;
 }
 #settingsForm .settingsMenuButton {
-  background-color: #f9fafb;
-  color: #3B4252;
-  border: 1px solid #3B4252;
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
   border-radius: 5px;
   transition: all 0.3s;
   width: 15rem;
@@ -279,20 +355,52 @@ body .open#overlay {
   align-self: center;
 }
 #settingsForm .settingsMenuButton:hover {
-  background-color: #ECEFF4;
-  color: #88C0D0;
-  border: 1px solid #88C0D0;
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
+}
+#settingsForm #themeButtons {
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 #wordModal #modalContent {
   margin: 15% auto;
   padding: 20px;
-  border: 1px solid #3B4252;
+  border: var(--buttonBorder);
   width: 80%;
   height: 50%;
 }
-#wordModal #modalContent #modalHeader span {
-  float: right;
+#wordModal #modalContent .modalSection {
+  padding: 15px;
+}
+#wordModal #modalContent #modalHeader {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+#wordModal #modalContent #modalHeader #modalExit {
+  margin-left: auto;
+}
+#wordModal #modalContent #modalButtons {
+  display: flex;
+  justify-content: space-evenly;
+}
+#wordModal #modalContent #modalButtons .modalButton {
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
+  border-radius: 5px;
+  transition: all 0.3s;
+  width: 15rem;
+  height: 3rem;
+}
+#wordModal #modalContent #modalButtons .modalButton:hover {
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
 }
 #wordModal #modalContent #modalWords {
   display: flex;
@@ -307,18 +415,11 @@ body .open#overlay {
 }
 #scoresNav #scoreboard {
   width: 90%;
-  background-color: #f9fafb;
   table-layout: fixed;
 }
 #scoresNav #scoreboard #scorebody tr {
   text-align: center;
   width: 50%;
-}
-#scoresNav #scoreboard #scorebody tr:nth-child(odd) {
-  background-color: #E5E9F0;
-}
-#scoresNav #scoreboard #scorebody tr:nth-child(even) {
-  background-color: #f9fafb;
 }
 
 html #gameContainer,
@@ -388,18 +489,18 @@ html #wordModal {
   font-size: 1.5rem;
 }
 #game #gameResetArea #gameResetButton {
-  background-color: #f9fafb;
-  color: #3B4252;
-  border: 1px solid #3B4252;
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
   border-radius: 5px;
   transition: all 0.3s;
   width: 5rem;
   height: 80%;
 }
 #game #gameResetArea #gameResetButton:hover {
-  background-color: #ECEFF4;
-  color: #88C0D0;
-  border: 1px solid #88C0D0;
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
 }
 
 #gameContainer .gameOverlay {
@@ -413,6 +514,7 @@ html #wordModal {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(3px);
   opacity: 1;
   height: 100%;
@@ -451,7 +553,7 @@ html #wordModal {
   margin: 0;
   height: 1.5rem;
   outline: 0;
-  border: 1px solid #3B4252;
+  border: var(--buttonBorder);
   border-radius: 5px;
   text-align: center;
 }
@@ -474,16 +576,16 @@ html #wordModal {
   align-items: center;
 }
 #gameContainer #finishOverlay form #finishRetryArea .finishButton {
-  background-color: #f9fafb;
-  color: #3B4252;
-  border: 1px solid #3B4252;
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
   border-radius: 5px;
   transition: all 0.3s;
   width: 5rem;
   height: 2rem;
 }
 #gameContainer #finishOverlay form #finishRetryArea .finishButton:hover {
-  background-color: #ECEFF4;
-  color: #88C0D0;
-  border: 1px solid #88C0D0;
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
 }

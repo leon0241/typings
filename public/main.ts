@@ -1,3 +1,4 @@
+const body: HTMLElement = document.querySelector('body');
 const gameTypingField: HTMLInputElement = document.querySelector(
   "#gameTypingField"
 );
@@ -69,6 +70,18 @@ function openScores(): void {
     sidebarDOM(scoresButton, scoresNav, settingsButton, "close");
     openToggle = false;
   }
+}
+
+function changeToLight(): void {
+  body.classList.replace("dark", "light")
+}
+
+function changeToDark(): void {
+  body.classList.replace("light", "dark")
+}
+
+function initGame() {
+  DOMFunctions.showBackdrop();
 }
 
 function sidebarDOM(button, nav, button2, state): void {
@@ -378,6 +391,7 @@ class DOMManipulation {
     }
   }
 
+  // Check if the word is on the second row, and delete the first row if it is
   checkRow() {
     let nodeList = this.nodeList;
     let item = nodeList.item(this.position);

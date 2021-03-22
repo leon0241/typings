@@ -1,7 +1,7 @@
 //Functions and variables
 @use "partials/colors" as c;
 @use "partials/variables" as *;
-@use "partials/light";
+@use "partials/themes" as *;
 
 $defWidth: 69px;
 $borderStyle: groove;
@@ -22,31 +22,33 @@ $defHeight: 69px;
   @include width_height(100%);
 }
 
+
 @mixin width_height($width, $height: $width) {
   width: $width;
   height: $height;
 }
 
 @mixin container_style {
-  border: 2px solid $borderOutline;
+  border: var(--containerBorder);
   border-radius: 7px;
-  background-color: c.$nord6;
+  background-color: var(--gameBackground);
 }
 
 @mixin border_style {
-  border: 1px solid $borderOutline;
+  border: var(--buttonBorder);
 }
 
 @mixin button_hover {
-  background-color: c.$nord6;
-  color: $hoverCol;
-  border: 1px solid $hoverCol;
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
 }
 
+
 @mixin button_style {
-  background-color: $focusBg;
-  color: $mediumText;
-  border: 1px solid $borderOutline;
+  @include border_style;
+  background-color: var(--focusBackground);
+  color: var(--smallText);
   border-radius: 5px;
   transition: all 0.3s;
 
@@ -68,32 +70,42 @@ $defHeight: 69px;
 }
 
 // Colours
+*{
+  transition: background-color 0.5s, color 1s;
+}
 
 body {
   #screenContainer {
-    background-color: $background;
+    background-color: var(--backgroundColor);
   }
 
   #modalContent {
-    background-color: $navBg;
+    background-color: var(--navBackground);
+  }
+
+  .navButton {
+    .tooltip {
+      background-color: var(--mediumText);
+      color: var(--gameBackground);
+    }
   }
 
   h1,
   h2 {
-    color: $highlightText;
+    color: var(--highlightText);
   }
 
   p,
   label {
-    color: $mediumText;
+    color: var(--mediumText);
   }
 
   nav {
-    background-color: $navBg;
+    background-color: var(--navBackground);
   }
 
   input {
-    background-color: $focusBg;
+    background-color: var(--focusBackground);
   }
 }
 
@@ -102,29 +114,38 @@ body {
     @include container_style;
 
     .gameArea {
-      background-color: $gameBg;
+      background-color: var(--gameBackground);
     }
 
     #statBox {
-      background-color: $focusBg;
+      background-color: var(--focusBackground);
+      color: var(--mediumText);
     }
 
     #gameWordArea {
       .typingWord {
         font-size: 1.5rem;
         text-overflow: clip;
+        color: var(--typingWord);
+        transition: color 0.2s;
       }
 
       #highlightWord {
-        color: c.$nord8;
+        color: var(--highlightWord);
       }
 
       .correctWord {
-        color: c.$nord14;
+        color: var(--correctWord);
       }
 
       .wrongWord {
-        color: c.$nord11;
+        color: var(--wrongWord);
+      }
+    }
+
+    #gameTypingArea {
+      #gameTypingField {
+        color: var(--highlightText);
       }
     }
   }
@@ -136,15 +157,44 @@ body {
   }
 
   #finishOverlay {
-    background-color: $gameBg;
+    background-color: var(--gameBackground);
     @include container_style;
 
     #finishStatArea {
       .finishStat {
-        color: $mediumText;
+        color: var(--mediumText);
         font-size: 1.25rem;
       }
     }
+  }
+}
+
+#scoresNav {
+  #scoreboard {
+    background-color: var(--focusBackground);
+
+    .scoreHeader {
+      color: var(--mediumText);
+    }
+
+    #scorebody > tr {
+      color: var(--smallText);
+
+
+      &:nth-child(odd) {
+        background-color: var(--scoreboard1);
+      }
+
+      &:nth-child(even) {
+        background-color: var(--scoreboard2);
+      }
+    }
+  }
+}
+
+#wordModal {
+  #modalContent {
+
   }
 }
 
@@ -226,10 +276,11 @@ main {
 // Sidebar buttons
 main {
   .navButton {
-    position: absolute;
-    @include width_height(50px);
-    padding: 0;
     @include button_style;
+    @include width_height(50px);
+    position: absolute;
+    margin: 15px;
+    padding: 0;
 
     &:focus {
       outline: none;
@@ -244,8 +295,6 @@ main {
       @include width_height(120px, 50%);
       margin: 20% 5px auto;
       visibility: hidden;
-      background-color: $mediumText;
-      color: c.$nord6;
       text-align: center;
       padding: 5% 0;
       border-radius: 5px;
@@ -300,7 +349,7 @@ body {
 
   .open {
     &#settingsButton {
-      margin-left: $menuSize;
+      margin-left: calc(#{$menuSize} + 15px);
     }
 
     &#settingsNav {
@@ -309,7 +358,7 @@ body {
     }
 
     &#scoresButton {
-      margin-right: $menuSize;
+      margin-right: calc(#{$menuSize} + 15px);
     }
 
     &#scoresNav {
@@ -328,6 +377,11 @@ body {
 #settingsForm {
   display: flex;
   flex-direction: column;
+  height: 100%;
+
+  #settingsHeader {
+    padding-left: 15px;
+  }
 
   .radioHeader {
     text-align: center;
@@ -368,20 +422,45 @@ body {
     font-size: 1.25rem;
     align-self: center;
   }
+
+  #themeButtons {
+    margin-top: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 }
 
 // View words
 
 #wordModal {
   #modalContent {
+
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid c.$nord1;
+    @include border_style;
     @include width_height(80%, 50%);
 
+    .modalSection {
+      padding: 15px;
+    }
+
     #modalHeader {
-      span {
-        float: right;
+      display: flex;
+      flex-direction: row;
+      text-align: center;
+
+      #modalExit {
+        margin-left: auto;
+      }
+    }
+
+    #modalButtons {
+      display: flex;
+      justify-content: space-evenly;
+      .modalButton {
+        @include button_style;
+        @include width_height(15rem, 3rem);
       }
     }
 
@@ -402,21 +481,12 @@ body {
   align-items: center;
   #scoreboard {
     width: 90%;
-    background-color: $focusBg;
     table-layout: fixed;
 
     #scorebody {
       tr {
         text-align: center;
         width: 50%;
-
-        &:nth-child(odd) {
-          background-color: c.$nord5;
-        }
-
-        &:nth-child(even) {
-          background-color: $focusBg;
-        }
       }
     }
   }
@@ -464,6 +534,7 @@ html {
     box-sizing: border-box;
   }
 }
+
 
 #game {
   #gameStatsArea {
@@ -522,6 +593,7 @@ html {
 
   #startOverlay {
     @include center_flex_element;
+    background-color: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(3px);
     opacity: 1;
     height: 100%;
@@ -558,7 +630,7 @@ html {
           margin: 0;
           height: 1.5rem;
           outline: 0;
-          border: 1px solid $borderOutline;
+          @include border_style;
           border-radius: 5px;
           text-align: center;
         }

@@ -26,14 +26,14 @@ class GameSettings {
         return this._type;
     }
     // ==Class Setters==
+    set name(value) {
+        this._name = value;
+    }
     set length(value) {
         this._length = value;
     }
     set type(value) {
         this._type = value;
-    }
-    set name(value) {
-        this._name = value;
     }
     // ==Class Functions==
     // Gets the Length in terms of time/number of words
@@ -167,6 +167,53 @@ class UserGame extends GameSettings {
         this._wordErrors += 1;
     }
     // ==Class Functions==
+    // Changes length and type when settings are edited
+    //TODO: Settings DOM to call this function
+    editGameData(x, y) {
+        let newType = x;
+        let newLength = y;
+        this._type = newType;
+        this._length = newLength;
+    }
+    // Creates an array of 30 with random words
+    initialiseArray() {
+        // Creates temp variable, maybe faster to assign to this.gameWords before
+        let tempGameWords = [];
+        for (let i = 0; i < 50; i++) {
+            // Random integer from 0 to length of array and assigns
+            let randint = Math.floor(Math.random() * words.length);
+            tempGameWords[i] = this._words[randint];
+        }
+        this._gameWords = tempGameWords;
+    }
+    // Checks if the word is correct or not
+    wordCheck() {
+        // Removes the spacebar from your input word
+        let inputWord = gameTypingField.value.trim();
+        let wordComparison = Game.word;
+        // Defines the item to change the class of
+        let nodeItem = document.getElementById("previousWord");
+        // Checks if the input word is the same as the actual word
+        if (inputWord === wordComparison) {
+            DOMFunctions.setAnswer(true, nodeItem);
+        }
+        else {
+            Game.incrementWordErrors();
+            DOMFunctions.setAnswer(false, nodeItem);
+        }
+        // Checking if next word is on next line, and deletes the first line
+        // Sets DOMRect of the next word, will test if it is on the next line or not
+        DOMFunctions.checkRow();
+    }
+    // Appends a new word to the araray
+    newWord() {
+        let gameWords = this._gameWords;
+        // Random number up to the length of total words array
+        let randint = Math.floor(Math.random() * words.length);
+        gameWords.push(words[randint]);
+        // Goes to updateWords with array gameWords, position length of gameWords - 1 (for 0 counting array)
+        DOMFunctions.updateWords(this._gameWords, this._gameWords.length - 1);
+    }
     // Calculates WPM and accuracy of the player
     calculateStats() {
         // Variable initialisation
@@ -190,54 +237,6 @@ class UserGame extends GameSettings {
         let stats = [];
         tempStats.forEach((element) => stats.push(Math.round(element)));
         this._calculatedStats = stats;
-    }
-    // Changes length and type when settings are edited
-    //TODO: Settings DOM to call this function
-    editGameData(x, y) {
-        let newType = x;
-        let newLength = y;
-        this._type = newType;
-        this._length = newLength;
-    }
-    // Creates an array of 30 with random words
-    initialiseArray() {
-        // Creates temp variable, maybe faster to assign to this.gameWords before
-        let tempGameWords = [];
-        for (let i = 0; i < 50; i++) {
-            // Random integer from 0 to length of array and assigns
-            let randint = Math.floor(Math.random() * words.length);
-            tempGameWords[i] = this._words[randint];
-        }
-        this._gameWords = tempGameWords;
-    }
-    // Appends a new word to the araray
-    newWord() {
-        let gameWords = this._gameWords;
-        // Random number up to the length of total words array
-        let randint = Math.floor(Math.random() * words.length);
-        gameWords.push(words[randint]);
-        // Goes to updateWords with array gameWords, position length of gameWords - 1 (for 0 counting array)
-        DOMFunctions.updateWords(this._gameWords, this._gameWords.length - 1);
-    }
-    // Checks if the word is correct or not
-    wordCheck() {
-        // Removes the spacebar from your input word
-        let inputWord = gameTypingField.value.trim();
-        let wordComparison = Game.word;
-        let position = DOMFunctions.position;
-        // Defines the item to change the class of
-        let nodeItem = document.getElementById("previousWord");
-        // Checks if the input word is the same as the actual word
-        if (inputWord === wordComparison) {
-            DOMFunctions.setAnswer(true, nodeItem);
-        }
-        else {
-            Game.incrementWordErrors();
-            DOMFunctions.setAnswer(false, nodeItem);
-        }
-        // Checking if next word is on next line, and deletes the first line
-        // Sets DOMRect of the next word, will test if it is on the next line or not
-        DOMFunctions.checkRow();
     }
     resetStats() {
         this._calculatedStats = [0, 0];
@@ -341,13 +340,13 @@ class GameFunctions extends UserGame {
         DOMFunctions.updateNodeList();
         // Increase word count
         this.incrementWordCount();
+        this.newWord();
         // Increase position (this is used for DOM styling)
         DOMFunctions.incrementPosition();
         // Highlights the current word
         DOMFunctions.highlightCurrentWord();
         // Checks: if word is correct, if word is last on its line
         this.wordCheck();
-        this.newWord();
         // Clears the value of the field
         gameTypingField.value = "";
         //debugger;
@@ -378,9 +377,6 @@ function resetGame() {
     Game.initialiseArray();
     DOMFunctions.showArray(Game.gameWords);
     DOMFunctions.changeGameProgress("");
-}
-function initGame() {
-    DOMFunctions.showBackdrop();
 }
 function finishedReset(exit) {
     Game.setName();
