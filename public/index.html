@@ -18,17 +18,17 @@
       <div id="modalContent">
         <header id="modalHeader" class="modalSection">
           <h2>modal</h2>
-          <span id="modalExit" onclick="closeModal()">&times;</span>
+          <span id="modalExit">&times;</span>
         </header>
 
         <section id="modalButtons" class="modalSection">
-          <button id="freqSort" class="modalButton" onclick="freqSortf()">
+          <button id="freqSort" class="modalButton">
             Sort by frequency
           </button>
-          <button id="lengthSort" class="modalButton" onclick="lengthSortf()">
+          <button id="lengthSort" class="modalButton">
             Sort by length
           </button>
-          <button id="alphaSort" class="modalButton" onclick="alphaSortf()">
+          <button id="alphaSort" class="modalButton">
             Sort alphabetically
           </button>
         </section>
@@ -151,8 +151,8 @@
           </button>
 
           <div id="themeButtons">
-            <button type="button" class="settingsMenuButton" onclick="changeToLight()">Light</button>
-            <button type="button" class="settingsMenuButton" onclick="changeToDark()">Dark</button>
+            <button type="button" class="settingsMenuButton" id="lightButton">Light</button>
+            <button type="button" class="settingsMenuButton" id="darkButton">Dark</button>
           </div>
         </form>
       </nav>
@@ -162,7 +162,6 @@
         type="button"
         id="settingsButton"
         class="navButton"
-        onclick="openSettings()"
       >
         <img
           src="resources/images/settings.png"
@@ -204,7 +203,7 @@
 
           <!-- Start overlay window -->
           <div id="startOverlay" class="gameOverlay">
-            <button id="startButton" type="button" onclick="initGame()">
+            <button id="startButton" type="button">
               Click to start
             </button>
           </div>
@@ -308,7 +307,6 @@
         type="button"
         id="scoresButton"
         class="navButton"
-        onclick="openScores()"
       >
         <img src="resources/images/trophy.png" class="navIcon" alt="Scores" />
         <span class="tooltip" id="scoreTooltip">Scoreboard</span>

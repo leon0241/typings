@@ -104,26 +104,6 @@ class GameSettings {
     }
     this._name = name;
   }
-
-  // idk if this works or not
-  setCookies(): void {
-    let date = new Date();
-    let currentTime = date.getTime();
-    let expire = currentTime + 1000 * 60 * 60 * 24 * 365;
-    date.setTime(expire);
-    let expireStr = "expires=" + date.toUTCString();
-
-    let type = "type=" + this._type;
-    let length = "length=" + this._length.toString();
-    document.cookie = type + ";" + length + ";" + expireStr;
-
-    console.log(expireStr);
-    console.log(type, length);
-    console.log(type + ";" + length + ";" + expireStr);
-    console.log(document.cookie);
-  }
-
-  getCookies(): void {}
 }
 
 // Methods used to modify values by the player throughout the game
@@ -215,11 +195,12 @@ class UserGame extends GameSettings {
 
   // Changes length and type when settings are edited
   //TODO: Settings DOM to call this function
-  editGameData(x: number, y: number): void {
-    let newType = x;
-    let newLength = y;
-    this._type = newType;
-    this._length = newLength;
+  editGameData(x: string, y: string): void {
+    let type: number = parseInt(x, 10);
+    let length: number = parseInt(y, 10);
+
+    this._type = type;
+    this._length = length;
   }
 
   // Creates an array of 30 with random words
@@ -450,12 +431,18 @@ function newGame(that: any) {
   let type: string = that.test_type.value;
   let length: string =
     type === "0" ? that.time_length.value : that.word_length.value;
-  let newType: number = parseInt(type, 10);
-  let newLength: number = parseInt(length, 10);
+
+  if (type === "") {
+    type = "1"
+  }
+
+  if (length === "") {
+    length = "0"
+  }
 
   Game.resetStats;
-  Game.editGameData(newType, newLength);
-  Game.setCookies();
+  Game.editGameData(type, length);
+  DOMFunctions.setSettings(type, length);
   Game.initialiseArray();
   DOMFunctions.showArray(Game.gameWords);
   DOMFunctions.changeGameProgress("");
@@ -518,11 +505,22 @@ let Game = new GameFunctions(1, 0, words); // Words = 1, time = 0
 let DOMFunctions = new DOMManipulation();
 let Scores = new Scoreboard();
 
-window.onload = (event) => {
+window.onload = (e) => {
   console.log(localStorage.length)
-  if (localStorage.length > 0) {
-    Scores.initScoreboard();
+
+  if (localStorage.length === 0) {
+    DOMFunctions.setSettings("1", "0")
+  } else if (localStorage.length > 0) {
+    let importSettings: string[] = DOMFunctions.getSettings()
+    Game.editGameData(importSettings[0], importSettings[1]);
+    console.log(importSettings)
+    setTheme(importSettings[2])
+
+    if (localStorage.length > 3) {
+      Scores.initScoreboard();
+    }
   }
+
   Game.initialiseArray();
   DOMFunctions.showArray(Game.gameWords);
 };

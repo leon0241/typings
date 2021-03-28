@@ -1,40 +1,52 @@
+// Setting DOM variable stuff
+
+// Body
 const body: HTMLElement = document.querySelector('body');
-const gameTypingField: HTMLInputElement = document.querySelector(
+const overlay: HTMLElement = document.getElementById("overlay");
+
+const settingsButton: HTMLElement = document.getElementById("settingsButton");
+const scoresButton: HTMLElement = document.getElementById("scoresButton");
+
+// Game
+const game: HTMLElement = document.getElementById("game");
+const gameProgress: HTMLElement = game.querySelector("#gameProgress");
+const gameWordArea: HTMLElement = game.querySelector("#gameWordArea");
+const gameTypingField: HTMLInputElement = game.querySelector(
   "#gameTypingField"
 );
-const gameWordArea: HTMLElement = document.querySelector("#gameWordArea");
-const gameWPM: HTMLElement = document.querySelector("#gameWPM");
-const gameAccuracy: HTMLElement = document.querySelector("#gameAccuracy");
-const gameProgress: HTMLElement = document.querySelector("#gameProgress");
-const startOverlay: HTMLElement = document.querySelector("#startOverlay");
-const finishOverlay: HTMLElement = document.querySelector("#finishOverlay");
-const nameInput: HTMLInputElement = document.querySelector(
+
+// Start
+const startOverlay: HTMLElement = document.getElementById("startOverlay");
+
+// Finish
+const finishOverlay: HTMLElement = document.getElementById("finishOverlay");
+const finishForm: HTMLFormElement = finishOverlay.querySelector("#finishForm");
+const nameInput: HTMLInputElement = finishForm.querySelector(
   "#finishTypingField"
 );
-const hiddenWPMInput: HTMLInputElement = document.querySelector("#hiddenWpm");
-const hiddenAccInput: HTMLInputElement = document.querySelector("#hiddenAcc");
-const finishForm: HTMLFormElement = document.querySelector("#finishForm");
+const gameWPM: HTMLElement = finishForm.querySelector("#gameWPM");
+const gameAccuracy: HTMLElement = finishForm.querySelector("#gameAccuracy");
 
-const settingsButton: HTMLElement = document.querySelector("#settingsButton");
-const settingsNav: HTMLElement = document.querySelector("#settingsNav");
+const hiddenWPMInput: HTMLInputElement = finishForm.querySelector("#hiddenWpm");
+const hiddenAccInput: HTMLInputElement = finishForm.querySelector("#hiddenAcc");
 
-const radiotime: HTMLElement = document.querySelector("#radiotime");
-const radiowords: HTMLElement = document.querySelector("#radiowords");
-const wordSelector: HTMLElement = document.querySelector("#wordSelector");
-const timeSelector: HTMLElement = document.querySelector("#timeSelector");
 
-const scoresButton: HTMLElement = document.querySelector("#scoresButton");
-const scoresNav: HTMLElement = document.querySelector("#scoresNav");
-const overlay: HTMLElement = document.querySelector("#overlay");
+// Settings
 
-const tempscore: HTMLElement = document.querySelector("#tempscores");
-const scoreboard: HTMLTableElement = document.querySelector("#scoreboard");
-const scorebody: HTMLTableSectionElement = document.querySelector("#scorebody");
+const settingsNav: HTMLElement = document.getElementById("settingsNav");
 
-const modal: HTMLElement = document.querySelector("#wordModal");
-const openModal: HTMLButtonElement = document.querySelector("#openModal");
-const modalWords: HTMLElement = document.querySelector("#modalWords");
-const modalExit: HTMLElement = document.querySelector("#modalExit");
+const wordSelector: HTMLElement = settingsNav.querySelector("#wordSelector");
+const timeSelector: HTMLElement = settingsNav.querySelector("#timeSelector");
+
+// Scores
+const scoresNav: HTMLElement = document.getElementById("scoresNav");
+
+const scoreboard: HTMLTableElement = scoresNav.querySelector("#scoreboard");
+const scorebody: HTMLTableSectionElement = scoreboard.querySelector("#scorebody");
+
+// Modal
+const modal: HTMLElement = document.getElementById("wordModal");
+const modalWords: HTMLElement = modal.querySelector("#modalWords");
 
 // Creates a http request to submit form
 function submitFinishForm(): void {
@@ -52,7 +64,7 @@ function submitFinishForm(): void {
 
 let openToggle = false;
 
-function openSettings(): void {
+settingsButton.onclick = () => {
   if (openToggle === false) {
     sidebarDOM(settingsButton, settingsNav, scoresButton, "open");
     openToggle = true;
@@ -62,7 +74,7 @@ function openSettings(): void {
   }
 }
 
-function openScores(): void {
+scoresButton.onclick = () => {
   if (openToggle === false) {
     sidebarDOM(scoresButton, scoresNav, settingsButton, "open");
     openToggle = true;
@@ -72,41 +84,59 @@ function openScores(): void {
   }
 }
 
-function changeToLight(): void {
-  body.classList.replace("dark", "light")
+document.getElementById("lightButton").onclick = () => {
+  setTheme("light")
 }
 
-function changeToDark(): void {
-  body.classList.replace("light", "dark")
+document.getElementById("darkButton").onclick = () => {
+  setTheme("dark")
 }
 
-function initGame() {
+function setTheme(theme: string): void {
+  switch (theme) {
+    case "light": {
+      body.classList.replace("dark", "light")
+      DOMFunctions.theme = "light"
+      localStorage.setItem("theme", "light")
+      break
+    }
+    case "dark": {
+      body.classList.replace("light", "dark")
+      DOMFunctions.theme = "dark"
+      localStorage.setItem("theme", "dark")
+      break
+    }
+  }
+}
+
+document.getElementById("startButton").onclick = () => {
   DOMFunctions.showBackdrop();
 }
 
 function sidebarDOM(button, nav, button2, state): void {
+  let elementList = [button, nav, overlay]
   if (state === "open") {
-    button.classList.add("open");
-    nav.classList.add("open");
-    overlay.classList.add("open");
+    elementList.forEach(element => {
+      element.classList.add("open")
+    })
     button2.style.zIndex = "2";
   } else {
-    button.classList.remove("open");
-    nav.classList.remove("open");
-    overlay.classList.remove("open");
+    elementList.forEach(element => {
+      element.classList.remove("open")
+    })
     button2.style.zIndex = "4";
   }
 }
 
-openModal.onclick = (event) => {
+document.getElementById("openModal").onclick = () => {
   modal.style.display = "flex";
 };
 
-radiotime.onclick = () => {
+document.getElementById("radiotime").onclick = () => {
   chooseTimeWords(wordSelector, timeSelector);
 };
 
-radiowords.onclick = () => {
+document.getElementById("radiowords").onclick = () => {
   chooseTimeWords(timeSelector, wordSelector);
 };
 
@@ -117,6 +147,7 @@ function chooseTimeWords(a: HTMLElement, b: HTMLElement) {
     element.disabled = true;
     element.checked = false;
   });
+
   if (b.classList.contains("deselected")) {
     b.classList.remove("deselected");
     let group = b.querySelectorAll(".lengthRadio");
@@ -126,21 +157,21 @@ function chooseTimeWords(a: HTMLElement, b: HTMLElement) {
   }
 }
 
-function closeModal(): void {
+document.getElementById("modalExit").onclick = () => {
   modal.style.display = "none";
 }
 
-function freqSortf(): void {
+document.getElementById("freqSort").onclick = () => {
   let arr = words;
   writeWords(arr);
 }
 
-function lengthSortf(): void {
+document.getElementById("lengthSort").onclick = () => {
   let arr = sortWordsByLength();
   writeWords(arr);
 }
 
-function alphaSortf(): void {
+document.getElementById("alphaSort").onclick = () => {
   let wordDummy = [...words];
   let arr = wordDummy.sort((a, b) => {
     return a.toLowerCase().localeCompare(b.toLowerCase());
@@ -208,6 +239,7 @@ function bubbleSort2d(list: [string, number][]) {
 
 class Scoreboard {
   _scores: [string, number][];
+  //TODO: ADD INDEX IT RELIES ON LOCALSTORAGELENGTH AND THAT IS BEING INCREASED BY 3
 
   constructor() {
     this._scores = [];
@@ -238,6 +270,7 @@ class Scoreboard {
   parseItem(index: number) {
     let raw = localStorage.getItem(index.toString());
     let parsed = JSON.parse(raw);
+    console.log(parsed)
     let score: any = Object.values(parsed);
     return score;
   }
@@ -286,6 +319,7 @@ class Scoreboard {
 class DOMManipulation {
   _position: number;
   _nodeList: NodeListOf<HTMLElement>;
+  _theme: string;
 
   constructor() {
     // How far a word is down a line
@@ -293,6 +327,8 @@ class DOMManipulation {
 
     // List of all words
     this._nodeList = document.querySelectorAll(".typingWord");
+
+    this._theme = "dark";
   }
 
   // == Class getters==
@@ -308,11 +344,20 @@ class DOMManipulation {
     return gameWordArea;
   }
 
+  get theme() {
+    return this._theme
+  }
+
   // ==Class Setters==
 
   set position(value: number) {
     this._position = value;
   }
+
+  set theme(value: string) {
+    this._theme = value;
+  }
+
   // ==Class Functions==
 
   // updates the node list
@@ -456,5 +501,19 @@ class DOMManipulation {
   appendFormData(): void {
     hiddenWPMInput.value = Game._calculatedStats[0].toString();
     hiddenAccInput.value = Game._calculatedStats[1].toString();
+  }
+
+  // idk if this works or not
+  setSettings(type, length): void {
+    localStorage.setItem("type", type)
+    localStorage.setItem("length", length)
+    localStorage.setItem("theme", this._theme)
+  }
+
+  getSettings(): string[] {
+    let type = localStorage.getItem("type")
+    let length = localStorage.getItem("length")
+    let theme = localStorage.getItem("theme")
+    return [type, length, theme]
   }
 }

@@ -1,31 +1,35 @@
+// Setting DOM variable stuff
+// Body
 const body = document.querySelector('body');
-const gameTypingField = document.querySelector("#gameTypingField");
-const gameWordArea = document.querySelector("#gameWordArea");
-const gameWPM = document.querySelector("#gameWPM");
-const gameAccuracy = document.querySelector("#gameAccuracy");
-const gameProgress = document.querySelector("#gameProgress");
-const startOverlay = document.querySelector("#startOverlay");
-const finishOverlay = document.querySelector("#finishOverlay");
-const nameInput = document.querySelector("#finishTypingField");
-const hiddenWPMInput = document.querySelector("#hiddenWpm");
-const hiddenAccInput = document.querySelector("#hiddenAcc");
-const finishForm = document.querySelector("#finishForm");
-const settingsButton = document.querySelector("#settingsButton");
-const settingsNav = document.querySelector("#settingsNav");
-const radiotime = document.querySelector("#radiotime");
-const radiowords = document.querySelector("#radiowords");
-const wordSelector = document.querySelector("#wordSelector");
-const timeSelector = document.querySelector("#timeSelector");
-const scoresButton = document.querySelector("#scoresButton");
-const scoresNav = document.querySelector("#scoresNav");
-const overlay = document.querySelector("#overlay");
-const tempscore = document.querySelector("#tempscores");
-const scoreboard = document.querySelector("#scoreboard");
-const scorebody = document.querySelector("#scorebody");
-const modal = document.querySelector("#wordModal");
-const openModal = document.querySelector("#openModal");
-const modalWords = document.querySelector("#modalWords");
-const modalExit = document.querySelector("#modalExit");
+const overlay = document.getElementById("overlay");
+const settingsButton = document.getElementById("settingsButton");
+const scoresButton = document.getElementById("scoresButton");
+// Game
+const game = document.getElementById("game");
+const gameProgress = game.querySelector("#gameProgress");
+const gameWordArea = game.querySelector("#gameWordArea");
+const gameTypingField = game.querySelector("#gameTypingField");
+// Start
+const startOverlay = document.getElementById("startOverlay");
+// Finish
+const finishOverlay = document.getElementById("finishOverlay");
+const finishForm = finishOverlay.querySelector("#finishForm");
+const nameInput = finishForm.querySelector("#finishTypingField");
+const gameWPM = finishForm.querySelector("#gameWPM");
+const gameAccuracy = finishForm.querySelector("#gameAccuracy");
+const hiddenWPMInput = finishForm.querySelector("#hiddenWpm");
+const hiddenAccInput = finishForm.querySelector("#hiddenAcc");
+// Settings
+const settingsNav = document.getElementById("settingsNav");
+const wordSelector = settingsNav.querySelector("#wordSelector");
+const timeSelector = settingsNav.querySelector("#timeSelector");
+// Scores
+const scoresNav = document.getElementById("scoresNav");
+const scoreboard = scoresNav.querySelector("#scoreboard");
+const scorebody = scoreboard.querySelector("#scorebody");
+// Modal
+const modal = document.getElementById("wordModal");
+const modalWords = modal.querySelector("#modalWords");
 // Creates a http request to submit form
 function submitFinishForm() {
     // // Gets form with the new data
@@ -40,7 +44,7 @@ function submitFinishForm() {
     // http.send(formData);
 }
 let openToggle = false;
-function openSettings() {
+settingsButton.onclick = () => {
     if (openToggle === false) {
         sidebarDOM(settingsButton, settingsNav, scoresButton, "open");
         openToggle = true;
@@ -49,8 +53,8 @@ function openSettings() {
         sidebarDOM(settingsButton, settingsNav, scoresButton, "close");
         openToggle = false;
     }
-}
-function openScores() {
+};
+scoresButton.onclick = () => {
     if (openToggle === false) {
         sidebarDOM(scoresButton, scoresNav, settingsButton, "open");
         openToggle = true;
@@ -59,37 +63,54 @@ function openScores() {
         sidebarDOM(scoresButton, scoresNav, settingsButton, "close");
         openToggle = false;
     }
+};
+document.getElementById("lightButton").onclick = () => {
+    setTheme("light");
+};
+document.getElementById("darkButton").onclick = () => {
+    setTheme("dark");
+};
+function setTheme(theme) {
+    switch (theme) {
+        case "light": {
+            body.classList.replace("dark", "light");
+            DOMFunctions.theme = "light";
+            localStorage.setItem("theme", "light");
+            break;
+        }
+        case "dark": {
+            body.classList.replace("light", "dark");
+            DOMFunctions.theme = "dark";
+            localStorage.setItem("theme", "dark");
+            break;
+        }
+    }
 }
-function changeToLight() {
-    body.classList.replace("dark", "light");
-}
-function changeToDark() {
-    body.classList.replace("light", "dark");
-}
-function initGame() {
+document.getElementById("startButton").onclick = () => {
     DOMFunctions.showBackdrop();
-}
+};
 function sidebarDOM(button, nav, button2, state) {
+    let elementList = [button, nav, overlay];
     if (state === "open") {
-        button.classList.add("open");
-        nav.classList.add("open");
-        overlay.classList.add("open");
+        elementList.forEach(element => {
+            element.classList.add("open");
+        });
         button2.style.zIndex = "2";
     }
     else {
-        button.classList.remove("open");
-        nav.classList.remove("open");
-        overlay.classList.remove("open");
+        elementList.forEach(element => {
+            element.classList.remove("open");
+        });
         button2.style.zIndex = "4";
     }
 }
-openModal.onclick = (event) => {
+document.getElementById("openModal").onclick = () => {
     modal.style.display = "flex";
 };
-radiotime.onclick = () => {
+document.getElementById("radiotime").onclick = () => {
     chooseTimeWords(wordSelector, timeSelector);
 };
-radiowords.onclick = () => {
+document.getElementById("radiowords").onclick = () => {
     chooseTimeWords(timeSelector, wordSelector);
 };
 function chooseTimeWords(a, b) {
@@ -107,24 +128,24 @@ function chooseTimeWords(a, b) {
         });
     }
 }
-function closeModal() {
+document.getElementById("modalExit").onclick = () => {
     modal.style.display = "none";
-}
-function freqSortf() {
+};
+document.getElementById("freqSort").onclick = () => {
     let arr = words;
     writeWords(arr);
-}
-function lengthSortf() {
+};
+document.getElementById("lengthSort").onclick = () => {
     let arr = sortWordsByLength();
     writeWords(arr);
-}
-function alphaSortf() {
+};
+document.getElementById("alphaSort").onclick = () => {
     let wordDummy = [...words];
     let arr = wordDummy.sort((a, b) => {
         return a.toLowerCase().localeCompare(b.toLowerCase());
     });
     writeWords(arr);
-}
+};
 function writeWords(arr) {
     modalWords.innerHTML = "";
     for (let i = 0; i < arr.length; i++) {
@@ -178,6 +199,7 @@ function bubbleSort2d(list) {
     return list;
 }
 class Scoreboard {
+    //TODO: ADD INDEX IT RELIES ON LOCALSTORAGELENGTH AND THAT IS BEING INCREASED BY 3
     constructor() {
         this._scores = [];
     }
@@ -200,6 +222,7 @@ class Scoreboard {
     parseItem(index) {
         let raw = localStorage.getItem(index.toString());
         let parsed = JSON.parse(raw);
+        console.log(parsed);
         let score = Object.values(parsed);
         return score;
     }
@@ -243,6 +266,7 @@ class DOMManipulation {
         this._position = 0;
         // List of all words
         this._nodeList = document.querySelectorAll(".typingWord");
+        this._theme = "dark";
     }
     // == Class getters==
     get position() {
@@ -254,9 +278,15 @@ class DOMManipulation {
     get area() {
         return gameWordArea;
     }
+    get theme() {
+        return this._theme;
+    }
     // ==Class Setters==
     set position(value) {
         this._position = value;
+    }
+    set theme(value) {
+        this._theme = value;
     }
     // ==Class Functions==
     // updates the node list
@@ -380,5 +410,17 @@ class DOMManipulation {
     appendFormData() {
         hiddenWPMInput.value = Game._calculatedStats[0].toString();
         hiddenAccInput.value = Game._calculatedStats[1].toString();
+    }
+    // idk if this works or not
+    setSettings(type, length) {
+        localStorage.setItem("type", type);
+        localStorage.setItem("length", length);
+        localStorage.setItem("theme", this._theme);
+    }
+    getSettings() {
+        let type = localStorage.getItem("type");
+        let length = localStorage.getItem("length");
+        let theme = localStorage.getItem("theme");
+        return [type, length, theme];
     }
 }
