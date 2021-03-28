@@ -202,9 +202,10 @@ class Scoreboard {
     //TODO: ADD INDEX IT RELIES ON LOCALSTORAGELENGTH AND THAT IS BEING INCREASED BY 3
     constructor() {
         this._scores = [];
+        this._index = 0;
     }
     get strLen() {
-        return localStorage.length.toString();
+        return this._index.toString();
     }
     get scores() {
         return this._scores;
@@ -212,12 +213,16 @@ class Scoreboard {
     set scores(value) {
         this._scores = value;
     }
+    initIndex(offset) {
+        this._index = localStorage.length - offset;
+    }
     addNewScore(value) {
         this._scores.push(value);
     }
     submitToLocalStorage(name, wpm) {
         let stat = { name, wpm };
         localStorage.setItem(this.strLen, JSON.stringify(stat));
+        this._index += 1;
     }
     parseItem(index) {
         let raw = localStorage.getItem(index.toString());
@@ -228,7 +233,8 @@ class Scoreboard {
     }
     initScoreboard() {
         let arr = [];
-        for (let i = 0; i < localStorage.length; i++) {
+        let len = this._index;
+        for (let i = 0; i < len; i++) {
             arr[i] = this.parseItem(i);
         }
         let sortedArr = insertionSort2d(arr);
@@ -240,7 +246,7 @@ class Scoreboard {
         }
     }
     updateScoreboard() {
-        let item = this.parseItem(localStorage.length - 1);
+        let item = this.parseItem(this._index - 1);
         this.addNewScore(item);
         let sortedArr = bubbleSort2d(this._scores);
         sortedArr.reverse();

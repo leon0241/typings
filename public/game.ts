@@ -508,6 +508,7 @@ let Scores = new Scoreboard();
 window.onload = (e) => {
   console.log(localStorage.length)
 
+
   if (localStorage.length === 0) {
     DOMFunctions.setSettings("1", "0")
   } else if (localStorage.length > 0) {
@@ -517,6 +518,7 @@ window.onload = (e) => {
     setTheme(importSettings[2])
 
     if (localStorage.length > 3) {
+      Scores.initIndex(3)
       Scores.initScoreboard();
     }
   }

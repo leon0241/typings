@@ -239,14 +239,16 @@ function bubbleSort2d(list: [string, number][]) {
 
 class Scoreboard {
   _scores: [string, number][];
+  _index: number;
   //TODO: ADD INDEX IT RELIES ON LOCALSTORAGELENGTH AND THAT IS BEING INCREASED BY 3
 
   constructor() {
     this._scores = [];
+    this._index = 0;
   }
 
   get strLen(): string {
-    return localStorage.length.toString();
+    return this._index.toString();
   }
 
   get scores(): [string, number][] {
@@ -257,6 +259,10 @@ class Scoreboard {
     this._scores = value;
   }
 
+  initIndex(offset) {
+    this._index = localStorage.length - offset
+  }
+
   addNewScore(value: [string, number]) {
     this._scores.push(value);
   }
@@ -265,6 +271,7 @@ class Scoreboard {
     let stat = { name, wpm };
 
     localStorage.setItem(this.strLen, JSON.stringify(stat));
+    this._index += 1;
   }
 
   parseItem(index: number) {
@@ -277,7 +284,8 @@ class Scoreboard {
 
   initScoreboard() {
     let arr = [];
-    for (let i = 0; i < localStorage.length; i++) {
+    let len = this._index
+    for (let i = 0; i < len; i++) {
       arr[i] = this.parseItem(i);
     }
     let sortedArr = insertionSort2d(arr);
@@ -291,7 +299,7 @@ class Scoreboard {
   }
 
   updateScoreboard() {
-    let item = this.parseItem(localStorage.length - 1);
+    let item = this.parseItem(this._index - 1);
     this.addNewScore(item);
 
     let sortedArr = bubbleSort2d(this._scores);

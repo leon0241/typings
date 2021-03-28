@@ -419,6 +419,7 @@ window.onload = (e) => {
         console.log(importSettings);
         setTheme(importSettings[2]);
         if (localStorage.length > 3) {
+            Scores.initIndex(3);
             Scores.initScoreboard();
         }
     }
