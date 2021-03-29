@@ -230,7 +230,6 @@ class UserGame extends GameSettings {
         this._userWordCount = 0;
         this._wordErrors = 0;
         DOMFunctions.position = 0;
-        gameTypingField.value = "";
     }
 }
 // Methods that are used to control the game
@@ -346,12 +345,13 @@ function newGame(that) {
     let type = that.test_type.value;
     let length = type === "0" ? that.time_length.value : that.word_length.value;
     if (type === "") {
-        type = "1";
+        type = defOpt[0].toString();
     }
     if (length === "") {
-        length = "0";
+        length = defOpt[1].toString();
     }
     Game.resetStats;
+    gameTypingField.value = "";
     Game.editGameData(type, length);
     DOMFunctions.setSettings(type, length);
     Game.initialiseArray();
@@ -361,6 +361,7 @@ function newGame(that) {
 function resetGame() {
     inGame = false;
     clicked = false;
+    gameTypingField.value = "";
     Game.resetStats();
     Game.initialiseArray();
     DOMFunctions.showArray(Game.gameWords);
@@ -405,24 +406,27 @@ gameTypingField.onkeydown = (e) => {
  ================*/
 let inGame = false;
 let clicked = false;
-let Game = new GameFunctions(1, 0, words); // Words = 1, time = 0
+let defOpt = [0, 1];
+let Game = new GameFunctions(defOpt[0], defOpt[1], words); // Words = 1, time = 0
 let DOMFunctions = new DOMManipulation();
 let Scores = new Scoreboard();
 window.onload = (e) => {
-    console.log(localStorage.length);
+    // Check if the length is 0
     if (localStorage.length === 0) {
-        DOMFunctions.setSettings("1", "0");
+        // Set the defualt settings
+        DOMFunctions.setSettings(defOpt[0].toString(), defOpt[1].toString());
     }
+    // Check if the 
     else if (localStorage.length > 0) {
         let importSettings = DOMFunctions.getSettings();
         Game.editGameData(importSettings[0], importSettings[1]);
-        console.log(importSettings);
         setTheme(importSettings[2]);
         if (localStorage.length > 3) {
             Scores.initIndex(3);
             Scores.initScoreboard();
         }
     }
+    gameTypingField.value = "";
     Game.initialiseArray();
     DOMFunctions.showArray(Game.gameWords);
 };

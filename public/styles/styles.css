@@ -1,6 +1,7 @@
 .light {
   --highlightText: #2E3440;
   --mediumText: #3B4252;
+  --smallText: #434C5E;
   --backgroundColor: #D8DEE9;
   --navBackground: #E5E9F0;
   --gameBackground: #ECEFF4;
@@ -118,9 +119,42 @@ body input {
   border-radius: 7px;
   background-color: var(--gameBackground);
 }
+#gameContainer #finishOverlay #finishNameArea #finishTypingField {
+  color: var(--highlightText);
+}
 #gameContainer #finishOverlay #finishStatArea .finishStat {
   color: var(--mediumText);
   font-size: 1.25rem;
+}
+
+#settingsForm .settingsRadio .radioSelector {
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+#settingsForm .settingsRadio .radioSelector:hover {
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
+}
+#settingsForm .settingsRadio input:checked + label {
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
+}
+#settingsForm .settingsMenuButton {
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+#settingsForm .settingsMenuButton:hover {
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
 }
 
 #scoresNav #scoreboard {
@@ -197,6 +231,29 @@ body main {
   position: relative;
   display: flex;
   flex-direction: column;
+}
+body main #pageText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+body main #pageText #bottomText {
+  position: relative;
+  background-color: var(--gameBackground);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  z-index: 2;
+}
+body main #pageText #bottomText p {
+  color: var(--mediumText);
+}
+body main #pageText #bottomText p > a {
+  color: var(--hoverCol);
+}
+body main #pageText #bottomText p > a:visited {
+  color: var(--selectedCol);
 }
 body main #screenContainer {
   width: 100%;
@@ -323,48 +380,23 @@ body .open#overlay {
   opacity: 0;
   pointer-events: none;
 }
-#settingsForm .settingsRadio input:checked + label {
-  background-color: var(--buttonHover);
-  color: var(--hoverCol);
-  border: 1px solid var(--hoverCol);
-}
 #settingsForm .settingsRadio .radioSelector {
-  border: var(--buttonBorder);
-  background-color: var(--focusBackground);
-  color: var(--smallText);
-  border-radius: 5px;
-  transition: all 0.3s;
   text-align: center;
   vertical-align: middle;
   width: 7rem;
   height: 2rem;
   margin: 5px;
 }
-#settingsForm .settingsRadio .radioSelector:hover {
-  background-color: var(--buttonHover);
-  color: var(--hoverCol);
-  border: 1px solid var(--hoverCol);
-}
 #settingsForm .settingsRadio .lengthRadio:disabled + label {
   opacity: 0.5;
   pointer-events: none;
 }
 #settingsForm .settingsMenuButton {
-  border: var(--buttonBorder);
-  background-color: var(--focusBackground);
-  color: var(--smallText);
-  border-radius: 5px;
-  transition: all 0.3s;
   width: 15rem;
   height: 3rem;
   margin: 10px;
   font-size: 1.25rem;
   align-self: center;
-}
-#settingsForm .settingsMenuButton:hover {
-  background-color: var(--buttonHover);
-  color: var(--hoverCol);
-  border: 1px solid var(--hoverCol);
 }
 #settingsForm #themeButtons {
   margin-top: auto;
@@ -374,11 +406,15 @@ body .open#overlay {
 }
 
 #wordModal #modalContent {
+  border-radius: 10px;
   margin: 15% auto;
   padding: 20px;
+  position: absolute;
   border: var(--buttonBorder);
   width: 80%;
   height: 50%;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
 }
 #wordModal #modalContent .modalSection {
   padding: 15px;
@@ -390,6 +426,18 @@ body .open#overlay {
 }
 #wordModal #modalContent #modalHeader #modalExit {
   margin-left: auto;
+  font-size: 2rem;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  color: var(--mediumText);
+  text-align: center;
+  vertical-align: middle;
+  line-height: 2rem;
+}
+#wordModal #modalContent #modalHeader #modalExit:hover {
+  background-color: var(--focusBackground);
+  color: var(--highlightText);
 }
 #wordModal #modalContent #modalButtons {
   display: flex;
@@ -412,11 +460,22 @@ body .open#overlay {
 #wordModal #modalContent #modalWords {
   display: flex;
   flex-wrap: wrap;
+  border-radius: 5px;
 }
 #wordModal #modalContent #modalWords .modalWord {
   padding: 2px;
 }
 
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
 #scoresNav {
   align-items: center;
 }

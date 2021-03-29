@@ -277,7 +277,6 @@ class Scoreboard {
   parseItem(index: number) {
     let raw = localStorage.getItem(index.toString());
     let parsed = JSON.parse(raw);
-    console.log(parsed)
     let score: any = Object.values(parsed);
     return score;
   }

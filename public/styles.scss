@@ -160,6 +160,12 @@ body {
     background-color: var(--gameBackground);
     @include container_style;
 
+    #finishNameArea {
+      #finishTypingField {
+        color: var(--highlightText);
+      }
+    }
+
     #finishStatArea {
       .finishStat {
         color: var(--mediumText);
@@ -168,6 +174,25 @@ body {
     }
   }
 }
+
+#settingsForm {
+  .settingsRadio {
+    .radioSelector {
+      @include button_style;
+    }
+
+    input {
+      &:checked + label {
+        @include button_hover;
+      }
+    }
+  }
+
+  .settingsMenuButton {
+    @include button_style;
+  }
+}
+
 
 #scoresNav {
   #scoreboard {
@@ -196,9 +221,12 @@ body {
   #modalContent {
     #modalWords {
       background-color: var(--focusBackground);
+
       .modalWord {
         color: var(--mediumText);
       }
+
+
     }
   }
 }
@@ -256,6 +284,38 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
+
+    #pageText {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+
+      #topText {
+        
+      }
+
+      #bottomText {
+        position: relative;
+        background-color: var(--gameBackground);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        z-index: 2;
+
+        p {
+          color: var(--mediumText);
+          
+          &>a {
+            color: var(--hoverCol);
+  
+            &:visited {
+              color: var(--selectedCol)
+            }
+          }
+        }
+      }
+    }
 
     #screenContainer {
       @include full_screen;
@@ -401,14 +461,9 @@ body {
       position: fixed;
       opacity: 0;
       pointer-events: none;
-
-      &:checked + label {
-        @include button_hover;
-      }
     }
 
     .radioSelector {
-      @include button_style;
       @include center_text;
       @include width_height(7rem, 2rem);
       margin: 5px;
@@ -421,7 +476,6 @@ body {
   }
 
   .settingsMenuButton {
-    @include button_style;
     @include width_height(15rem, 3rem);
     margin: 10px;
     font-size: 1.25rem;
@@ -440,11 +494,15 @@ body {
 
 #wordModal {
   #modalContent {
-
+    border-radius: 10px;
     margin: 15% auto;
     padding: 20px;
+    position: absolute;
     @include border_style;
     @include width_height(80%, 50%);
+
+    animation-name: animatetop;
+    animation-duration: 0.4s;
 
     .modalSection {
       padding: 15px;
@@ -457,6 +515,19 @@ body {
 
       #modalExit {
         margin-left: auto;
+        font-size: 2rem;
+        height: 2rem;
+        width: 2rem;
+        border-radius: 50%;
+        color: var(--mediumText);
+        text-align: center;
+        vertical-align: middle;
+        line-height: 2rem;
+
+        &:hover {
+          background-color: var(--focusBackground);
+          color: var(--highlightText);
+        }
       }
     }
 
@@ -472,12 +543,18 @@ body {
     #modalWords {
       display: flex;
       flex-wrap: wrap;
+      border-radius: 5px;
 
       .modalWord {
         padding: 2px;
       }
     }
   }
+}
+
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
 }
 
 // Scoreboard
