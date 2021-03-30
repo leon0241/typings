@@ -34,10 +34,6 @@ class GameSettings {
   }
 
   // ==Class Setters==
-  set name(value: string) {
-    this._name = value;
-  }
-
   set length(value: number) {
     this._length = value;
   }
@@ -221,7 +217,7 @@ class UserGame extends GameSettings {
   wordCheck(): void {
     // Removes the spacebar from your input word
     let inputWord = gameTypingField.value.trim();
-    let wordComparison = Game.word;
+    let wordComparison = this.word;
     // Defines the item to change the class of
     let nodeItem = document.getElementById("previousWord");
 
@@ -229,7 +225,7 @@ class UserGame extends GameSettings {
     if (inputWord === wordComparison) {
       DOMFunctions.setAnswer(true, nodeItem);
     } else {
-      Game.incrementWordErrors();
+      this.incrementWordErrors();
       DOMFunctions.setAnswer(false, nodeItem);
     }
 
@@ -386,6 +382,7 @@ class GameFunctions extends UserGame {
     }, interval); // Repeat every 1/10 seconds so there is no delay when finishing game
   }
 
+  
   finishGame(): void {
     inGame = false;
     this.calculateStats();

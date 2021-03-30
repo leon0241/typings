@@ -402,7 +402,6 @@ class DOMManipulation {
     // Set first word with .typingword as the highlight word
     let nodeItem = area.querySelector(".typingWord");
     nodeItem.id = "highlightWord";
-
     this.updateNodeList();
   }
 
