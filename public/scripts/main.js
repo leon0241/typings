@@ -44,6 +44,7 @@ function submitFinishForm() {
     // http.send(formData);
 }
 let openToggle = false;
+// Settings
 settingsButton.onclick = () => {
     if (openToggle === false) {
         sidebarDOM(settingsButton, settingsNav, scoresButton, "open");
@@ -73,9 +74,9 @@ document.getElementById("darkButton").onclick = () => {
 function setTheme(theme) {
     switch (theme) {
         case "light": {
+            localStorage.setItem("theme", "light");
             body.classList.replace("dark", "light");
             DOMFunctions.theme = "light";
-            localStorage.setItem("theme", "light");
             break;
         }
         case "dark": {
@@ -429,3 +430,4 @@ class DOMManipulation {
         return [type, length, theme];
     }
 }
+// TODO: timer doesn't actually work for some reason

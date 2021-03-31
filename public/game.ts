@@ -437,7 +437,10 @@ function newGame(that: any) {
   }
 
   Game.resetStats;
+  inGame = false;
+  clicked = false;
   gameTypingField.value = "";
+
   Game.editGameData(type, length);
   DOMFunctions.setSettings(type, length);
   Game.initialiseArray();
@@ -505,20 +508,20 @@ let DOMFunctions = new DOMManipulation();
 let Scores = new Scoreboard();
 
 window.onload = (e) => {
-
-  // Check if the length is 0
+  // Check if the length is empty - no settings
   if (localStorage.length === 0) {
     // Set the defualt settings
     DOMFunctions.setSettings(defOpt[0].toString(), defOpt[1].toString())
   }
   
-  // Check if the 
+  // Check if the localStorage isn't empty - import settings
   else if (localStorage.length > 0) {
     let importSettings: string[] = DOMFunctions.getSettings()
     Game.editGameData(importSettings[0], importSettings[1]);
 
     setTheme(importSettings[2])
 
+    // Check if the localStorage is over 3 - scores stored
     if (localStorage.length > 3) {
       Scores.initIndex(3)
       Scores.initScoreboard();
@@ -532,3 +535,4 @@ window.onload = (e) => {
 };
 
 //TODO: reset needs to clear input box
+//TODO: submit needs to reset the game
