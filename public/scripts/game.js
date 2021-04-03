@@ -1,6 +1,6 @@
 /*================
- *    CLASSES
- ================*/
+*    CLASSES
+================*/
 // Basic game options - type, length, words array
 class GameSettings {
     // ==Constructor==
@@ -80,6 +80,7 @@ class GameSettings {
         if (name === "") {
             name = "Anon";
         }
+        // Set name to name variable
         this._name = name;
     }
 }
@@ -219,6 +220,7 @@ class UserGame extends GameSettings {
         tempStats.forEach((element) => stats.push(Math.round(element)));
         this._calculatedStats = stats;
     }
+    // Reset all the stats to 0
     resetStats() {
         this._calculatedStats = [0, 0];
         this._characters = 0;
@@ -237,21 +239,28 @@ class GameFunctions extends UserGame {
     // Starts the game
     startGame() {
         inGame = true;
+        // Go to timedgame or wordGame depending on type variable
         let gameType = this._type === 0 ? this.goToTimedGame() : this.goToWordGame(); // TODO: maybe fix this idk
     }
     // Callback function for timed game
     goToTimedGame() {
+        // Change progress to timer
         DOMFunctions.changeGameProgress(this.getCalculatedLength());
+        // setInterval callback function
         this.timeTimer(() => {
+            // Finish game
             this.finishGame();
         });
     }
     // setInterval timer for a timed game
     timeTimer(callback) {
+        // Set duration to length
         let duration = this.getCalculatedLength();
+        // Init time
         let time = 1;
-        // SetInterval - timer
+        // SetInterval - timer with tick of 1000 seconds
         let gameTimer = setInterval(() => {
+            // On reset button i think
             if (inGame === false) {
                 clearInterval(gameTimer);
                 return;
@@ -273,9 +282,12 @@ class GameFunctions extends UserGame {
     }
     // Callback function for word game
     goToWordGame() {
+        // Change progress to words remaining
         let gameLength = this.getCalculatedLength();
         DOMFunctions.changeGameProgress(gameLength);
+        // setInterval callback function
         this.wordTimer(() => {
+            // Finish game
             this.finishGame();
         });
     }
@@ -309,10 +321,15 @@ class GameFunctions extends UserGame {
             }
         }, interval); // Repeat every 1/10 seconds so there is no delay when finishing game
     }
+    // On game finish
     finishGame() {
+        // Set in game to false
         inGame = false;
+        // Calculate the user stats
         this.calculateStats();
+        // Show finish overlay
         DOMFunctions.showFinish();
+        // Put stats in hidden form element
         DOMFunctions.appendFormData();
     }
     // Functions and methods called after a word is typed
@@ -336,42 +353,58 @@ class GameFunctions extends UserGame {
     }
 }
 /*================
- *   Functions
- ================*/
+*   Functions
+================*/
+// Function when button is submitted
 function newGame(that) {
+    // Get type from form
     let type = that.test_type.value;
+    // Get length from form, depending on the type
     let length = type === "0" ? that.time_length.value : that.word_length.value;
+    // If the type is empty, put default type
     if (type === "") {
         type = defOpt[0].toString();
     }
+    // If the length is empty, put default length
     if (length === "") {
         length = defOpt[1].toString();
     }
-    Game.resetStats;
-    inGame = false;
-    clicked = false;
-    gameTypingField.value = "";
+    // Change the game data to the values in the form
     Game.editGameData(type, length);
+    // Change the game settings in the class
     DOMFunctions.setSettings(type, length);
-    Game.initialiseArray();
-    DOMFunctions.showArray(Game.gameWords);
-    DOMFunctions.changeGameProgress("");
+    // Reset game function
+    resetGame();
 }
+// Function when reset button is pressed
 function resetGame() {
+    // Reset game stats
+    Game.resetStats;
+    // Set inGame and clicked globals to false
     inGame = false;
     clicked = false;
+    // Empty the value of the typing field 
     gameTypingField.value = "";
-    Game.resetStats();
-    Game.initialiseArray();
-    DOMFunctions.showArray(Game.gameWords);
+    // Empty the progress field
     DOMFunctions.changeGameProgress("");
+    //Initialise the array
+    Game.initialiseArray();
+    // Show the array in the DOM
+    DOMFunctions.showArray(Game.gameWords);
 }
+// Function when exit or retry button is changed
 function finishedReset(exit) {
+    // Read name from input box and set it
     Game.setName();
+    // Hide finish overlay
     DOMFunctions.hideFinish();
+    // Submit score to local storage
     Scores.submitToLocalStorage(Game.name, Game.calculatedStats[0]);
+    // Update the scoreboard
     Scores.updateScoreboard();
+    // Reset game function
     resetGame();
+    // Check if exit is true and show the start overlay
     if (exit === true) {
         DOMFunctions.showStart();
     }
@@ -401,14 +434,19 @@ gameTypingField.onkeydown = (e) => {
     }
 };
 /*================
- *     GAME
- ================*/
+*     GAME
+================*/
+// Check if in game
 let inGame = false;
+// Check if clicked
 let clicked = false;
+// Default options (time, 1 minute)
 let defOpt = [0, 1];
+// Define new classes
 let Game = new GameFunctions(defOpt[0], defOpt[1], words); // Words = 1, time = 0
 let DOMFunctions = new DOMManipulation();
 let Scores = new Scoreboard();
+// On window load
 window.onload = (e) => {
     // Check if the length is empty - no settings
     if (localStorage.length === 0) {
@@ -417,17 +455,25 @@ window.onload = (e) => {
     }
     // Check if the localStorage isn't empty - import settings
     else if (localStorage.length > 0) {
+        // Get the settings from localStorage
         let importSettings = DOMFunctions.getSettings();
+        // Change the settings in the game
         Game.editGameData(importSettings[0], importSettings[1]);
+        // Set the theme
         setTheme(importSettings[2]);
         // Check if the localStorage is over 3 - scores stored
         if (localStorage.length > 3) {
+            // Initialise the user score index with an offset of 3
             Scores.initIndex(3);
+            // Initialise the scoreboard in DOM
             Scores.initScoreboard();
         }
     }
+    // empty the game typing field
     gameTypingField.value = "";
+    // Initialise array
     Game.initialiseArray();
+    // Show the array
     DOMFunctions.showArray(Game.gameWords);
 };
 //TODO: reset needs to clear input box
