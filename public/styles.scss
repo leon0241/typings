@@ -1,6 +1,7 @@
-// Import themes and variables
+// Import themes and variables (partials folder)
 @use "partials/variables" as *;
 @use "partials/themes" as *;
+$menuSize: 25rem;
 
 /*==============
 |    Mixins    |
