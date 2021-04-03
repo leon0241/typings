@@ -5,68 +5,68 @@
 
 // Light mode
 .light {
-   // Text
-   --highlightText: #{$nord0};
-   --mediumText: #{$nord1};
-   --smallText: #{$nord2};
+  // Text
+  --highlightText: #{$nord0};
+  --mediumText: #{$nord1};
+  --smallText: #{$nord2};
 
-   // Background colours
-   --backgroundColor: #{$nord4};
-   --navBackground: #{$nord5};
-   --gameBackground: #{$nord6};
-   --focusBackground: #{$polarbg};
+  // Background colours
+  --backgroundColor: #{$nord4};
+  --navBackground: #{$nord5};
+  --gameBackground: #{$nord6};
+  --focusBackground: #{$polarbg};
 
-   // Button colours
-   --hoverCol: #{$nord8};
-   --selectedCol: #{$nord-10};
-   --borderOutline: #{$nord1};
-   --buttonHover: #{$nord6};
+  // Button colours
+  --hoverCol: #{$nord8};
+  --selectedCol: #{$nord-10};
+  --borderOutline: #{$nord1};
+  --buttonHover: #{$nord6};
 
-   // Container colours
-   --containerBorder: 2px solid var(--borderOutline);
-   --buttonBorder: 1px solid var(--borderOutline);
+  // Container colours
+  --containerBorder: 2px solid var(--borderOutline);
+  --buttonBorder: 1px solid var(--borderOutline);
 
-   // Scoreboard odd/even
-   --scoreboard1: #{$nord4};
-   --scoreboard2: #{$polarbg};
+  // Scoreboard odd/even
+  --scoreboard1: #{$nord4};
+  --scoreboard2: #{$polarbg};
 
-   // Word game colours
-   --typingWord: #{$nord1};
-   --highlightWord: #{$nord8};
-   --correctWord: #{$nord-14};
-   --wrongWord: #{$nord-11};
+  // Word game colours
+  --typingWord: #{$nord1};
+  --highlightWord: #{$nord8};
+  --correctWord: #{$nord-14};
+  --wrongWord: #{$nord-11};
 }
 
 // Dark mode
 .dark {
-   // Text
-   --highlightText: #{$nord6};
-   --mediumText: #{$nord5};
-   --smallText: #{rgba($nord4, 0.87)};
+  // Text
+  --highlightText: #{$nord6};
+  --mediumText: #{$nord5};
+  --smallText: #{rgba($nord4, 0.87)};
 
-   // Background colours
-   --backgroundColor: #{$nord0};
-   --gameBackground: #{$nord1};
-   --navBackground: #{$nord2};
-   --focusBackground: #{$nord3};
+  // Background colours
+  --backgroundColor: #{$nord0};
+  --gameBackground: #{$nord1};
+  --navBackground: #{$nord2};
+  --focusBackground: #{$nord3};
 
-   // Button colours
-   --hoverCol: #{$nord8};
-   --selectedCol: #{$nord-10};
-   --borderOutline: #{rgba($nord4, 0.87)};
-   --buttonHover: #{$nord2};
+  // Button colours
+  --hoverCol: #{$nord8};
+  --selectedCol: #{$nord-10};
+  --borderOutline: #{rgba($nord4, 0.87)};
+  --buttonHover: #{$nord2};
 
-   // Container colours
-   --containerBorder: 2px solid var(--borderOutline);
-   --buttonBorder: 1px solid var(--borderOutline);
+  // Container colours
+  --containerBorder: 2px solid var(--borderOutline);
+  --buttonBorder: 1px solid var(--borderOutline);
 
-   // Scoreboard odd/even
-   --scoreboard1: #{$nord1};
-   --scoreboard2: #{$nord3};
+  // Scoreboard odd/even
+  --scoreboard1: #{$nord1};
+  --scoreboard2: #{$nord3};
 
-   // Word game colours
-   --typingWord: #{$nord4};
-   --highlightWord: #{$nord8};
-   --correctWord: #{$nord-14};
-   --wrongWord: #{$nord-11};
+  // Word game colours
+  --typingWord: #{$nord4};
+  --highlightWord: #{$nord8};
+  --correctWord: #{$nord-14};
+  --wrongWord: #{$nord-11};
 }
