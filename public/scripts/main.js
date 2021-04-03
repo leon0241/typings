@@ -1,6 +1,8 @@
-// Setting DOM variable stuff
+/*=====================
+|    DOM Variables    |
+=====================*/
 // Body
-const body = document.querySelector('body');
+const body = document.querySelector("body");
 const overlay = document.getElementById("overlay");
 const settingsButton = document.getElementById("settingsButton");
 const scoresButton = document.getElementById("scoresButton");
@@ -43,6 +45,9 @@ const modalWords = modal.querySelector("#modalWords");
 //   // // Send form data
 //   // http.send(formData);
 // }
+/*==================
+|  Onclick events  |
+===================*/
 let openToggle = false;
 // Settings button onclick
 settingsButton.onclick = () => {
@@ -73,7 +78,7 @@ function sidebarDOM(button, nav, button2, state) {
     // Check if state is open
     if (state === "open") {
         // Add open class to each element in list
-        elementList.forEach(element => {
+        elementList.forEach((element) => {
             element.classList.add("open");
         });
         // Set the z index of the opposite button so it gets hidden by overlay
@@ -82,7 +87,7 @@ function sidebarDOM(button, nav, button2, state) {
     }
     else {
         // Remove open class to each element in the list
-        elementList.forEach(element => {
+        elementList.forEach((element) => {
             element.classList.remove("open");
         });
         // Set the z index of the opposite button back to normal
@@ -140,7 +145,7 @@ document.getElementById("radiowords").onclick = () => {
 function chooseTimeWords(a, b) {
     // Add deselcted class
     a.classList.add("deselected");
-    // Selects all radio buttons inside the group with 
+    // Selects all radio buttons inside the group with
     let group = a.querySelectorAll(".lengthRadio");
     // Disable each element
     group.forEach((element) => {
@@ -183,6 +188,9 @@ document.getElementById("alphaSort").onclick = () => {
     });
     writeWords(arr);
 };
+/*=================
+|    Functions    |
+==================*/
 //Write modal words with providedarray
 function writeWords(arr) {
     // Clear inner html of field
@@ -208,7 +216,7 @@ function sortWordsByLength() {
     let sortedArr = insertionSort2d(lengthArr);
     // Reverse array
     sortedArr.reverse;
-    // Redefine array as word only 
+    // Redefine array as word only
     let finalArr = [];
     for (let i = 0; i < words.length; i++) {
         finalArr[i] = sortedArr[i][0];
@@ -233,7 +241,7 @@ function insertionSort2d(list) {
     }
     return list;
 }
-// Bubble sort 
+// Bubble sort
 function bubbleSort2d(list) {
     // Swapped check
     let swapped = true;
@@ -241,7 +249,7 @@ function bubbleSort2d(list) {
     while (swapped === true) {
         // Preset swap check
         swapped = false;
-        // Repeat all items in list 
+        // Repeat all items in list
         for (let i = 1; i < max; i++) {
             // If list[i - 1] is larger than list[i]
             if (list[i - 1][1] > list[i][1]) {
@@ -256,9 +264,11 @@ function bubbleSort2d(list) {
     }
     return list;
 }
+/*===============
+|    Classes    |
+================*/
 // Scoreboard and any functions related to it
 class Scoreboard {
-    //TODO: ADD INDEX IT RELIES ON LOCALSTORAGELENGTH AND THAT IS BEING INCREASED BY 3
     constructor() {
         // Users scores
         this._scores = [];
@@ -314,7 +324,7 @@ class Scoreboard {
             // Format: [string, number]
             arr[i] = this.parseItem(i);
         }
-        // Insertion sort the values 
+        // Insertion sort the values
         let sortedArr = insertionSort2d(arr);
         // Reverse values from high to low
         sortedArr.reverse();
@@ -412,7 +422,6 @@ class DOMManipulation {
     showArray(gameWords) {
         let area = gameWordArea;
         area.innerHTML = "";
-        // TODO: rename area
         // Creates new spans with text from gamewords[]
         // Repeats 50 times for some overflow
         for (let i = 0; i < 50; i++) {
@@ -530,4 +539,3 @@ class DOMManipulation {
         return [type, length, theme];
     }
 }
-// TODO: timer doesn't actually work for some reason

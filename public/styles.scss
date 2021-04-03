@@ -1,50 +1,56 @@
-//Functions and variables
-@use "partials/colors" as c;
+// Import themes and variables
 @use "partials/variables" as *;
 @use "partials/themes" as *;
 
-$defWidth: 69px;
-$borderStyle: groove;
-$defHeight: 69px;
+/*==============
+|    Mixins    |
+==============*/
 
+// Display flex and center item
 @mixin center_flex_element {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+// Center text
 @mixin center_text {
   text-align: center;
   vertical-align: middle;
 }
 
+// Set width and height to 100%
 @mixin full_screen {
   @include width_height(100%);
 }
 
-
+// Set width and height to values.
+//If height not specified, set both to same value
 @mixin width_height($width, $height: $width) {
   width: $width;
   height: $height;
 }
 
+// Style for container
 @mixin container_style {
   border: var(--containerBorder);
   border-radius: 7px;
   background-color: var(--gameBackground);
 }
 
+// Set style for border of buttons
 @mixin border_style {
   border: var(--buttonBorder);
 }
 
+// Hover effect for button
 @mixin button_hover {
   background-color: var(--buttonHover);
   color: var(--hoverCol);
   border: 1px solid var(--hoverCol);
 }
 
-
+// Styling of buttons
 @mixin button_style {
   @include border_style;
   background-color: var(--focusBackground);
@@ -52,11 +58,13 @@ $defHeight: 69px;
   border-radius: 5px;
   transition: all 0.3s;
 
+  // On hover
   &:hover {
     @include button_hover;
   }
 }
 
+// Create a half transparent overlay across whole screen
 @mixin blocking_overlay {
   background-color: rgba(0, 0, 0, 0.5);
   display: none;
@@ -64,32 +72,34 @@ $defHeight: 69px;
   @include full_screen;
 }
 
+// Set item to top right corner
 @mixin top_right {
   top: 0px;
   right: 0px;
 }
 
-// Colours
-*{
+/*===============
+|    Colours    |
+===============*/
+
+// Set transition of all
+* {
   transition: background-color 0.5s, color 1s;
 }
 
-.noTransition {
-  -webkit-transition: none !important;
-  -moz-transition: none !important;
-  -o-transition: none !important;
-  transition: none !important;
-}
-
+// General body elements
 body {
+  // Game container
   #screenContainer {
     background-color: var(--backgroundColor);
   }
 
+  // Modal content
   #modalContent {
     background-color: var(--navBackground);
   }
 
+  // Tooltip for nav buttons
   .navButton {
     .tooltip {
       background-color: var(--mediumText);
@@ -97,39 +107,49 @@ body {
     }
   }
 
+  // Title and subtitle
   h1,
   h2 {
     color: var(--highlightText);
   }
 
+  // Text and labels
   p,
   label {
     color: var(--mediumText);
   }
 
+  // Navbar
   nav {
     background-color: var(--navBackground);
   }
 
+  // Input typing boxes
   input {
     background-color: var(--focusBackground);
   }
 }
 
+// Game Container
 #gameContainer {
+  // Main game container
   #game {
     @include container_style;
 
+    // all of the game grid separator elements
     .gameArea {
       background-color: var(--gameBackground);
     }
 
+    // Stat box
     #statBox {
       background-color: var(--focusBackground);
       color: var(--mediumText);
     }
 
+    // Game word area
     #gameWordArea {
+      // Any word spans inside it
       .typingWord {
         font-size: 1.5rem;
         text-overflow: clip;
@@ -137,43 +157,55 @@ body {
         transition: color 0.2s;
       }
 
+      // Current word
       #highlightWord {
         color: var(--highlightWord);
       }
 
+      // Correct words
       .correctWord {
         color: var(--correctWord);
       }
 
+      // Wrong words
       .wrongWord {
         color: var(--wrongWord);
       }
     }
 
+    // Game typing area
     #gameTypingArea {
+      // User typing field
       #gameTypingField {
         color: var(--highlightText);
       }
     }
   }
 
+  // Start overlay container
   #startOverlay {
+    // 'press to start' button
     #startButton {
       @include button_style;
     }
   }
 
+  // Finish overlay container
   #finishOverlay {
     background-color: var(--gameBackground);
     @include container_style;
 
+    // Name input area
     #finishNameArea {
+      // Name input field
       #finishTypingField {
         color: var(--highlightText);
       }
     }
 
+    // WPM and accuracy display
     #finishStatArea {
+      // Fields inside it
       .finishStat {
         color: var(--mediumText);
         font-size: 1.25rem;
@@ -182,41 +214,51 @@ body {
   }
 }
 
+// Settings form
 #settingsForm {
+  // Radio button sections
   .settingsRadio {
+    // Radio button label
     .radioSelector {
       @include button_style;
     }
 
+    // Radio button
     input {
+      // Label when checked
       &:checked + label {
         @include button_hover;
       }
     }
   }
 
+  // Other buttons in the settings
   .settingsMenuButton {
     @include button_style;
   }
 }
 
-
+// Scoreboard nav bar
 #scoresNav {
+  // Scoreboard table
   #scoreboard {
     background-color: var(--focusBackground);
 
+    // Header element
     .scoreHeader {
       color: var(--mediumText);
     }
 
+    // Row elements
     #scorebody > tr {
       color: var(--smallText);
 
-
+      // Odd element
       &:nth-child(odd) {
         background-color: var(--scoreboard1);
       }
 
+      // Even element
       &:nth-child(even) {
         background-color: var(--scoreboard2);
       }
@@ -224,21 +266,25 @@ body {
   }
 }
 
+// Word modal
 #wordModal {
+  // Word modal contents
   #modalContent {
+    // Word model words field
     #modalWords {
       background-color: var(--focusBackground);
 
+      // Actual word spans
       .modalWord {
         color: var(--mediumText);
       }
-
-
     }
   }
 }
 
-// Fonts
+/*=============
+|    Fonts    |
+=============*/
 
 * {
   font-family: Consolas;
@@ -264,46 +310,56 @@ body {
   }
 }
 
-// General body styling
+/*============================
+|    General body styling    |
+============================*/
 
+// Set html to full height
 html {
   height: 100%;
 }
 
+// Body
 body {
   height: 100%;
   margin: 0;
   padding: 0;
   position: static;
 
+  // Word modal
   #wordModal {
     @include blocking_overlay;
     overflow: auto;
     justify-content: center;
   }
 
+  // Settings overlay
   #overlay {
     @include blocking_overlay;
   }
 
+  // Main body elements
   main {
     @include full_screen;
     position: relative;
     display: flex;
     flex-direction: column;
 
+    // Main body text
     #pageText {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       height: 100%;
 
+      // Text at the top
       #topText {
         h1 {
           margin-top: 1rem;
         }
       }
 
+      // Footer
       #bottomText {
         position: relative;
         background-color: var(--gameBackground);
@@ -312,20 +368,24 @@ body {
         justify-content: space-evenly;
         z-index: 2;
 
+        // P element inside
         p {
           color: var(--mediumText);
-          
-          &>a {
+
+          // Link inside p
+          & > a {
             color: var(--hoverCol);
-  
+
+            // On visited
             &:visited {
-              color: var(--selectedCol)
+              color: var(--selectedCol);
             }
           }
         }
       }
     }
 
+    // Container containing game
     #screenContainer {
       @include full_screen;
       @include center_flex_element;
@@ -335,7 +395,9 @@ body {
   }
 }
 
-// Main elements
+/*=============
+|    Main     |
+=============*/
 
 main {
   h1 {
@@ -347,8 +409,12 @@ main {
   }
 }
 
-// Sidebar buttons
+/*=======================
+|    Sidebar buttons    |
+=======================*/
+
 main {
+  // Buttons to activate navbar
   .navButton {
     @include button_style;
     @include width_height(50px);
@@ -356,15 +422,18 @@ main {
     margin: 1rem;
     padding: 0;
 
+    // On focus
     &:focus {
       outline: none;
     }
 
+    // Set size of icon
     .navIcon {
       height: 80%;
       margin: 10%;
     }
 
+    // Tooltip
     .tooltip {
       @include width_height(120px, 50%);
       margin: 20% 5px auto;
@@ -380,20 +449,24 @@ main {
       transition: opacity 0.3s;
     }
 
+    // Set scores tooltip to the right
     #scoreTooltip {
       right: 105%;
     }
 
+    // Tooltip visible when hovered
     &:hover .tooltip {
       visibility: visible;
       opacity: 1;
     }
   }
 
+  // Put scores button to top right
   #scoresButton {
     @include top_right;
   }
 
+  // Rotate transition for settings button
   #settingsButton {
     img {
       transition: transform 0.3s;
@@ -405,8 +478,12 @@ main {
   }
 }
 
-// Sidebar and open animation
+/*===============
+|    Sidebar    |
+===============*/
+
 body {
+  // Navbars
   .navbar {
     @include width_height(0, 100%);
     display: flex;
@@ -417,73 +494,89 @@ body {
     transition: width 0.3s, opacity 0.15s;
   }
 
+  // Put scores nav in top right
   #scoresNav {
     @include top_right;
   }
 
+  // With class open
   .open {
+    // Margin left of button
     &#settingsButton {
       margin-left: calc(#{$menuSize} + 15px);
     }
 
+    // Width of navbar
     &#settingsNav {
       width: $menuSize;
       opacity: 1;
     }
 
+    // Margin right of button
     &#scoresButton {
       margin-right: calc(#{$menuSize} + 15px);
     }
 
+    // Width of button
     &#scoresNav {
       width: $menuSize;
       opacity: 1;
     }
 
+    // Overlay visibility
     &#overlay {
       display: block;
     }
   }
 }
 
-// Settings form
+/*=====================
+|    Settings form    |
+=====================*/
 
 #settingsForm {
   display: flex;
   flex-direction: column;
   height: 100%;
 
+  // Settings header
   #settingsHeader {
     padding-left: 15px;
   }
 
+  // Header for radio buttons
   .radioHeader {
     text-align: center;
   }
 
+  // Radio buttons group
   .settingsRadio {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
 
+    // Radio button input invisible
     input {
       position: fixed;
       opacity: 0;
       pointer-events: none;
     }
 
+    // Radio button label
     .radioSelector {
       @include center_text;
       @include width_height(7rem, 2rem);
       margin: 5px;
     }
 
+    // lable of disabled button
     .lengthRadio:disabled + label {
       opacity: 0.5;
       pointer-events: none;
     }
   }
 
+  // Other buttons in menu
   .settingsMenuButton {
     @include width_height(15rem, 3rem);
     margin: 10px;
@@ -491,6 +584,7 @@ body {
     align-self: center;
   }
 
+  // Theme buttons at bottom
   #themeButtons {
     margin-top: auto;
     display: flex;
@@ -499,10 +593,14 @@ body {
   }
 }
 
-// View words
+/*========================
+|    View words modal    |
+========================*/
 
 #wordModal {
   @include center_flex_element();
+
+  // Modal content
   #modalContent {
     border-radius: 10px;
     padding: 20px;
@@ -510,18 +608,22 @@ body {
     @include border_style;
     @include width_height(80%, auto);
 
+    // Animation come down
     animation-name: animatetop;
     animation-duration: 0.4s;
 
+    // Sections in modal
     .modalSection {
       padding: 15px;
     }
 
+    // Header section
     #modalHeader {
       display: flex;
       flex-direction: row;
       text-align: center;
 
+      // Exit button
       #modalExit {
         margin-left: auto;
         font-size: 2rem;
@@ -533,6 +635,7 @@ body {
         vertical-align: middle;
         line-height: 2rem;
 
+        // On hover
         &:hover {
           background-color: var(--focusBackground);
           color: var(--highlightText);
@@ -540,20 +643,25 @@ body {
       }
     }
 
+    // Buttons section
     #modalButtons {
       display: flex;
       justify-content: space-evenly;
+
+      // Modal buttons
       .modalButton {
         @include button_style;
         @include width_height(15rem, 3rem);
       }
     }
 
+    // Words section
     #modalWords {
       display: flex;
       flex-wrap: wrap;
       border-radius: 5px;
 
+      // Modal word
       .modalWord {
         padding: 2px;
       }
@@ -561,20 +669,31 @@ body {
   }
 }
 
+// Animate top
 @keyframes animatetop {
-  from {opacity: 0}
-  to {opacity: 1}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-// Scoreboard
+/*==================
+|    Scoreboard    |
+==================*/
 
 #scoresNav {
   align-items: center;
+
+  // Scoreboard table
   #scoreboard {
     width: 90%;
     table-layout: fixed;
 
+    // Scoreboard body
     #scorebody {
+      // Element in body
       tr {
         text-align: center;
         width: 50%;
@@ -583,38 +702,50 @@ body {
   }
 }
 
-// Z-Indexing
+/*==================
+|    Z-indexing    |
+==================*/
 
 html {
+  // Main elements above normal
   #gameContainer,
   #topText {
     z-index: 2;
   }
 
+  // Overlay above main elements
   #overlay {
     z-index: 3;
   }
 
+  // Navbar above overlay
   .navbar,
   .navButton {
     z-index: 4;
   }
 
+  // Modal above navbar
   #wordModal {
     z-index: 5;
   }
 }
 
-// Game window
+/*===================
+|    Game window    |
+===================*/
 
 #gameContainer {
   @include width_height(39rem, 18rem);
   position: absolute;
 
+  // Game grid making
   #game {
+    // lh = line height including bottom e.g y
     $lh: 7 / 6;
-    $bl: 1/6;
+
+    // Text size = 4.5 (3 columns) * line height + 5/6(no idea lol)
     $text: 4.5rem * $lh + 5/6;
+    // Regular grids to 2.5rem
     $grids: 2.5rem;
 
     @include full_screen;
@@ -626,17 +757,20 @@ html {
   }
 }
 
-
+// Game
 #game {
+  // Stats area
   #gameStatsArea {
     @include center_flex_element;
 
+    // Box inside stats area
     #statBox {
       @include width_height(2.5rem, 100%);
       display: flex;
       border-radius: 50%;
       justify-content: center;
 
+      // Span inside box
       #gameProgress {
         line-height: 2.5rem;
         font-size: 1.5rem;
@@ -644,6 +778,7 @@ html {
     }
   }
 
+  // Game words
   #gameWordArea {
     position: relative;
     overflow: hidden;
@@ -651,9 +786,11 @@ html {
     padding-bottom: 0.5rem + 1rem * 1/6;
   }
 
+  // Game typing area
   #gameTypingArea {
     display: block;
 
+    // Typing field
     #gameTypingField {
       @include width_height(100%, calc(100% - 5px));
       border: 0;
@@ -666,7 +803,9 @@ html {
     }
   }
 
+  // Reset area
   #gameResetArea {
+    //Reset button
     #gameResetButton {
       @include button_style;
       @include width_height(5rem, 80%);
@@ -674,49 +813,63 @@ html {
   }
 }
 
-// Start and finish overlay
+/*============================
+|    Start/finish overlay    |
+============================*/
+
 #gameContainer {
+  // Overlays
   .gameOverlay {
     @include full_screen;
     @include top_right;
     position: absolute;
   }
 
+  // Start overlay
   #startOverlay {
     @include center_flex_element;
     background-color: rgba(0, 0, 0, 0.3);
+    // Blur backdrop doesn't work on firefox
     backdrop-filter: blur(3px);
     opacity: 1;
     height: 100%;
 
+    // On hidden
     &.hide {
       backdrop-filter: blur(0);
       opacity: 0;
       height: 0;
+      // Transition doesn't really work but whatever
       transition: backdrop-filter 0.3s, opacity 0.03s, height 0s 0.3s;
     }
 
+    // Start button
     #startButton {
       @include width_height(10rem, 5rem);
       @include center_text;
     }
   }
 
+  // Finish overlay
   #finishOverlay {
     display: none;
 
+    // finish "form"
     form {
       display: grid;
       grid-template-rows: 20% 15% auto 20%;
       height: 100%;
 
+      // Title of form
       #finishTitleArea {
         @include center_flex_element;
       }
 
+      // Name input area
       #finishNameArea {
         @include center_flex_element;
 
+        // Typing field
         #finishTypingField {
           margin: 0;
           height: 1.5rem;
@@ -727,27 +880,33 @@ html {
         }
       }
 
+      // Stats area
       #finishStatArea {
         display: grid;
         padding: 0 10%;
         grid-template-columns: 50% 50%;
+        // Title area smaller than actual number
         grid-template-rows: 30% 70%;
 
+        // Grid items
         .finishStat {
           justify-self: center;
           align-self: center;
         }
       }
 
+      // Hidden forms
       #finishHiddenForms {
         display: none;
       }
 
+      // Retry/Exit buttons
       #finishRetryArea {
         display: flex;
         justify-content: space-evenly;
         align-items: center;
 
+        // Button
         .finishButton {
           @include button_style;
           @include width_height(5rem, 2rem);

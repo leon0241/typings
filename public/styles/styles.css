@@ -1,0 +1,701 @@
+.light {
+  --highlightText: #2E3440;
+  --mediumText: #3B4252;
+  --smallText: #434C5E;
+  --backgroundColor: #D8DEE9;
+  --navBackground: #E5E9F0;
+  --gameBackground: #ECEFF4;
+  --focusBackground: #f9fafb;
+  --hoverCol: #88C0D0;
+  --selectedCol: #5E81AC;
+  --borderOutline: #3B4252;
+  --buttonHover: #ECEFF4;
+  --containerBorder: 2px solid var(--borderOutline);
+  --buttonBorder: 1px solid var(--borderOutline);
+  --scoreboard1: #D8DEE9;
+  --scoreboard2: #f9fafb;
+  --typingWord: #3B4252;
+  --highlightWord: #88C0D0;
+  --correctWord: #A3BE8C;
+  --wrongWord: #BF616A;
+}
+
+.dark {
+  --highlightText: #ECEFF4;
+  --mediumText: #E5E9F0;
+  --smallText: rgba(216, 222, 233, 0.87);
+  --backgroundColor: #2E3440;
+  --gameBackground: #3B4252;
+  --navBackground: #434C5E;
+  --focusBackground: #4C566A;
+  --hoverCol: #88C0D0;
+  --selectedCol: #5E81AC;
+  --borderOutline: rgba(216, 222, 233, 0.87);
+  --buttonHover: #434C5E;
+  --containerBorder: 2px solid var(--borderOutline);
+  --buttonBorder: 1px solid var(--borderOutline);
+  --scoreboard1: #3B4252;
+  --scoreboard2: #4C566A;
+  --typingWord: #D8DEE9;
+  --highlightWord: #88C0D0;
+  --correctWord: #A3BE8C;
+  --wrongWord: #BF616A;
+}
+
+/*==============
+|    Mixins    |
+==============*/
+/*===============
+|    Colours    |
+===============*/
+* {
+  transition: background-color 0.5s, color 1s;
+}
+
+body #screenContainer {
+  background-color: var(--backgroundColor);
+}
+body #modalContent {
+  background-color: var(--navBackground);
+}
+body .navButton .tooltip {
+  background-color: var(--mediumText);
+  color: var(--gameBackground);
+}
+body h1,
+body h2 {
+  color: var(--highlightText);
+}
+body p,
+body label {
+  color: var(--mediumText);
+}
+body nav {
+  background-color: var(--navBackground);
+}
+body input {
+  background-color: var(--focusBackground);
+}
+
+#gameContainer #game {
+  border: var(--containerBorder);
+  border-radius: 7px;
+  background-color: var(--gameBackground);
+}
+#gameContainer #game .gameArea {
+  background-color: var(--gameBackground);
+}
+#gameContainer #game #statBox {
+  background-color: var(--focusBackground);
+  color: var(--mediumText);
+}
+#gameContainer #game #gameWordArea .typingWord {
+  font-size: 1.5rem;
+  text-overflow: clip;
+  color: var(--typingWord);
+  transition: color 0.2s;
+}
+#gameContainer #game #gameWordArea #highlightWord {
+  color: var(--highlightWord);
+}
+#gameContainer #game #gameWordArea .correctWord {
+  color: var(--correctWord);
+}
+#gameContainer #game #gameWordArea .wrongWord {
+  color: var(--wrongWord);
+}
+#gameContainer #game #gameTypingArea #gameTypingField {
+  color: var(--highlightText);
+}
+#gameContainer #startOverlay #startButton {
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+#gameContainer #startOverlay #startButton:hover {
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
+}
+#gameContainer #finishOverlay {
+  background-color: var(--gameBackground);
+  border: var(--containerBorder);
+  border-radius: 7px;
+  background-color: var(--gameBackground);
+}
+#gameContainer #finishOverlay #finishNameArea #finishTypingField {
+  color: var(--highlightText);
+}
+#gameContainer #finishOverlay #finishStatArea .finishStat {
+  color: var(--mediumText);
+  font-size: 1.25rem;
+}
+
+#settingsForm .settingsRadio .radioSelector {
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+#settingsForm .settingsRadio .radioSelector:hover {
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
+}
+#settingsForm .settingsRadio input:checked + label {
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
+}
+#settingsForm .settingsMenuButton {
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+#settingsForm .settingsMenuButton:hover {
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
+}
+
+#scoresNav #scoreboard {
+  background-color: var(--focusBackground);
+}
+#scoresNav #scoreboard .scoreHeader {
+  color: var(--mediumText);
+}
+#scoresNav #scoreboard #scorebody > tr {
+  color: var(--smallText);
+}
+#scoresNav #scoreboard #scorebody > tr:nth-child(odd) {
+  background-color: var(--scoreboard1);
+}
+#scoresNav #scoreboard #scorebody > tr:nth-child(even) {
+  background-color: var(--scoreboard2);
+}
+
+#wordModal #modalContent #modalWords {
+  background-color: var(--focusBackground);
+}
+#wordModal #modalContent #modalWords .modalWord {
+  color: var(--mediumText);
+}
+
+/*=============
+|    Fonts    |
+=============*/
+* {
+  font-family: Consolas;
+  font-size: 16px;
+}
+
+body h1 {
+  font-size: 2rem;
+}
+body h2 {
+  font-size: 1.75rem;
+}
+body .radioHeader {
+  font-size: 1.5rem;
+  font-weight: 100;
+}
+body .radioSelector {
+  font-size: 1.25rem;
+}
+
+/*============================
+|    General body styling    |
+============================*/
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: static;
+}
+body #wordModal {
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  justify-content: center;
+}
+body #overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+body main {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+body main #pageText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+body main #pageText #topText h1 {
+  margin-top: 1rem;
+}
+body main #pageText #bottomText {
+  position: relative;
+  background-color: var(--gameBackground);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  z-index: 2;
+}
+body main #pageText #bottomText p {
+  color: var(--mediumText);
+}
+body main #pageText #bottomText p > a {
+  color: var(--hoverCol);
+}
+body main #pageText #bottomText p > a:visited {
+  color: var(--selectedCol);
+}
+body main #screenContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 0;
+  position: absolute;
+}
+
+/*=============
+|    Main     |
+=============*/
+main h1 {
+  text-align: center;
+}
+main p {
+  text-align: center;
+}
+
+/*=======================
+|    Sidebar buttons    |
+=======================*/
+main .navButton {
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
+  border-radius: 5px;
+  transition: all 0.3s;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  margin: 1rem;
+  padding: 0;
+}
+main .navButton:hover {
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
+}
+main .navButton:focus {
+  outline: none;
+}
+main .navButton .navIcon {
+  height: 80%;
+  margin: 10%;
+}
+main .navButton .tooltip {
+  width: 120px;
+  height: 50%;
+  margin: 20% 5px auto;
+  visibility: hidden;
+  text-align: center;
+  padding: 5% 0;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+main .navButton #scoreTooltip {
+  right: 105%;
+}
+main .navButton:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+main #scoresButton {
+  top: 0px;
+  right: 0px;
+}
+main #settingsButton img {
+  transition: transform 0.3s;
+}
+main #settingsButton:hover img {
+  transform: rotate(45deg);
+}
+
+/*===============
+|    Sidebar    |
+===============*/
+body .navbar {
+  width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  overflow: hidden;
+  opacity: 0;
+  transition: width 0.3s, opacity 0.15s;
+}
+body #scoresNav {
+  top: 0px;
+  right: 0px;
+}
+body .open#settingsButton {
+  margin-left: calc(25rem + 15px);
+}
+body .open#settingsNav {
+  width: 25rem;
+  opacity: 1;
+}
+body .open#scoresButton {
+  margin-right: calc(25rem + 15px);
+}
+body .open#scoresNav {
+  width: 25rem;
+  opacity: 1;
+}
+body .open#overlay {
+  display: block;
+}
+
+/*=====================
+|    Settings form    |
+=====================*/
+#settingsForm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#settingsForm #settingsHeader {
+  padding-left: 15px;
+}
+#settingsForm .radioHeader {
+  text-align: center;
+}
+#settingsForm .settingsRadio {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+#settingsForm .settingsRadio input {
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+}
+#settingsForm .settingsRadio .radioSelector {
+  text-align: center;
+  vertical-align: middle;
+  width: 7rem;
+  height: 2rem;
+  margin: 5px;
+}
+#settingsForm .settingsRadio .lengthRadio:disabled + label {
+  opacity: 0.5;
+  pointer-events: none;
+}
+#settingsForm .settingsMenuButton {
+  width: 15rem;
+  height: 3rem;
+  margin: 10px;
+  font-size: 1.25rem;
+  align-self: center;
+}
+#settingsForm #themeButtons {
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+/*========================
+|    View words modal    |
+========================*/
+#wordModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#wordModal #modalContent {
+  border-radius: 10px;
+  padding: 20px;
+  position: absolute;
+  border: var(--buttonBorder);
+  width: 80%;
+  height: auto;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+}
+#wordModal #modalContent .modalSection {
+  padding: 15px;
+}
+#wordModal #modalContent #modalHeader {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+#wordModal #modalContent #modalHeader #modalExit {
+  margin-left: auto;
+  font-size: 2rem;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  color: var(--mediumText);
+  text-align: center;
+  vertical-align: middle;
+  line-height: 2rem;
+}
+#wordModal #modalContent #modalHeader #modalExit:hover {
+  background-color: var(--focusBackground);
+  color: var(--highlightText);
+}
+#wordModal #modalContent #modalButtons {
+  display: flex;
+  justify-content: space-evenly;
+}
+#wordModal #modalContent #modalButtons .modalButton {
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
+  border-radius: 5px;
+  transition: all 0.3s;
+  width: 15rem;
+  height: 3rem;
+}
+#wordModal #modalContent #modalButtons .modalButton:hover {
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
+}
+#wordModal #modalContent #modalWords {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 5px;
+}
+#wordModal #modalContent #modalWords .modalWord {
+  padding: 2px;
+}
+
+@keyframes animatetop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/*==================
+|    Scoreboard    |
+==================*/
+#scoresNav {
+  align-items: center;
+}
+#scoresNav #scoreboard {
+  width: 90%;
+  table-layout: fixed;
+}
+#scoresNav #scoreboard #scorebody tr {
+  text-align: center;
+  width: 50%;
+}
+
+/*==================
+|    Z-indexing    |
+==================*/
+html #gameContainer,
+html #topText {
+  z-index: 2;
+}
+html #overlay {
+  z-index: 3;
+}
+html .navbar,
+html .navButton {
+  z-index: 4;
+}
+html #wordModal {
+  z-index: 5;
+}
+
+/*===================
+|    Game window    |
+===================*/
+#gameContainer {
+  width: 39rem;
+  height: 18rem;
+  position: absolute;
+}
+#gameContainer #game {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 2.5rem 6.0833333333rem 2.5rem 2.5rem;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  box-sizing: border-box;
+}
+
+#game #gameStatsArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#game #gameStatsArea #statBox {
+  width: 2.5rem;
+  height: 100%;
+  display: flex;
+  border-radius: 50%;
+  justify-content: center;
+}
+#game #gameStatsArea #statBox #gameProgress {
+  line-height: 2.5rem;
+  font-size: 1.5rem;
+}
+#game #gameWordArea {
+  position: relative;
+  overflow: hidden;
+  padding: 0.5rem;
+  padding-bottom: 0.6666666667rem;
+}
+#game #gameTypingArea {
+  display: block;
+}
+#game #gameTypingArea #gameTypingField {
+  width: 100%;
+  height: calc(100% - 5px);
+  border: 0;
+  margin: 0;
+  padding: 0;
+  border-radius: 5px;
+  outline: none;
+  padding-left: 5px;
+  font-size: 1.5rem;
+}
+#game #gameResetArea #gameResetButton {
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
+  border-radius: 5px;
+  transition: all 0.3s;
+  width: 5rem;
+  height: 80%;
+}
+#game #gameResetArea #gameResetButton:hover {
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
+}
+
+/*============================
+|    Start/finish overlay    |
+============================*/
+#gameContainer .gameOverlay {
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  right: 0px;
+  position: absolute;
+}
+#gameContainer #startOverlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(3px);
+  opacity: 1;
+  height: 100%;
+}
+#gameContainer #startOverlay.hide {
+  backdrop-filter: blur(0);
+  opacity: 0;
+  height: 0;
+  transition: backdrop-filter 0.3s, opacity 0.03s, height 0s 0.3s;
+}
+#gameContainer #startOverlay #startButton {
+  width: 10rem;
+  height: 5rem;
+  text-align: center;
+  vertical-align: middle;
+}
+#gameContainer #finishOverlay {
+  display: none;
+}
+#gameContainer #finishOverlay form {
+  display: grid;
+  grid-template-rows: 20% 15% auto 20%;
+  height: 100%;
+}
+#gameContainer #finishOverlay form #finishTitleArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#gameContainer #finishOverlay form #finishNameArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#gameContainer #finishOverlay form #finishNameArea #finishTypingField {
+  margin: 0;
+  height: 1.5rem;
+  outline: 0;
+  border: var(--buttonBorder);
+  border-radius: 5px;
+  text-align: center;
+}
+#gameContainer #finishOverlay form #finishStatArea {
+  display: grid;
+  padding: 0 10%;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 30% 70%;
+}
+#gameContainer #finishOverlay form #finishStatArea .finishStat {
+  justify-self: center;
+  align-self: center;
+}
+#gameContainer #finishOverlay form #finishHiddenForms {
+  display: none;
+}
+#gameContainer #finishOverlay form #finishRetryArea {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+#gameContainer #finishOverlay form #finishRetryArea .finishButton {
+  border: var(--buttonBorder);
+  background-color: var(--focusBackground);
+  color: var(--smallText);
+  border-radius: 5px;
+  transition: all 0.3s;
+  width: 5rem;
+  height: 2rem;
+}
+#gameContainer #finishOverlay form #finishRetryArea .finishButton:hover {
+  background-color: var(--buttonHover);
+  color: var(--hoverCol);
+  border: 1px solid var(--hoverCol);
+}

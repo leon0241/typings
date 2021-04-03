@@ -3,36 +3,39 @@
   <head>
     <meta charset="utf-8" />
     <title>typings</title>
+    <!-- Import stylesheet -->
     <link rel="stylesheet" type="text/css" href="styles/styles.min.css" />
 
+    <!-- Import scripts -->
     <script type="text/javascript" src="scripts/words.min.js" defer></script>
     <script type="text/javascript" src="scripts/main.min.js" defer></script>
     <script type="text/javascript" src="scripts/game.min.js" defer></script>
   </head>
+
   <body class="dark">
     <!-- Overlay for nav bars -->
     <div id="overlay"></div>
 
     <!-- Modal to view words -->
     <div id="wordModal" class="modal">
+      <!-- Modal contents -->
       <div id="modalContent">
+        <!-- Modal Header -->
         <header id="modalHeader" class="modalSection">
           <h2>view words</h2>
           <span id="modalExit">&times;</span>
         </header>
 
+        <!-- Modal sort buttons -->
         <section id="modalButtons" class="modalSection">
-          <button id="freqSort" class="modalButton">
-            Sort by frequency
-          </button>
-          <button id="lengthSort" class="modalButton">
-            Sort by length
-          </button>
+          <button id="freqSort" class="modalButton">Sort by frequency</button>
+          <button id="lengthSort" class="modalButton">Sort by length</button>
           <button id="alphaSort" class="modalButton">
             Sort alphabetically
           </button>
         </section>
 
+        <!-- Modal words -->
         <section id="modalWords" class="modalSection">
           <p>Click a button to view words...</p>
           <!-- Empty and will be filled with DOM -->
@@ -42,23 +45,32 @@
 
     <!-- Game window -->
     <main>
-
+      <!-- On screen text -->
       <section id="pageText">
+        <!-- Header-->
         <header id="topText">
+          <!-- Title -->
           <h1>typing (づ｡◕‿‿◕｡)づ</h1>
-          <!-- <h1>typing</h1> -->
+
+          <!-- Description -->
           <p>A simple typing program. Press space to enter a word.</p>
         </header>
-  
+
+        <!-- Footer -->
         <footer id="bottomText">
+          <!-- Colours credit - nord theme -->
           <p>
-            Colours used: 
+            Colours used:
             <a href="https://www.nordtheme.com/">Nord theme</a>
           </p>
+
+          <!-- Word list credit - COCA -->
           <p>
-            Words used: 
+            Words used:
             <a href="https://www.wordfrequency.info/">COCA 2020</a>
           </p>
+
+          <!-- Github repo link -->
           <p>
             Github repo:
             <a href="https://github.com/leon0241/typings">leon0241/typings</a>
@@ -68,15 +80,15 @@
 
       <!-- Settings nav bar -->
       <nav id="settingsNav" class="navbar">
-
         <!-- Form with settings -->
         <form
           name="settingsForm"
           id="settingsForm"
           onsubmit="newGame(this);return false"
         >
-
+          <!-- Header -->
           <h2 id="settingsHeader">Settings</h2>
+
           <!-- Test type -->
           <label for="test_type" class="radioHeader">Test type</label>
           <section class="settingsRadio" id="typeSelector">
@@ -175,26 +187,34 @@
             Submit
           </button>
 
+          <!-- Theme buttons -->
           <div id="themeButtons">
-            <button type="button" class="settingsMenuButton" id="lightButton">Light</button>
-            <button type="button" class="settingsMenuButton" id="darkButton">Dark</button>
+            <!-- Light theme -->
+            <button type="button" class="settingsMenuButton" id="lightButton">
+              Light
+            </button>
+
+            <!-- Dark theme -->
+            <button type="button" class="settingsMenuButton" id="darkButton">
+              Dark
+            </button>
           </div>
         </form>
       </nav>
 
       <!-- Button to open settings -->
-      <button
-        type="button"
-        id="settingsButton"
-        class="navButton"
-      >
+      <button type="button" id="settingsButton" class="navButton">
+        <!-- Settings button -->
         <img
           src="resources/images/settings.png"
           class="navIcon"
           alt="Settings"
         />
+
+        <!-- Tooltip -->
         <span class="tooltip">Settings</span>
       </button>
+
       <!-- Full screen container -->
       <section id="screenContainer">
         <!-- Game size container -->
@@ -228,9 +248,7 @@
 
           <!-- Start overlay window -->
           <div id="startOverlay" class="gameOverlay">
-            <button id="startButton" type="button">
-              Click to start
-            </button>
+            <button id="startButton" type="button">Click to start</button>
           </div>
 
           <!-- Finish overlay window -->
@@ -322,12 +340,11 @@
       </section>
 
       <!-- Button to open scores -->
-      <button
-        type="button"
-        id="scoresButton"
-        class="navButton"
-      >
+      <button type="button" id="scoresButton" class="navButton">
+        <!-- Button image -->
         <img src="resources/images/trophy.png" class="navIcon" alt="Scores" />
+
+        <!-- Button tooltip -->
         <span class="tooltip" id="scoreTooltip">Scoreboard</span>
       </button>
 

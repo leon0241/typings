@@ -1,5 +1,5 @@
 /*================
-*    CLASSES
+|    CLASSES     |
 ================*/
 // Basic game options - type, length, words array
 class GameSettings {
@@ -353,7 +353,7 @@ class GameFunctions extends UserGame {
     }
 }
 /*================
-*   Functions
+|   Functions    |
 ================*/
 // Function when button is submitted
 function newGame(that) {
@@ -383,7 +383,7 @@ function resetGame() {
     // Set inGame and clicked globals to false
     inGame = false;
     clicked = false;
-    // Empty the value of the typing field 
+    // Empty the value of the typing field
     gameTypingField.value = "";
     // Empty the progress field
     DOMFunctions.changeGameProgress("");
@@ -434,7 +434,7 @@ gameTypingField.onkeydown = (e) => {
     }
 };
 /*================
-*     GAME
+|     GAME       |
 ================*/
 // Check if in game
 let inGame = false;

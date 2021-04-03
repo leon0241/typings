@@ -1,7 +1,9 @@
-// Setting DOM variable stuff
+/*=====================
+|    DOM Variables    |
+=====================*/
 
 // Body
-const body: HTMLElement = document.querySelector('body');
+const body: HTMLElement = document.querySelector("body");
 const overlay: HTMLElement = document.getElementById("overlay");
 const settingsButton: HTMLElement = document.getElementById("settingsButton");
 const scoresButton: HTMLElement = document.getElementById("scoresButton");
@@ -29,7 +31,6 @@ const gameAccuracy: HTMLElement = finishForm.querySelector("#gameAccuracy");
 const hiddenWPMInput: HTMLInputElement = finishForm.querySelector("#hiddenWpm");
 const hiddenAccInput: HTMLInputElement = finishForm.querySelector("#hiddenAcc");
 
-
 // Settings navbar
 
 const settingsNav: HTMLElement = document.getElementById("settingsNav");
@@ -41,7 +42,9 @@ const timeSelector: HTMLElement = settingsNav.querySelector("#timeSelector");
 const scoresNav: HTMLElement = document.getElementById("scoresNav");
 
 const scoreboard: HTMLTableElement = scoresNav.querySelector("#scoreboard");
-const scorebody: HTMLTableSectionElement = scoreboard.querySelector("#scorebody");
+const scorebody: HTMLTableSectionElement = scoreboard.querySelector(
+  "#scorebody"
+);
 
 // View words modal
 const modal: HTMLElement = document.getElementById("wordModal");
@@ -61,6 +64,10 @@ const modalWords: HTMLElement = modal.querySelector("#modalWords");
 //   // http.send(formData);
 // }
 
+/*==================
+|  Onclick events  |
+===================*/
+
 let openToggle = false;
 
 // Settings button onclick
@@ -72,7 +79,7 @@ settingsButton.onclick = () => {
     sidebarDOM(settingsButton, settingsNav, scoresButton, "close");
     openToggle = false;
   }
-}
+};
 
 // Scores button onclick
 scoresButton.onclick = () => {
@@ -83,27 +90,27 @@ scoresButton.onclick = () => {
     sidebarDOM(scoresButton, scoresNav, settingsButton, "close");
     openToggle = false;
   }
-}
+};
 
 // Set dom of sidebar
 function sidebarDOM(button, nav, button2, state): void {
   // List of elements to add class
-  let elementList = [button, nav, overlay]
+  let elementList = [button, nav, overlay];
   // Check if state is open
   if (state === "open") {
     // Add open class to each element in list
-    elementList.forEach(element => {
-      element.classList.add("open")
-    })
+    elementList.forEach((element) => {
+      element.classList.add("open");
+    });
     // Set the z index of the opposite button so it gets hidden by overlay
     button2.style.zIndex = "2";
 
-  // If state is closed
+    // If state is closed
   } else {
     // Remove open class to each element in the list
-    elementList.forEach(element => {
-      element.classList.remove("open")
-    })
+    elementList.forEach((element) => {
+      element.classList.remove("open");
+    });
     // Set the z index of the opposite button back to normal
     button2.style.zIndex = "4";
   }
@@ -111,34 +118,34 @@ function sidebarDOM(button, nav, button2, state): void {
 
 // Light mode button onclick
 document.getElementById("lightButton").onclick = () => {
-  setTheme("light")
-}
+  setTheme("light");
+};
 
 // Dark mode button onclick
 document.getElementById("darkButton").onclick = () => {
-  setTheme("dark")
-}
+  setTheme("dark");
+};
 
 // Set theme to either light or dark
 function setTheme(theme: string): void {
   switch (theme) {
     case "light": {
       // Change theme key in localStorage
-      localStorage.setItem("theme", "light")
+      localStorage.setItem("theme", "light");
       // Replace body class
-      body.classList.replace("dark", "light")
+      body.classList.replace("dark", "light");
       // Set class theme
-      DOMFunctions.theme = "light"
-      break
+      DOMFunctions.theme = "light";
+      break;
     }
     case "dark": {
       // Change theme key in localStorage
-      body.classList.replace("light", "dark")
+      body.classList.replace("light", "dark");
       // Replace body class
-      DOMFunctions.theme = "dark"
+      DOMFunctions.theme = "dark";
       // Set class theme
-      localStorage.setItem("theme", "dark")
-      break
+      localStorage.setItem("theme", "dark");
+      break;
     }
   }
 }
@@ -146,7 +153,7 @@ function setTheme(theme: string): void {
 // On start button onclick
 document.getElementById("startButton").onclick = () => {
   DOMFunctions.showBackdrop();
-}
+};
 
 // Open modal button onclick
 document.getElementById("openModal").onclick = () => {
@@ -167,7 +174,7 @@ document.getElementById("radiowords").onclick = () => {
 function chooseTimeWords(a: HTMLElement, b: HTMLElement) {
   // Add deselcted class
   a.classList.add("deselected");
-  // Selects all radio buttons inside the group with 
+  // Selects all radio buttons inside the group with
   let group = a.querySelectorAll(".lengthRadio");
   // Disable each element
   group.forEach((element: any) => {
@@ -190,20 +197,20 @@ function chooseTimeWords(a: HTMLElement, b: HTMLElement) {
 // Modal exit onclick
 document.getElementById("modalExit").onclick = () => {
   modal.style.display = "none";
-}
+};
 
 // Modal Frequency sort onclick
 document.getElementById("freqSort").onclick = () => {
   let arr = words;
   writeWords(arr);
-}
+};
 
 // Modal Length sort onclick
 document.getElementById("lengthSort").onclick = () => {
   // Sort words by length
   let arr = sortWordsByLength();
   writeWords(arr);
-}
+};
 
 // Modal alphabetical sort onclick
 document.getElementById("alphaSort").onclick = () => {
@@ -215,7 +222,11 @@ document.getElementById("alphaSort").onclick = () => {
     return a.toLowerCase().localeCompare(b.toLowerCase());
   });
   writeWords(arr);
-}
+};
+
+/*=================
+|    Functions    |
+==================*/
 
 //Write modal words with providedarray
 function writeWords(arr: string[]): void {
@@ -245,7 +256,7 @@ function sortWordsByLength(): string[] {
   // Reverse array
   sortedArr.reverse;
 
-  // Redefine array as word only 
+  // Redefine array as word only
   let finalArr: string[] = [];
   for (let i = 0; i < words.length; i++) {
     finalArr[i] = sortedArr[i][0];
@@ -255,7 +266,6 @@ function sortWordsByLength(): string[] {
 
 // Insertion sort
 function insertionSort2d(list: [string, number][]) {
-
   // Sorting algoritm
   let max = list.length;
   for (let i = 1; i < max; i++) {
@@ -275,18 +285,17 @@ function insertionSort2d(list: [string, number][]) {
   return list;
 }
 
-// Bubble sort 
+// Bubble sort
 function bubbleSort2d(list: [string, number][]) {
   // Swapped check
   let swapped = true;
-
 
   let max = list.length;
   while (swapped === true) {
     // Preset swap check
     swapped = false;
 
-    // Repeat all items in list 
+    // Repeat all items in list
     for (let i = 1; i < max; i++) {
       // If list[i - 1] is larger than list[i]
       if (list[i - 1][1] > list[i][1]) {
@@ -303,11 +312,14 @@ function bubbleSort2d(list: [string, number][]) {
   return list;
 }
 
+/*===============
+|    Classes    |
+================*/
+
 // Scoreboard and any functions related to it
 class Scoreboard {
   _scores: [string, number][];
   _index: number;
-  //TODO: ADD INDEX IT RELIES ON LOCALSTORAGELENGTH AND THAT IS BEING INCREASED BY 3
 
   constructor() {
     // Users scores
@@ -315,7 +327,7 @@ class Scoreboard {
     // localStorage index
     this._index = 0;
   }
- 
+
   // Getter methods
   get strLen(): string {
     return this._index.toString();
@@ -334,7 +346,7 @@ class Scoreboard {
 
   // Initialise index with length - offset(stored settings)
   initIndex(offset) {
-    this._index = localStorage.length - offset
+    this._index = localStorage.length - offset;
   }
 
   // Add new score to scores array
@@ -372,26 +384,26 @@ class Scoreboard {
   // Initialise scoreboard DOM on startup
   initScoreboard() {
     let arr = [];
-    
+
     // Set array with parsed items of all localStorage values
-    let len = this._index
+    let len = this._index;
     for (let i = 0; i < len; i++) {
       // Format: [string, number]
       arr[i] = this.parseItem(i);
     }
 
-    // Insertion sort the values 
+    // Insertion sort the values
     let sortedArr = insertionSort2d(arr);
 
     // Reverse values from high to low
     sortedArr.reverse();
-    
+
     // Set scores variable to the sorted array
     this._scores = sortedArr;
 
     // Empty scoreboard table
     scorebody.innerHTML = "";
-    
+
     // Insert row for each value in array
     for (let i = 0; i < sortedArr.length; i++) {
       this.insertRow(sortedArr[i]);
@@ -402,7 +414,7 @@ class Scoreboard {
   updateScoreboard() {
     // Parse item of index - 1(zero-based)
     let item = this.parseItem(this._index - 1);
-    
+
     // Add new score with item
     this.addNewScore(item);
 
@@ -435,7 +447,7 @@ class Scoreboard {
 
       // Text element
       let text = document.createTextNode(array[i].toString());
-      
+
       // Append text element to the cell
       cell.appendChild(text);
     }
@@ -473,7 +485,7 @@ class DOMManipulation {
   }
 
   get theme() {
-    return this._theme
+    return this._theme;
   }
 
   // ==Class Setters==
@@ -512,7 +524,6 @@ class DOMManipulation {
   showArray(gameWords: string[]): void {
     let area = gameWordArea;
     area.innerHTML = "";
-    // TODO: rename area
     // Creates new spans with text from gamewords[]
     // Repeats 50 times for some overflow
     for (let i = 0; i < 50; i++) {
@@ -601,7 +612,7 @@ class DOMManipulation {
     if (typeof value === "number") {
       value = value.toString();
     }
-    
+
     // Set game progress span text content to the value
     gameProgress.textContent = value;
   }
@@ -635,18 +646,16 @@ class DOMManipulation {
 
   // Set the settings into variables in localStorage
   setSettings(type, length): void {
-    localStorage.setItem("type", type)
-    localStorage.setItem("length", length)
-    localStorage.setItem("theme", this._theme)
+    localStorage.setItem("type", type);
+    localStorage.setItem("length", length);
+    localStorage.setItem("theme", this._theme);
   }
 
   // Get the settings from localStorage and return an array with them
   getSettings(): string[] {
-    let type = localStorage.getItem("type")
-    let length = localStorage.getItem("length")
-    let theme = localStorage.getItem("theme")
-    return [type, length, theme]
+    let type = localStorage.getItem("type");
+    let length = localStorage.getItem("length");
+    let theme = localStorage.getItem("theme");
+    return [type, length, theme];
   }
 }
-
-// TODO: timer doesn't actually work for some reason
