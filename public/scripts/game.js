@@ -355,42 +355,35 @@ class GameFunctions extends UserGame {
 /*================
 |   Functions    |
 ================*/
+// DO NOT TOUCH IT BREAKS
 // Function when button is submitted
 function newGame(that) {
-    // Get type from form
     let type = that.test_type.value;
-    // Get length from form, depending on the type
     let length = type === "0" ? that.time_length.value : that.word_length.value;
-    // If the type is empty, put default type
     if (type === "") {
         type = defOpt[0].toString();
     }
-    // If the length is empty, put default length
     if (length === "") {
         length = defOpt[1].toString();
     }
-    // Change the game data to the values in the form
-    Game.editGameData(type, length);
-    // Change the game settings in the class
-    DOMFunctions.setSettings(type, length);
-    // Reset game function
-    resetGame();
-}
-// Function when reset button is pressed
-function resetGame() {
-    // Reset game stats
     Game.resetStats;
-    // Set inGame and clicked globals to false
     inGame = false;
     clicked = false;
-    // Empty the value of the typing field
     gameTypingField.value = "";
-    // Empty the progress field
-    DOMFunctions.changeGameProgress("");
-    //Initialise the array
+    Game.editGameData(type, length);
+    DOMFunctions.setSettings(type, length);
     Game.initialiseArray();
-    // Show the array in the DOM
     DOMFunctions.showArray(Game.gameWords);
+    DOMFunctions.changeGameProgress("");
+}
+function resetGame() {
+    inGame = false;
+    clicked = false;
+    gameTypingField.value = "";
+    Game.resetStats();
+    Game.initialiseArray();
+    DOMFunctions.showArray(Game.gameWords);
+    DOMFunctions.changeGameProgress("");
 }
 // Function when exit or retry button is changed
 function finishedReset(exit) {
