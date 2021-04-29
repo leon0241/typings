@@ -1,8 +1,8 @@
 # Typing website created with HTML, TypeScript and SCSS.
 
 ## Created for Advanced Higher Computing Science assignment 2021.
+Name: En-Liang Lee  
 SCN: 130679900  
-Name: En-Liang Lee
 
 ## [Link to page](https://leon0241.github.io/typings/public)
 
