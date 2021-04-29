@@ -1,8 +1,8 @@
 # Typing website created with HTML, TypeScript and SCSS.
 
 ## Created for Advanced Higher Computing Science assignment 2021.
-SCN: 130679900
-Name: Leon Lee
+SCN: 130679900  
+Name: En-Liang Lee
 
 ## [Link to page](https://leon0241.github.io/typings/public)
 
@@ -13,12 +13,12 @@ Settings menu will let you change the type of game(time or words) and length of 
 Scoreboard will track the users scores and display them from high to low.
 
 ### Files
-Website code is stored in ./public  
+Assignment document is stored in a separate repository: [adv-higher-assignment](https://github.com/leon0241/adv-higher-assignment)  
+Website code is stored in [./public](public)  
 Inactive node.js server stored in root, has no use at the moment.
 
-Website hosted on Github Pages
-
 ### Credits
+* Website hosted with [Github Pages](https://pages.github.com/)  
 * Word data taken from [Corpus of Contemporary American English (COCA)](https://www.wordfrequency.info/)
-* Colour palette taken from [Nord Theme](https://www.nordtheme.com/)
+* Colour palette used: [Nord Theme](https://www.nordtheme.com/)
 * Scoreboard and settings icons made by [Freepik](https://www.freepik.com) from [Flaticon](https://www.flaticon.com/)
