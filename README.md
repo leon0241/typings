@@ -15,7 +15,9 @@ Scoreboard will track the users scores and display them from high to low.
 ### Files
 Assignment document is stored in a separate repository: [adv-higher-assignment](https://github.com/leon0241/adv-higher-assignment)  
 Website code is stored in [./public](public)  
-Inactive node.js server stored in root, has no use at the moment.
+Inactive node.js server stored in root, has no use at the moment.  
+Code written with TypeScript, compiled into minified JavaScript.
+Stylesheets written with SCSS, compiled into minified CSS.
 
 ### Credits
 * Website hosted with [Github Pages](https://pages.github.com/)  
