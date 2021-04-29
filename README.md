@@ -1,4 +1,4 @@
-# Typing website created with HTML, TypeScript and SCSS.
+# Typing game created with HTML, TypeScript and SCSS.
 
 ## Created for Advanced Higher Computing Science assignment 2021.
 Name: En-Liang Lee  
